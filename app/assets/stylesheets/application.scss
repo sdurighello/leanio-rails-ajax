@@ -1,0 +1,77 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
+ * files in this directory. Styles in this file should be added after the last require_* statement.
+ * It is generally better to create a new file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ */
+
+ @import "bootstrap-sprockets";
+ @import "bootstrap";
+
+// *** Main ***
+main {
+   padding-top: 80px;
+}
+
+// *** Nav Bar ***
+
+.navbar-default {
+  background-color: #026aa7;
+}
+
+.navbar-brand {
+  padding: 5px 5px;
+}
+
+.navbar-form {
+  margin: 4px;
+}
+
+.glyphicon {
+  color: #fff;;
+}
+
+.darkblue {
+  background-color: #02436a;
+  border: 0px;
+}
+
+.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus{
+  color: #fff;
+}
+
+.input-group-btn:last-child > .btn, .input-group-btn:last-child > .btn-group {
+  background-color: #1996e0;
+  border-top: 2px solid #1996e0;
+}
+
+.lightblue {
+  background-color: #1996e0;
+  border: 0px;
+}
+
+.form-control {
+  color: #000;
+}
+
+.navbar-nav > li > a{
+  margin: 8px;
+  padding: 7px 10px;
+}
+
+.navbar-default .navbar-nav > li > a {
+    color: #ffffff;
+}
+
+.panel-default {
+  background-color: #d3d3d3;
+}
