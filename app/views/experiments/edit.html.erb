@@ -1,6 +1,6 @@
 <h1>Editing Experiment</h1>
 
-<%= render 'form', experiment: @experiment %>
+<%= render 'form' %>
 
-<%= link_to 'Show', @experiment %> |
-<%= link_to 'Back', experiments_path %>
+<%= link_to 'Show', project_phase_experiment_path(@project.id, @phase.id, @experiment) %> |
+<%= link_to 'Back', project_phase_experiments_path(@project.id, @phase.id) %>

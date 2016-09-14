@@ -1,6 +1,6 @@
 <h1>Editing Sprint</h1>
 
-<%= render 'form', sprint: @sprint %>
+<%= render 'form' %>
 
-<%= link_to 'Show', @sprint %> |
-<%= link_to 'Back', sprints_path %>
+<%= link_to 'Show', project_phase_sprint_path(@project.id, @phase.id, @sprint) %> |
+<%= link_to 'List', project_phase_sprints_path(@project.id, @phase.id) %>

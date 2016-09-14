@@ -1,11 +1,12 @@
 class TeamsController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_project, only: [:index, :show, :new, :edit, :create, :update, :destroy]
   before_action :set_team, only: [:show, :edit, :update, :destroy]
 
   # GET /teams
   # GET /teams.json
   def index
-    @teams = Team.all
+    @teams = Team.where(project_id: params[:project_id])
   end
 
   # GET /teams/1
@@ -29,7 +30,7 @@ class TeamsController < ApplicationController
 
     respond_to do |format|
       if @team.save
-        format.html { redirect_to @team, notice: 'Team was successfully created.' }
+        format.html { redirect_to project_team_path(@project.id, @team), notice: 'Team was successfully created.' }
         format.json { render :show, status: :created, location: @team }
       else
         format.html { render :new }
@@ -43,7 +44,7 @@ class TeamsController < ApplicationController
   def update
     respond_to do |format|
       if @team.update(team_params)
-        format.html { redirect_to @team, notice: 'Team was successfully updated.' }
+        format.html { redirect_to project_team_path(@project.id, @team), notice: 'Team was successfully updated.' }
         format.json { render :show, status: :ok, location: @team }
       else
         format.html { render :edit }
@@ -57,19 +58,22 @@ class TeamsController < ApplicationController
   def destroy
     @team.destroy
     respond_to do |format|
-      format.html { redirect_to teams_url, notice: 'Team was successfully destroyed.' }
+      format.html { redirect_to project_teams_path(@project.id), notice: 'Team was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_project
+      @project = Project.find(params[:project_id])
+    end
     def set_team
       @team = Team.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def team_params
-      params.require(:team).permit(:name, :description)
+      params.require(:team).permit(:project_id, :name, :description)
     end
 end

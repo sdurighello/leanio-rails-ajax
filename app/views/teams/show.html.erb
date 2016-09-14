@@ -10,5 +10,5 @@
   <%= @team.description %>
 </p>
 
-<%= link_to 'Edit', edit_team_path(@team) %> |
-<%= link_to 'Back', teams_path %>
+<%= link_to 'Edit', edit_project_team_path(@team.project, @team) %> |
+<%= link_to 'List', project_teams_path(@team.project) %>

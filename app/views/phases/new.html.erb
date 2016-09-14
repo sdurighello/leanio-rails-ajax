@@ -1,5 +1,56 @@
 <h1>New Phase</h1>
 
-<%= render 'form', phase: @phase %>
+<%= form_for([@project, @phase]) do |f| %>
+  <% if phase.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(phase.errors.count, "error") %> prohibited this phase from being saved:</h2>
 
-<%= link_to 'Back', phases_path %>
+      <ul>
+      <% phase.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :start_date %>
+    <%= f.date_select :start_date %>
+  </div>
+
+  <div class="field">
+    <%= f.label :end_date %>
+    <%= f.date_select :end_date %>
+  </div>
+
+  <div class="field">
+    <%= f.label :sequence %>
+    <%= f.number_field :sequence %>
+  </div>
+
+  <div class="field">
+    <%= f.label :number_of_sprints %>
+    <%= f.number_field :number_of_sprints %>
+  </div>
+
+  <div class="field">
+    <%= f.label :sprint_length %>
+    <%= f.number_field :sprint_length %>
+  </div>
+
+  <div class="field">
+    <%= f.label :completed %>
+    <%= f.check_box :completed %>
+  </div>
+
+  <%= f.hidden_field :completed, :value => FALSE %>
+  <%= f.hidden_field :project_id, value: @project.id %>
+  <%= f.hidden_field :sequence, value: @phase.sequence %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+
+<%= link_to 'List', project_phases_path(@project.id) %>

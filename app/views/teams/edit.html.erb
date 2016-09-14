@@ -1,6 +1,6 @@
-<h1>Editing Team</h1>
+<h1>Editing Team: <%= @team.name %></h1>
 
-<%= render 'form', team: @team %>
+<%= render 'form' %>
 
-<%= link_to 'Show', @team %> |
-<%= link_to 'Back', teams_path %>
+<%= link_to 'Show', project_team_path(@project.id, @team) %> |
+<%= link_to 'List', project_teams_path(@project.id) %>

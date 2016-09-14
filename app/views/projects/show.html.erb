@@ -15,5 +15,32 @@
   <%= @project.active %>
 </p>
 
+<div class="phase_overview">
+  <table class="phase_table">
+    <tr class="top_row">
+      <th>Current</th>
+      <th>Phase</th>
+      <th>Start date</th>
+      <th>End date</th>
+    </tr>
+    <% @project.phases.order(:sequence).each do |phase| %>
+      <tr>
+        <th>
+        <% if @project.current_stage_id == phase.id %>
+          [x]
+        <% else %>
+          [ ]
+        <% end %>
+        </th>
+        <th><%= link_to phase.name, project_phase_path(@project.id, phase) %></th>
+        <th><%= phase.start_date.strftime("%d %B %Y") %></th>
+        <th><%= phase.end_date.strftime("%d %B %Y") %></th>
+      </tr>
+    <% end %>
+  </table>
+  <%= link_to 'New phase', new_project_phase_path(@project.id), :class => 'btn btn-large btn-success' %>
+</div>
+
 <%= link_to 'Edit', edit_project_path(@project) %> |
-<%= link_to 'Back', projects_path %>
+<%= link_to 'Destroy', @project, method: :delete, data: { confirm: 'Are you sure?' } %> |
+<%= link_to 'List', projects_path %>

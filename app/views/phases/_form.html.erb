@@ -1,4 +1,7 @@
-<%= form_for(phase) do |f| %>
+
+<h3>Project: <em><%= @project.name %></em> - Phase: <em><%= @phase.name %></em></h3>
+
+<%= form_for([@project, @phase]) do |f| %>
   <% if phase.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(phase.errors.count, "error") %> prohibited this phase from being saved:</h2>
@@ -40,6 +43,10 @@
     <%= f.label :completed %>
     <%= f.check_box :completed %>
   </div>
+
+  <%= f.hidden_field :completed, value: @phase.completed %>
+  <%= f.hidden_field :project_id, value: @project.id %>
+  <%= f.hidden_field :sequence, value: @phase.sequence %>
 
   <div class="actions">
     <%= f.submit %>

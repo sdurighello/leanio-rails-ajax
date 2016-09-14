@@ -1,31 +1,58 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Projects</h1>
+<h3>Active Projects</h3>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Active</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
+<div class="container block">
     <% @projects.each do |project| %>
-      <tr>
-        <td><%= project.name %></td>
-        <td><%= project.description %></td>
-        <td><%= project.active %></td>
-        <td><%= link_to 'Show', project %></td>
-        <td><%= link_to 'Edit', edit_project_path(project) %></td>
-        <td><%= link_to 'Destroy', project, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
+        <% if project.active == true %>
+            <div class="col-md-3 col-sm-6">
+                <%= link_to project do %>
+                    <div class="panel panel-default activeblock">
+                        <div class="panel-body" style="height: 80px">
+                          <td><%= project.name %></td><br>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+        <% end %>
     <% end %>
-  </tbody>
-</table>
+    <div class="col-md-3 col-sm-6 text-center">
+      <% if can? :manage, Project %>
+        <%= link_to new_project_path do %>
+          <div class="panel panel-default">
+              <div class="panel-body" style="height: 80px">
+                  <td>Create a new project..</td>
+              </div>
+          </div>
+        <% end %>
+      <% else %>
+          <%= link_to user_session_path do %>
+            <div class="panel panel-default">
+                <div class="panel-body" style="height: 80px">
+                    <td>Please login to create new project</td>
+                </div>
+            </div>
+          <%end%>
+      <%end%>
+    </div>
+</div>
 
 <br>
 
-<%= link_to 'New Project', new_project_path %>
+<h3>Past Projects</h3>
+
+<div class="container block">
+    <% @projects.each do |project| %>
+        <% if project.active == false %>
+            <div class="col-md-3 col-sm-6">
+                <%= link_to project do %>
+                    <div class="panel panel-default">
+                        <div class="panel-body" style="height: 80px">
+                            <td><%= project.name %></td><br>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+        <% end %>
+    <% end %>
+</div>

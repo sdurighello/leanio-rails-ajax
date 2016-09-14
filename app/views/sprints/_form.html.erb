@@ -1,4 +1,7 @@
-<%= form_for(sprint) do |f| %>
+
+<p><b>Project:</b> <em><%= @project.name %></em> - <b>Phase:</b> <em><%= @phase.name %></em></p>
+
+<%= form_for([@project, @phase, @sprint]) do |f| %>
   <% if sprint.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(sprint.errors.count, "error") %> prohibited this sprint from being saved:</h2>
@@ -65,6 +68,8 @@
     <%= f.label :impediments %>
     <%= f.text_area :impediments %>
   </div>
+
+  <%= f.hidden_field :phase_id, value: @phase.id %>
 
   <div class="actions">
     <%= f.submit %>

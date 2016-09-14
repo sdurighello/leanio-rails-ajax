@@ -1,4 +1,7 @@
-<%= form_for(experiment) do |f| %>
+
+<p><b>Project:</b> <em><%= @project.name %></em> - <b>Phase:</b> <em><%= @phase.name %></em></p>
+
+<%= form_for([@project, @phase, @experiment]) do |f| %>
   <% if experiment.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(experiment.errors.count, "error") %> prohibited this experiment from being saved:</h2>
@@ -10,6 +13,8 @@
       </ul>
     </div>
   <% end %>
+
+  <%= f.hidden_field :phase_id, value: @phase.id %>
 
   <div class="field">
     <%= f.label :name %>

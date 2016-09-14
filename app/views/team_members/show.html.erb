@@ -5,5 +5,5 @@
   <%= @team_member.role %>
 </p>
 
-<%= link_to 'Edit', edit_team_member_path(@team_member) %> |
-<%= link_to 'Back', team_members_path %>
+<%= link_to 'Edit', edit_project_team_member_path(@team_member.project, @team_member) %> |
+<%= link_to 'List', project_team_members_path(@team_member.project) %>

@@ -21,10 +21,16 @@
     <%= f.text_area :description %>
   </div>
 
-  <div class="field">
-    <%= f.label :active %>
-    <%= f.check_box :active %>
-  </div>
+  <%= f.hidden_field :active, :value => TRUE %>
+
+  <% if project.new_record? %>
+    <%= f.fields_for :phases do |m| %>
+     <div class="field form-group">
+       <%= m.label 'Current phase' %><br>
+       <%= m.select :sequence, Project.get_list_of_phases %>
+     </div>
+    <% end %>
+  <% end %>
 
   <div class="actions">
     <%= f.submit %>

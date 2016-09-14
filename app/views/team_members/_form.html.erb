@@ -1,10 +1,13 @@
-<%= form_for(team_member) do |f| %>
-  <% if team_member.errors.any? %>
+
+<h3>Project: <em><%= @project.name %></em></h3>
+
+<%= form_for([@project, @team_member]) do |f| %>
+  <% if @team_member.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(team_member.errors.count, "error") %> prohibited this team_member from being saved:</h2>
+      <h2><%= pluralize(@team_member.errors.count, "error") %> prohibited this team_member from being saved:</h2>
 
       <ul>
-      <% team_member.errors.full_messages.each do |message| %>
+      <% @team_member.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -15,6 +18,8 @@
     <%= f.label :role %>
     <%= f.text_field :role %>
   </div>
+
+  <%= f.hidden_field :project_id, value: @project.id %>
 
   <div class="actions">
     <%= f.submit %>
