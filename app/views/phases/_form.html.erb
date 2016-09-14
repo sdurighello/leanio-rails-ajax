@@ -1,5 +1,5 @@
 
-<h3>Project: <em><%= @project.name %></em> - Phase: <em><%= @phase.name %></em></h3>
+<h3>Project: <em><%= @project.name %></em> - Phase <%= @phase.sequence + 1 %>: <em><%= @phase.name %></em></h3>
 
 <%= form_for([@project, @phase]) do |f| %>
   <% if @phase.errors.any? %>
@@ -20,16 +20,6 @@
   </div>
 
   <div class="field">
-    <%= f.label :end_date %>
-    <%= f.date_select :end_date %>
-  </div>
-
-  <div class="field">
-    <%= f.label :sequence %>
-    <%= f.number_field :sequence %>
-  </div>
-
-  <div class="field">
     <%= f.label :number_of_sprints %>
     <%= f.number_field :number_of_sprints %>
   </div>
@@ -41,7 +31,7 @@
 
   <% if @phase.new_record? %>
 
-    <%= f.hidden_field :completed, :value => FALSE %>
+    <%= f.hidden_field :completed, value: false %>
     <%= f.hidden_field :project_id, value: @project.id %>
     <%= f.hidden_field :sequence, value: @phase.sequence %>
 
@@ -51,7 +41,7 @@
       <%= f.label :completed %>
       <%= f.check_box :completed %>
     </div>
-
+    <%= f.hidden_field :end_date, value: @phase.end_date %>
     <%= f.hidden_field :project_id, value: @project.id %>
     <%= f.hidden_field :sequence, value: @phase.sequence %>
 

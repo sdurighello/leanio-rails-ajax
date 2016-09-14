@@ -26,7 +26,7 @@
     <%= f.hidden_field :active, value: true %>
 
     <%= f.fields_for :phases do |m| %>
-       <div class="field form-group">
+       <div class="field">
          <%= m.label 'Current phase' %><br>
          <%= m.select :sequence, Project.get_list_of_phases %>
        </div>
