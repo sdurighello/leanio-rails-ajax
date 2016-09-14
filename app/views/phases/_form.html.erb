@@ -2,12 +2,12 @@
 <h3>Project: <em><%= @project.name %></em> - Phase: <em><%= @phase.name %></em></h3>
 
 <%= form_for([@project, @phase]) do |f| %>
-  <% if phase.errors.any? %>
+  <% if @phase.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(phase.errors.count, "error") %> prohibited this phase from being saved:</h2>
+      <h2><%= pluralize(@phase.errors.count, "error") %> prohibited this @phase from being saved:</h2>
 
       <ul>
-      <% phase.errors.full_messages.each do |message| %>
+      <% @phase.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
@@ -39,14 +39,23 @@
     <%= f.number_field :sprint_length %>
   </div>
 
-  <div class="field">
-    <%= f.label :completed %>
-    <%= f.check_box :completed %>
-  </div>
+  <% if @phase.new_record? %>
 
-  <%= f.hidden_field :completed, value: @phase.completed %>
-  <%= f.hidden_field :project_id, value: @project.id %>
-  <%= f.hidden_field :sequence, value: @phase.sequence %>
+    <%= f.hidden_field :completed, :value => FALSE %>
+    <%= f.hidden_field :project_id, value: @project.id %>
+    <%= f.hidden_field :sequence, value: @phase.sequence %>
+
+  <% else %>
+
+    <div class="field">
+      <%= f.label :completed %>
+      <%= f.check_box :completed %>
+    </div>
+
+    <%= f.hidden_field :project_id, value: @project.id %>
+    <%= f.hidden_field :sequence, value: @phase.sequence %>
+
+  <% end %>
 
   <div class="actions">
     <%= f.submit %>

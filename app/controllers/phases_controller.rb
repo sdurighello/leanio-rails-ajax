@@ -17,7 +17,7 @@ class PhasesController < ApplicationController
   # GET /phases/new
   def new
     sequence = @project.phases.order(:sequence).last[:sequence]
-    if sequence == (Project::STAGES.length - 1)
+    if sequence == (Project::PHASES.length - 1)
       redirect_to project_phases_path(@project.id), notice: 'New phase cannot be created'
     else
       @phase = Phase.new(sequence: sequence + 1)

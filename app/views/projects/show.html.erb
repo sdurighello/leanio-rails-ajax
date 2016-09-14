@@ -26,15 +26,15 @@
     <% @project.phases.order(:sequence).each do |phase| %>
       <tr>
         <th>
-        <% if @project.current_stage_id == phase.id %>
+        <% if @project.current_phase_id == phase.id %>
           [x]
         <% else %>
           [ ]
         <% end %>
         </th>
         <th><%= link_to phase.name, project_phase_path(@project.id, phase) %></th>
-        <th><%= phase.start_date.strftime("%d %B %Y") %></th>
-        <th><%= phase.end_date.strftime("%d %B %Y") %></th>
+        <th><%= phase.start_date.present? ? phase.start_date.strftime("%d %B %Y") : '-' %></th>
+        <th><%= phase.end_date.present? ? phase.end_date.strftime("%d %B %Y") : '-' %></th>
       </tr>
     <% end %>
   </table>

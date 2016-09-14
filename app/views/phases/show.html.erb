@@ -1,7 +1,7 @@
 <p id="notice"><%= notice %></p>
 
 <h1>
-  Phase: <%= @phase.name %>
+  Phase <%= @phase.sequence + 1 %>: <%= @phase.name %>
 </h1>
 
 <p>
@@ -15,11 +15,6 @@
 </p>
 
 <p>
-  <strong>Sequence:</strong>
-  <%= @phase.sequence %>
-</p>
-
-<p>
   <strong>Number of sprints:</strong>
   <%= @phase.number_of_sprints %>
 </p>
@@ -27,6 +22,11 @@
 <p>
   <strong>Sprint length:</strong>
   <%= @phase.sprint_length %>
+</p>
+
+<p>
+  <strong>Completed</strong>
+  <%= @phase.completed %>
 </p>
 
 <br>

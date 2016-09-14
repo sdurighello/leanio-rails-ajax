@@ -2,12 +2,12 @@
 <p><b>Project:</b> <em><%= @project.name %></em> - <b>Phase:</b> <em><%= @phase.name %></em></p>
 
 <%= form_for([@project, @phase, @sprint]) do |f| %>
-  <% if sprint.errors.any? %>
+  <% if @sprint.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(sprint.errors.count, "error") %> prohibited this sprint from being saved:</h2>
+      <h2><%= pluralize(@sprint.errors.count, "error") %> prohibited this sprint from being saved:</h2>
 
       <ul>
-      <% sprint.errors.full_messages.each do |message| %>
+      <% @sprint.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
       </ul>
