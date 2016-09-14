@@ -3,16 +3,29 @@ class Phase < ApplicationRecord
   has_many :experiments
   has_many :sprints
 
-  before_update :set_sprints
+  after_create :set_sprints_new
+  before_update :set_sprints_update
 
   def name
     Project::PHASES[self.sequence]
   end
 
-  def set_sprints
+
+  protected
+
+  def set_sprints_new
+    set_sprints(true)
+  end
+
+  def set_sprints_update
+    set_sprints(false)
+  end
+
+  def set_sprints(new_resource)
     ex_phase = Phase.find_by_id(self.id)
     inputs_present = (self.start_date.present? && (self.number_of_sprints.present? && self.number_of_sprints > 0) && (self.sprint_length.present? && self.sprint_length > 0))
     inputs_changed = ((self.start_date != ex_phase.start_date) || (self.number_of_sprints != ex_phase.number_of_sprints) || (self.sprint_length != ex_phase.sprint_length))
+    inputs_changed = true if new_resource
     if inputs_present && inputs_changed
       # Add calculated end date to the phase
       phase_duration = self.number_of_sprints * self.sprint_length
