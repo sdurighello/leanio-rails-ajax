@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160914081850) do
+ActiveRecord::Schema.define(version: 20160914093909) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -34,6 +34,8 @@ ActiveRecord::Schema.define(version: 20160914081850) do
     t.integer  "early_adopters_converted"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
+    t.integer  "phase_id"
+    t.index ["phase_id"], name: "index_experiments_on_phase_id", using: :btree
   end
 
   create_table "phases", force: :cascade do |t|
@@ -45,6 +47,8 @@ ActiveRecord::Schema.define(version: 20160914081850) do
     t.boolean  "completed"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.integer  "project_id"
+    t.index ["project_id"], name: "index_phases_on_project_id", using: :btree
   end
 
   create_table "projects", force: :cascade do |t|
@@ -69,12 +73,18 @@ ActiveRecord::Schema.define(version: 20160914081850) do
     t.text     "impediments"
     t.datetime "created_at",        null: false
     t.datetime "updated_at",        null: false
+    t.integer  "phase_id"
+    t.index ["phase_id"], name: "index_sprints_on_phase_id", using: :btree
   end
 
   create_table "team_members", force: :cascade do |t|
     t.string   "role"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer  "user_id"
+    t.integer  "team_id"
+    t.index ["team_id"], name: "index_team_members_on_team_id", using: :btree
+    t.index ["user_id"], name: "index_team_members_on_user_id", using: :btree
   end
 
   create_table "teams", force: :cascade do |t|
@@ -82,6 +92,8 @@ ActiveRecord::Schema.define(version: 20160914081850) do
     t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
+    t.integer  "project_id"
+    t.index ["project_id"], name: "index_teams_on_project_id", using: :btree
   end
 
   create_table "users", force: :cascade do |t|
@@ -101,4 +113,10 @@ ActiveRecord::Schema.define(version: 20160914081850) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "experiments", "phases"
+  add_foreign_key "phases", "projects"
+  add_foreign_key "sprints", "phases"
+  add_foreign_key "team_members", "teams"
+  add_foreign_key "team_members", "users"
+  add_foreign_key "teams", "projects"
 end
