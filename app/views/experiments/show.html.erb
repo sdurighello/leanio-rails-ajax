@@ -1,0 +1,84 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @experiment.name %>
+</p>
+
+<p>
+  <strong>Start date:</strong>
+  <%= @experiment.start_date %>
+</p>
+
+<p>
+  <strong>End date:</strong>
+  <%= @experiment.end_date %>
+</p>
+
+<p>
+  <strong>Completed:</strong>
+  <%= @experiment.completed %>
+</p>
+
+<p>
+  <strong>Domain:</strong>
+  <%= @experiment.domain %>
+</p>
+
+<p>
+  <strong>Assumption:</strong>
+  <%= @experiment.assumption %>
+</p>
+
+<p>
+  <strong>Method:</strong>
+  <%= @experiment.method %>
+</p>
+
+<p>
+  <strong>Observation:</strong>
+  <%= @experiment.observation %>
+</p>
+
+<p>
+  <strong>Measure:</strong>
+  <%= @experiment.measure %>
+</p>
+
+<p>
+  <strong>Learned:</strong>
+  <%= @experiment.learned %>
+</p>
+
+<p>
+  <strong>Success criteria:</strong>
+  <%= @experiment.success_criteria %>
+</p>
+
+<p>
+  <strong>Action:</strong>
+  <%= @experiment.action %>
+</p>
+
+<p>
+  <strong>Interviews planned:</strong>
+  <%= @experiment.interviews_planned %>
+</p>
+
+<p>
+  <strong>Interviews done:</strong>
+  <%= @experiment.interviews_done %>
+</p>
+
+<p>
+  <strong>Early adopters planned:</strong>
+  <%= @experiment.early_adopters_planned %>
+</p>
+
+<p>
+  <strong>Early adopters converted:</strong>
+  <%= @experiment.early_adopters_converted %>
+</p>
+
+<%= link_to 'Edit', edit_experiment_path(@experiment) %> |
+<%= link_to 'Back', experiments_path %>

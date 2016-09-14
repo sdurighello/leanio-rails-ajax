@@ -1,0 +1,2 @@
+json.extract! experiment, :id, :name, :start_date, :end_date, :completed, :domain, :assumption, :method, :observation, :measure, :learned, :success_criteria, :action, :interviews_planned, :interviews_done, :early_adopters_planned, :early_adopters_converted, :created_at, :updated_at
+json.url experiment_url(experiment, format: :json)

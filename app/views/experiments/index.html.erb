@@ -1,0 +1,57 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Experiments</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Start date</th>
+      <th>End date</th>
+      <th>Completed</th>
+      <th>Domain</th>
+      <th>Assumption</th>
+      <th>Method</th>
+      <th>Observation</th>
+      <th>Measure</th>
+      <th>Learned</th>
+      <th>Success criteria</th>
+      <th>Action</th>
+      <th>Interviews planned</th>
+      <th>Interviews done</th>
+      <th>Early adopters planned</th>
+      <th>Early adopters converted</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @experiments.each do |experiment| %>
+      <tr>
+        <td><%= experiment.name %></td>
+        <td><%= experiment.start_date %></td>
+        <td><%= experiment.end_date %></td>
+        <td><%= experiment.completed %></td>
+        <td><%= experiment.domain %></td>
+        <td><%= experiment.assumption %></td>
+        <td><%= experiment.method %></td>
+        <td><%= experiment.observation %></td>
+        <td><%= experiment.measure %></td>
+        <td><%= experiment.learned %></td>
+        <td><%= experiment.success_criteria %></td>
+        <td><%= experiment.action %></td>
+        <td><%= experiment.interviews_planned %></td>
+        <td><%= experiment.interviews_done %></td>
+        <td><%= experiment.early_adopters_planned %></td>
+        <td><%= experiment.early_adopters_converted %></td>
+        <td><%= link_to 'Show', experiment %></td>
+        <td><%= link_to 'Edit', edit_experiment_path(experiment) %></td>
+        <td><%= link_to 'Destroy', experiment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Experiment', new_experiment_path %>

@@ -1,0 +1,97 @@
+<%= form_for(experiment) do |f| %>
+  <% if experiment.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(experiment.errors.count, "error") %> prohibited this experiment from being saved:</h2>
+
+      <ul>
+      <% experiment.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :start_date %>
+    <%= f.date_select :start_date %>
+  </div>
+
+  <div class="field">
+    <%= f.label :end_date %>
+    <%= f.date_select :end_date %>
+  </div>
+
+  <div class="field">
+    <%= f.label :completed %>
+    <%= f.check_box :completed %>
+  </div>
+
+  <div class="field">
+    <%= f.label :domain %>
+    <%= f.text_field :domain %>
+  </div>
+
+  <div class="field">
+    <%= f.label :assumption %>
+    <%= f.text_area :assumption %>
+  </div>
+
+  <div class="field">
+    <%= f.label :method %>
+    <%= f.text_area :method %>
+  </div>
+
+  <div class="field">
+    <%= f.label :observation %>
+    <%= f.text_area :observation %>
+  </div>
+
+  <div class="field">
+    <%= f.label :measure %>
+    <%= f.text_area :measure %>
+  </div>
+
+  <div class="field">
+    <%= f.label :learned %>
+    <%= f.text_area :learned %>
+  </div>
+
+  <div class="field">
+    <%= f.label :success_criteria %>
+    <%= f.text_area :success_criteria %>
+  </div>
+
+  <div class="field">
+    <%= f.label :action %>
+    <%= f.text_area :action %>
+  </div>
+
+  <div class="field">
+    <%= f.label :interviews_planned %>
+    <%= f.number_field :interviews_planned %>
+  </div>
+
+  <div class="field">
+    <%= f.label :interviews_done %>
+    <%= f.number_field :interviews_done %>
+  </div>
+
+  <div class="field">
+    <%= f.label :early_adopters_planned %>
+    <%= f.number_field :early_adopters_planned %>
+  </div>
+
+  <div class="field">
+    <%= f.label :early_adopters_converted %>
+    <%= f.number_field :early_adopters_converted %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
