@@ -1,0 +1,72 @@
+<%= form_for(sprint) do |f| %>
+  <% if sprint.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(sprint.errors.count, "error") %> prohibited this sprint from being saved:</h2>
+
+      <ul>
+      <% sprint.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :start_date %>
+    <%= f.date_select :start_date %>
+  </div>
+
+  <div class="field">
+    <%= f.label :end_date %>
+    <%= f.date_select :end_date %>
+  </div>
+
+  <div class="field">
+    <%= f.label :completed %>
+    <%= f.check_box :completed %>
+  </div>
+
+  <div class="field">
+    <%= f.label :things_done %>
+    <%= f.text_area :things_done %>
+  </div>
+
+  <div class="field">
+    <%= f.label :things_learned %>
+    <%= f.text_area :things_learned %>
+  </div>
+
+  <div class="field">
+    <%= f.label :stories_estimated %>
+    <%= f.number_field :stories_estimated %>
+  </div>
+
+  <div class="field">
+    <%= f.label :stories_completed %>
+    <%= f.number_field :stories_completed %>
+  </div>
+
+  <div class="field">
+    <%= f.label :points_estimated %>
+    <%= f.number_field :points_estimated %>
+  </div>
+
+  <div class="field">
+    <%= f.label :points_completed %>
+    <%= f.number_field :points_completed %>
+  </div>
+
+  <div class="field">
+    <%= f.label :happiness %>
+    <%= f.number_field :happiness %>
+  </div>
+
+  <div class="field">
+    <%= f.label :impediments %>
+    <%= f.text_area :impediments %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -1,0 +1,59 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Start date:</strong>
+  <%= @sprint.start_date %>
+</p>
+
+<p>
+  <strong>End date:</strong>
+  <%= @sprint.end_date %>
+</p>
+
+<p>
+  <strong>Completed:</strong>
+  <%= @sprint.completed %>
+</p>
+
+<p>
+  <strong>Things done:</strong>
+  <%= @sprint.things_done %>
+</p>
+
+<p>
+  <strong>Things learned:</strong>
+  <%= @sprint.things_learned %>
+</p>
+
+<p>
+  <strong>Stories estimated:</strong>
+  <%= @sprint.stories_estimated %>
+</p>
+
+<p>
+  <strong>Stories completed:</strong>
+  <%= @sprint.stories_completed %>
+</p>
+
+<p>
+  <strong>Points estimated:</strong>
+  <%= @sprint.points_estimated %>
+</p>
+
+<p>
+  <strong>Points completed:</strong>
+  <%= @sprint.points_completed %>
+</p>
+
+<p>
+  <strong>Happiness:</strong>
+  <%= @sprint.happiness %>
+</p>
+
+<p>
+  <strong>Impediments:</strong>
+  <%= @sprint.impediments %>
+</p>
+
+<%= link_to 'Edit', edit_sprint_path(@sprint) %> |
+<%= link_to 'Back', sprints_path %>

@@ -1,0 +1,47 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Sprints</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Start date</th>
+      <th>End date</th>
+      <th>Completed</th>
+      <th>Things done</th>
+      <th>Things learned</th>
+      <th>Stories estimated</th>
+      <th>Stories completed</th>
+      <th>Points estimated</th>
+      <th>Points completed</th>
+      <th>Happiness</th>
+      <th>Impediments</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @sprints.each do |sprint| %>
+      <tr>
+        <td><%= sprint.start_date %></td>
+        <td><%= sprint.end_date %></td>
+        <td><%= sprint.completed %></td>
+        <td><%= sprint.things_done %></td>
+        <td><%= sprint.things_learned %></td>
+        <td><%= sprint.stories_estimated %></td>
+        <td><%= sprint.stories_completed %></td>
+        <td><%= sprint.points_estimated %></td>
+        <td><%= sprint.points_completed %></td>
+        <td><%= sprint.happiness %></td>
+        <td><%= sprint.impediments %></td>
+        <td><%= link_to 'Show', sprint %></td>
+        <td><%= link_to 'Edit', edit_sprint_path(sprint) %></td>
+        <td><%= link_to 'Destroy', sprint, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Sprint', new_sprint_path %>
