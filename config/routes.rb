@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'landing_pages/index'
+
   devise_for :users
   resources :team_members
   resources :teams
