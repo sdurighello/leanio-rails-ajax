@@ -17,7 +17,6 @@
         <% end %>
     <% end %>
     <div class="col-md-3 col-sm-6 text-center">
-      <% if can? :manage, Project %>
         <%= link_to new_project_path do %>
           <div class="panel panel-default">
               <div class="panel-body" style="height: 80px">
@@ -25,15 +24,6 @@
               </div>
           </div>
         <% end %>
-      <% else %>
-          <%= link_to user_session_path do %>
-            <div class="panel panel-default">
-                <div class="panel-body" style="height: 80px">
-                    <td>Please login to create new project</td>
-                </div>
-            </div>
-          <%end%>
-      <%end%>
     </div>
 </div>
 

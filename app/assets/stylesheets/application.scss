@@ -19,6 +19,8 @@
  @import "bootstrap-sprockets";
  @import "bootstrap";
 
+ .form-control::-webkit-input-placeholder { color: white; }
+
 // *** Main ***
 main {
    padding-top: 80px;
@@ -31,7 +33,7 @@ main {
 }
 
 .navbar-brand {
-  padding: 5px 5px;
+  
 }
 
 .navbar-form {
