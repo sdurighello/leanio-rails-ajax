@@ -21,15 +21,8 @@
     <%= f.text_field :name %>
   </div>
 
-  <div class="field">
-    <%= f.label :start_date %>
-    <%= f.date_select :start_date %>
-  </div>
-
-  <div class="field">
-    <%= f.label :end_date %>
-    <%= f.date_select :end_date %>
-  </div>
+  <%= f.hidden_field :start_date, value: @experiment.start_date %>
+  <%= f.hidden_field :end_date, value: @experiment.end_date %>
 
   <div class="field">
     <%= f.label :completed %>

@@ -1,6 +1,6 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_project, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:show, :edit, :update, :destroy, :set_current_phase]
 
   # GET /projects
   # GET /projects.json
@@ -36,6 +36,14 @@ class ProjectsController < ApplicationController
         format.html { render :new }
         format.json { render json: @project.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def set_current_phase
+    if Project.set_current_phase(params[:id], params[:phase_id])
+      redirect_to @project, notice: 'Project was successfully updated.'
+    else
+      redirect_to @project, notice: 'Could not update the current phase'
     end
   end
 

@@ -13,4 +13,6 @@ Rails.application.routes.draw do
     end
   end
 
+  post 'set_current_phase' => 'projects#set_current_phase'
+
 end

@@ -24,6 +24,12 @@ class Project < ApplicationRecord
     project_phases
   end
 
+  def self.set_current_phase(project_id, phase_id)
+    project = Project.find(project_id)
+    project.current_phase_id = phase_id
+    project.save
+  end
+
   def current_phase
     Phase.find(self.current_phase_id)
   end
