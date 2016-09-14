@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Start date:</strong>
+  <%= @phase.start_date %>
+</p>
+
+<p>
+  <strong>End date:</strong>
+  <%= @phase.end_date %>
+</p>
+
+<p>
+  <strong>Sequence:</strong>
+  <%= @phase.sequence %>
+</p>
+
+<p>
+  <strong>Number of sprints:</strong>
+  <%= @phase.number_of_sprints %>
+</p>
+
+<p>
+  <strong>Sprint length:</strong>
+  <%= @phase.sprint_length %>
+</p>
+
+<p>
+  <strong>Completed:</strong>
+  <%= @phase.completed %>
+</p>
+
+<%= link_to 'Edit', edit_phase_path(@phase) %> |
+<%= link_to 'Back', phases_path %>
