@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :teams
   resources :sprints
   resources :projects
   resources :phases
