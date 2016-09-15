@@ -1,5 +1,5 @@
 
-<h1>Step 1</h1>
+<h1>Step 1 - Experiment header</h1>
 
 <%= form_for([@project, @phase, @experiment], method: :put, url: wizard_path) do |f| %>
   <% if @experiment.errors.any? %>
@@ -19,6 +19,14 @@
   <div class="field">
     <%= f.label :name %>
     <%= f.text_field :name %>
+  </div>
+
+  <%= f.hidden_field :start_date, value: @experiment.start_date %>
+  <%= f.hidden_field :end_date, value: @experiment.end_date %>
+
+  <div class="field">
+    <%= f.label :completed %>
+    <%= f.check_box :completed %>
   </div>
 
   <div class="actions">
