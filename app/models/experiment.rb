@@ -2,6 +2,31 @@ class Experiment < ApplicationRecord
   belongs_to :phase
   has_and_belongs_to_many :sprints
 
+  validates :name, presence: true, if: -> { required_for_step?(:identity) }
+
+  # Multi step form wicked
+
+  # class attribute accessor
+  cattr_accessor :form_steps do
+    %w(identity characteristics instructions)
+  end
+
+  # instance level accessor to know in which step are we
+  attr_accessor :form_step
+
+  def required_for_step?(step)
+    # All fields are required if no form step is present
+    return true if form_step.nil?
+
+    # All fields from previous steps are required if the
+    # step parameter appears before or we are on the current step
+    return true if self.form_steps.index(step.to_s) { self.form_steps.index(form_step) }
+  end
+
+
+  # ----------------------
+
+
   def interviews_completion
     interviews_done = self.interviews_done ||= 0
     interviews_planned = self.interviews_planned ||= 0
@@ -17,5 +42,6 @@ class Experiment < ApplicationRecord
     ratio = number.to_f != 0 ? number.to_f / self.early_adopters_planned : 0
     {number: number, ratio: ratio}
   end
+
 
 end

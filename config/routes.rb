@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+
+
   root 'landing_pages#index'
 
   devise_for :users
@@ -9,7 +11,9 @@ Rails.application.routes.draw do
     resources :teams
     resources :team_members
     resources :phases do
-      resources :experiments
+      resources :experiments do
+        resources :steps, only: [:show, :update], controller: 'experiment/steps'
+      end
       resources :sprints
       post 'update_experiment_assignment' => 'sprints#update_experiment_assignment'
     end
