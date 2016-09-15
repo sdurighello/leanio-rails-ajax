@@ -14,10 +14,15 @@
     <%= render "layouts/header" %>
 
     <main class="container">
-      <ol class="breadcrumb">
-        <%= render_breadcrumbs :tag => :li, :separator => "" %>
-      </ol>
+
+      <% unless @disabled_breadcrumb %>
+        <ol class="breadcrumb">
+          <%= render_breadcrumbs(tag: :li, separator: "") %>
+        </ol>
+      <% end %>
+
       <%= yield %>
+
     </main>
 
   </body>

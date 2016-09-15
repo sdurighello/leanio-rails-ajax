@@ -1,2 +1,17 @@
-<h1>LandingPages#index</h1>
-<p>Find me in app/views/landing_pages/index.html.erb</p>
+
+<div class="jumbotron">
+  <h1>Running Lean</h1>
+  <p class="lead">Are you an entrepreneur about to create a new web application? If you want
+    to maximize your chances of building something customers want, this book
+    demonstrates ways to apply and test techniques for customer development,
+    Lean Startup, and bootstrapping. Learn how to identify and engage customers
+    throughout the development cycle so you can focus on building a product that
+    people will actually buy and use.
+  </p>
+  <% if user_signed_in? %>
+    <p><a class="btn btn-primary btn-lg" href="/projects" role="button" style="color: white">Go to projects</a></p>
+  <% else %>
+    <p><a class="btn btn-primary btn-lg" href="/users/sign_up" role="button" style="color: white">Sign up</a></p>
+  <% end %>
+
+</div>
