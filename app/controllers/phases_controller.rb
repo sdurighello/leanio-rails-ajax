@@ -28,7 +28,7 @@ class PhasesController < ApplicationController
       # -1 will make sure that the first one is created as 0
       @phase = Phase.new(sequence: sequence + 1)
     else
-      redirect_to project_phases_path(@project.id), notice: 'New phase cannot be created'
+      redirect_to project_path(@project.id), notice: 'New phase cannot be created'
     end
   end
 
