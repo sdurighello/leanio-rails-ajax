@@ -4,6 +4,8 @@ class ExperimentsController < ApplicationController
   before_action :set_phase, only: [:index, :show, :new, :edit, :create, :update, :destroy]
   before_action :set_experiment, only: [:show, :edit, :update, :destroy]
 
+  add_breadcrumb "Projects", :projects_path
+
   # GET /experiments
   # GET /experiments.json
   def index
@@ -13,15 +15,25 @@ class ExperimentsController < ApplicationController
   # GET /experiments/1
   # GET /experiments/1.json
   def show
+    add_breadcrumb "Project: " + @project.name, project_path(@project)
+    add_breadcrumb "Phase: " + @phase.name, project_phase_path(@project, @phase)
+    add_breadcrumb "Experiment " + @experiment.name
   end
 
   # GET /experiments/new
   def new
+    add_breadcrumb "Project: " + @project.name, project_path(@project)
+    add_breadcrumb "Phase: " + @phase.name, project_phase_path(@project, @phase)
+    add_breadcrumb "New Experiment"
+
     @experiment = Experiment.new
   end
 
   # GET /experiments/1/edit
   def edit
+    add_breadcrumb "Project: " + @project.name, project_path(@project)
+    add_breadcrumb "Phase: " + @phase.name, project_phase_path(@project, @phase)
+    add_breadcrumb "Experiment " + @experiment.name
   end
 
   # POST /experiments

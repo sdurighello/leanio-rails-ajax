@@ -2,6 +2,8 @@ class ProjectsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_project, only: [:show, :edit, :update, :destroy, :set_current_phase]
 
+  add_breadcrumb "Projects", :projects_path
+
   # GET /projects
   # GET /projects.json
   def index
@@ -11,16 +13,19 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show
+    add_breadcrumb "Project: " + @project.name, :project_path
   end
 
   # GET /projects/new
   def new
+    add_breadcrumb "New project"
     @project = Project.new
     @project.phases.build
   end
 
   # GET /projects/1/edit
   def edit
+    add_breadcrumb "Project: " + @project.name, :project_path
   end
 
   # POST /projects

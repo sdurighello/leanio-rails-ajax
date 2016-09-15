@@ -3,6 +3,8 @@ class PhasesController < ApplicationController
   before_action :set_project, only: [:index, :show, :new, :edit, :create, :update, :destroy]
   before_action :set_phase, only: [:show, :edit, :update, :destroy]
 
+  add_breadcrumb "Projects", :projects_path
+
   # GET /phases
   # GET /phases.json
   def index
@@ -12,10 +14,15 @@ class PhasesController < ApplicationController
   # GET /phases/1
   # GET /phases/1.json
   def show
+      add_breadcrumb "Project: " + @project.name, project_path(@project)
+      add_breadcrumb "Phase: " + @phase.name, :project_phase_path
   end
 
   # GET /phases/new
   def new
+    add_breadcrumb "Project: " + @project.name, project_path(@project)
+    add_breadcrumb "New Phase"
+
     sequence = @project.phases.order(:sequence).last[:sequence]
     if sequence == (Project::PHASES.length - 1)
       redirect_to project_phases_path(@project.id), notice: 'New phase cannot be created'
@@ -26,6 +33,8 @@ class PhasesController < ApplicationController
 
   # GET /phases/1/edit
   def edit
+    add_breadcrumb "Project: " + @project.name, project_path(@project)
+    add_breadcrumb "Phase: " + @phase.name, :project_phase_path
   end
 
   # POST /phases

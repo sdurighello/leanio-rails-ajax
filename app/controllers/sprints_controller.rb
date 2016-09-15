@@ -4,6 +4,8 @@ class SprintsController < ApplicationController
   before_action :set_phase, only: [:index, :show, :new, :edit, :create, :update, :destroy, :update_experiment_assignment]
   before_action :set_sprint, only: [:show, :edit, :update, :destroy, :update_experiment_assignment]
 
+  add_breadcrumb "Projects", :projects_path
+
   # GET /sprints
   # GET /sprints.json
   def index
@@ -13,6 +15,10 @@ class SprintsController < ApplicationController
   # GET /sprints/1
   # GET /sprints/1.json
   def show
+    @sprint_sequence = @phase.sprints.to_a.index(@sprint) + 1
+    add_breadcrumb "Project: " + @project.name, project_path(@project)
+    add_breadcrumb "Phase: " + @phase.name, project_phase_path(@project, @phase)
+    add_breadcrumb "Sprint " + @sprint_sequence.to_s
   end
 
   # GET /sprints/new
@@ -22,6 +28,10 @@ class SprintsController < ApplicationController
 
   # GET /sprints/1/edit
   def edit
+    @sprint_sequence = @phase.sprints.to_a.index(@sprint) + 1
+    add_breadcrumb "Project: " + @project.name, project_path(@project)
+    add_breadcrumb "Phase: " + @phase.name, project_phase_path(@project, @phase)
+    add_breadcrumb "Sprint " + @sprint_sequence.to_s
   end
 
   # POST /sprints
