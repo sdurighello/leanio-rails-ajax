@@ -15,15 +15,15 @@ class ExperimentsController < ApplicationController
   # GET /experiments/1
   # GET /experiments/1.json
   def show
-    add_breadcrumb "Project: " + @project.name, project_path(@project)
-    add_breadcrumb "Phase: " + @phase.name, project_phase_path(@project, @phase)
-    add_breadcrumb "Experiment " + @experiment.name
+    add_breadcrumb "Project: #{@project.name}", project_path(@project)
+    add_breadcrumb "Phase #{@phase.sequence}: #{@phase.name}", project_phase_path(@project, @phase)
+    add_breadcrumb "Experiment #{@experiment.name}"
   end
 
   # GET /experiments/new
   def new
-    add_breadcrumb "Project: " + @project.name, project_path(@project)
-    add_breadcrumb "Phase: " + @phase.name, project_phase_path(@project, @phase)
+    add_breadcrumb "Project: #{@project.name}", project_path(@project)
+    add_breadcrumb "Phase #{@phase.sequence}: #{@phase.name}", project_phase_path(@project, @phase)
     add_breadcrumb "New Experiment"
 
     @experiment = Experiment.new
@@ -31,9 +31,9 @@ class ExperimentsController < ApplicationController
 
   # GET /experiments/1/edit
   def edit
-    add_breadcrumb "Project: " + @project.name, project_path(@project)
-    add_breadcrumb "Phase: " + @phase.name, project_phase_path(@project, @phase)
-    add_breadcrumb "Experiment " + @experiment.name
+    add_breadcrumb "Project: #{@project.name}", project_path(@project)
+    add_breadcrumb "Phase #{@phase.sequence}: #{@phase.name}", project_phase_path(@project, @phase)
+    add_breadcrumb "Experiment #{@experiment.name}"
   end
 
   # POST /experiments
@@ -71,7 +71,7 @@ class ExperimentsController < ApplicationController
   def destroy
     @experiment.destroy
     respond_to do |format|
-      format.html { redirect_to project_phase_experiments_path(@project.id, @phase.id), notice: 'Experiment was successfully destroyed.' }
+      format.html { redirect_to project_phase_path(@project.id, @phase.id), notice: 'Experiment was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

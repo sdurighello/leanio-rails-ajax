@@ -14,27 +14,28 @@ class PhasesController < ApplicationController
   # GET /phases/1
   # GET /phases/1.json
   def show
-      add_breadcrumb "Project: " + @project.name, project_path(@project)
-      add_breadcrumb "Phase: " + @phase.name, :project_phase_path
+    add_breadcrumb "Project: #{@project.name}", project_path(@project)
+    add_breadcrumb "Phase #{@phase.sequence}: #{@phase.name}", project_phase_path(@project, @phase)
   end
 
   # GET /phases/new
   def new
-    add_breadcrumb "Project: " + @project.name, project_path(@project)
+    add_breadcrumb "Project: #{@project.name}", project_path(@project)
     add_breadcrumb "New Phase"
 
-    sequence = @project.phases.order(:sequence).last[:sequence]
-    if sequence == (Project::PHASES.length - 1)
-      redirect_to project_phases_path(@project.id), notice: 'New phase cannot be created'
-    else
+    sequence = @project.phases.empty? ? -1 : @project.phases.order(:sequence).last[:sequence]
+    if sequence < (Project::PHASES.length - 1)
+      # -1 will make sure that the first one is created as 0
       @phase = Phase.new(sequence: sequence + 1)
+    else
+      redirect_to project_phases_path(@project.id), notice: 'New phase cannot be created'
     end
   end
 
   # GET /phases/1/edit
   def edit
-    add_breadcrumb "Project: " + @project.name, project_path(@project)
-    add_breadcrumb "Phase: " + @phase.name, :project_phase_path
+    add_breadcrumb "Project: #{@project.name}", project_path(@project)
+    add_breadcrumb "Phase #{@phase.sequence}: #{@phase.name}", project_phase_path(@project, @phase)
   end
 
   # POST /phases
@@ -72,7 +73,7 @@ class PhasesController < ApplicationController
   def destroy
     @phase.destroy
     respond_to do |format|
-      format.html { redirect_to project_phases_path(@project.id), notice: 'Phase was successfully destroyed.' }
+      format.html { redirect_to project_path(@project.id), notice: 'Phase was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

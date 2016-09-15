@@ -16,9 +16,9 @@ class SprintsController < ApplicationController
   # GET /sprints/1.json
   def show
     @sprint_sequence = @phase.sprints.to_a.index(@sprint) + 1
-    add_breadcrumb "Project: " + @project.name, project_path(@project)
-    add_breadcrumb "Phase: " + @phase.name, project_phase_path(@project, @phase)
-    add_breadcrumb "Sprint " + @sprint_sequence.to_s
+    add_breadcrumb "Project: #{@project.name}", project_path(@project)
+    add_breadcrumb "Phase #{@phase.sequence}: #{@phase.name}", project_phase_path(@project, @phase)
+    add_breadcrumb "Sprint #{@sprint_sequence}"
   end
 
   # GET /sprints/new
@@ -29,9 +29,9 @@ class SprintsController < ApplicationController
   # GET /sprints/1/edit
   def edit
     @sprint_sequence = @phase.sprints.to_a.index(@sprint) + 1
-    add_breadcrumb "Project: " + @project.name, project_path(@project)
-    add_breadcrumb "Phase: " + @phase.name, project_phase_path(@project, @phase)
-    add_breadcrumb "Sprint " + @sprint_sequence.to_s
+    add_breadcrumb "Project: #{@project.name}", project_path(@project)
+    add_breadcrumb "Phase #{@phase.sequence}: #{@phase.name}", project_phase_path(@project, @phase)
+    add_breadcrumb "Sprint #{@sprint_sequence}"
   end
 
   # POST /sprints
@@ -77,7 +77,7 @@ class SprintsController < ApplicationController
   def destroy
     @sprint.destroy
     respond_to do |format|
-      format.html { redirect_to project_phase_sprint_path(@project.id, @phase.id), notice: 'Sprint was successfully destroyed.' }
+      format.html { redirect_to project_phase_path(@project.id, @phase.id), notice: 'Sprint was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

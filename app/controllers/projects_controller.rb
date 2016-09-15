@@ -13,7 +13,7 @@ class ProjectsController < ApplicationController
   # GET /projects/1
   # GET /projects/1.json
   def show
-    add_breadcrumb "Project: " + @project.name, :project_path
+    add_breadcrumb "Project: #{@project.name}", project_path(@project)
   end
 
   # GET /projects/new
@@ -25,7 +25,7 @@ class ProjectsController < ApplicationController
 
   # GET /projects/1/edit
   def edit
-    add_breadcrumb "Project: " + @project.name, :project_path
+    add_breadcrumb "Project: #{@project.name}", project_path(@project)
   end
 
   # POST /projects
