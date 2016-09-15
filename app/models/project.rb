@@ -1,7 +1,7 @@
 class Project < ApplicationRecord
 
-  has_many :phases, inverse_of: :project
-  has_many :teams
+  has_many :phases, inverse_of: :project, dependent: :destroy
+  has_many :teams, dependent: :destroy
 
   accepts_nested_attributes_for :phases, allow_destroy: true, reject_if: :all_blank
 

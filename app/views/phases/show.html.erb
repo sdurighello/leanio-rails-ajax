@@ -30,7 +30,8 @@
 </p>
 
 <br>
-<%= link_to 'Edit', edit_project_phase_path(@phase.project, @phase) %>
+<%= link_to 'Edit', edit_project_phase_path(@phase.project, @phase) %> |
+<%= link_to 'Destroy', project_phase_path(@project.id, @phase), method: :delete, data: { confirm: 'Are you sure?' } %>
 
 <hr>
 

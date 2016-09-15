@@ -22,7 +22,6 @@
       <th>Phase</th>
       <th>Start date</th>
       <th>End date</th>
-      <th> </th>
     </tr>
     <% @project.phases.order(:sequence).each do |phase| %>
       <tr>
@@ -36,9 +35,9 @@
         <th><%= link_to phase.name, project_phase_path(@project.id, phase) %></th>
         <th><%= phase.start_date.present? ? phase.start_date.strftime("%d %B %Y") : '-' %></th>
         <th><%= phase.end_date.present? ? phase.end_date.strftime("%d %B %Y") : '-' %></th>
-        <td>
+        <th>
           <%= button_to(name = "Set to current", options = {action: "set_current_phase"} , html_options = {method: "post", params:{phase_id: phase.id, id: @project.id}, disabled: @project.current_phase_id == phase.id, class: 'btn btn-info btn-xs'}) %>
-        </td>
+        </th>
       </tr>
     <% end %>
   </table>

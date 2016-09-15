@@ -81,4 +81,5 @@
 </p>
 
 <%= link_to 'Edit', edit_project_phase_experiment_path(@project.id, @phase.id, @experiment) %> |
+<%= link_to 'Destroy', project_phase_experiment_path(@project.id, @phase.id, @experiment), method: :delete, data: { confirm: 'Are you sure?' } %> |
 <%= link_to 'Back to phase', project_phase_path(@project.id, @phase.id) %>

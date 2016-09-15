@@ -1,7 +1,7 @@
 class Phase < ApplicationRecord
   belongs_to :project
-  has_many :experiments
-  has_many :sprints
+  has_many :experiments, dependent: :destroy
+  has_many :sprints, dependent: :destroy
 
   after_create :set_sprints_new
   before_update :set_sprints_update
