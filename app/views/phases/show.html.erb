@@ -45,7 +45,7 @@
       <th>Interviews completion</th>
       <th>Early adopters conversion</th>
     </tr>
-    <% @phase.experiments.order(:start_date).each do |experiment| %>
+    <% @phase.experiments.each do |experiment| %>
       <tr>
         <th>
         <% if experiment.completed %>

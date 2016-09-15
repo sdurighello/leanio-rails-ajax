@@ -43,7 +43,7 @@ class ProjectsController < ApplicationController
     if Project.set_current_phase(params[:id], params[:phase_id])
       redirect_to @project, notice: 'Project was successfully updated.'
     else
-      redirect_to @project, notice: 'Could not update the current phase'
+      redirect_to @project, notice: 'Could not set the current phase'
     end
   end
 

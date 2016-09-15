@@ -1,5 +1,6 @@
 class Experiment < ApplicationRecord
   belongs_to :phase
+  has_and_belongs_to_many :sprints
 
   def interviews_completion
     interviews_done = self.interviews_done ||= 0
@@ -16,6 +17,5 @@ class Experiment < ApplicationRecord
     ratio = number.to_f != 0 ? number.to_f / self.early_adopters_planned : 0
     {number: number, ratio: ratio}
   end
-
 
 end

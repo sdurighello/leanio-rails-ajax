@@ -33,7 +33,7 @@ main {
 }
 
 .navbar-brand {
-  
+
 }
 
 .navbar-form {
@@ -78,4 +78,70 @@ main {
 
 .panel-default {
   background-color: #d3d3d3;
+}
+
+// Other stuff
+
+
+.activeblock {
+  background-color: #026aa7;
+}
+
+.block a {
+  color: #000;
+  font-weight: bold;
+}
+
+.activeblock a {
+  color: #fff;
+}
+
+.completed {
+  background-color: #DFF0D8!important;
+}
+
+.completed a {
+  color: #3C763D;
+}
+
+progress {
+  min-width: 50px;
+  max-width: 250px;
+}
+
+.boxes {
+  color: #000;
+  padding-left: 1em;
+}
+
+input[type=radio] {
+  margin-left: 10px;
+}
+
+.ui-progressbar.beginning .ui-progressbar-value { background: #d9534f; }
+.ui-progressbar.middle .ui-progressbar-value { background: #f0ad4e; }
+.ui-progressbar.end .ui-progressbar-value { background: #5cb85c; }
+
+.progress-label {
+  display:none;
+}
+
+.progress_bar {
+  width: 150px;
+  max-width: 95%;
+  max-height: 10px;
+  margin-left: auto;
+}
+
+.happiness {
+  display: block;
+  margin-top: 32px;;
+  font-size: 30px;
+}
+
+.projectname {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px;
 }

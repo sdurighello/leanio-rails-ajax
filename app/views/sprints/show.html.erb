@@ -57,5 +57,54 @@
   <%= @sprint.impediments %>
 </p>
 
+<hr>
+
+<div class="phase_overview">
+  <table class="phase_table">
+    <tr class="top_row">
+      <th>Added to sprint</th>
+      <th>Completed</th>
+      <th>Experiment</th>
+      <th>Start date</th>
+      <th>End date</th>
+      <th>Interviews completion</th>
+      <th>Early adopters conversion</th>
+    </tr>
+    <% @sprint.phase.experiments.each do |experiment| %>
+      <% already_added = @sprint.experiments.include? experiment %>
+      <tr>
+        <th>
+        <% if already_added %>
+          [x]
+        <% else %>
+          [ ]
+        <% end %>
+        <th>
+        <% if experiment.completed %>
+          [x]
+        <% else %>
+          [ ]
+        <% end %>
+        </th>
+        <th><%= link_to experiment.name, project_phase_experiment_path(@project.id, @phase.id, experiment) %></th>
+        <th><%= experiment.start_date.present? ? experiment.start_date.strftime("%d %B %Y") : '-' %></th>
+        <th><%= experiment.end_date.present? ? experiment.end_date.strftime("%d %B %Y") : '-' %></th>
+        <th><%= experiment.interviews_completion[:number] %>
+          (<%= number_to_percentage(experiment.interviews_completion[:ratio] * 100, options = {precision: 2}) %>)
+        </th>
+        <th><%= experiment.early_adopters_conversion[:number] %>
+          (<%= number_to_percentage(experiment.early_adopters_conversion[:ratio] * 100, options = {precision: 2}) %>)
+        </th>
+        <th>
+          <%= button_to(name = already_added ? "Remove" : "Add", options = {action: "update_experiment_assignment"} , html_options = {method: "post", params:{project_id: @project.id, phase_id: @phase_id, id: @sprint.id, experiment_id: experiment.id}, class: already_added ? 'btn btn-danger btn-xs' : 'btn btn-success btn-xs'}) %>
+        </th>
+      </tr>
+    <% end %>
+  </table>
+  <br>
+  <%= link_to('Create new experiment', new_project_phase_experiment_path(@project.id, @phase.id), :class => 'btn btn-large btn-success')  %>
+</div>
+
+
 <%= link_to 'Edit', edit_project_phase_sprint_path(@project.id, @phase.id, @sprint) %> |
 <%= link_to 'List', project_phase_sprints_path(@project.id, @phase.id) %>

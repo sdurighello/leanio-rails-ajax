@@ -1,5 +1,6 @@
 class Sprint < ApplicationRecord
   belongs_to :phase
+  has_and_belongs_to_many :experiments
 
   def stories_completion
     stories_completed = self.stories_completed ||= 0
@@ -15,6 +16,12 @@ class Sprint < ApplicationRecord
     number = points_completed - points_estimated
     ratio = number.to_f != 0 ? number.to_f / self.points_estimated : 0
     {number: number, ratio: ratio}
+  end
+
+  def update_experiment_assignment(experiment_id)
+    experiment = Experiment.find(experiment_id)
+    self.experiments.include?(experiment) ? self.experiments.delete(experiment) : self.experiments << experiment
+    self.save
   end
 
 end

@@ -1,8 +1,8 @@
 class SprintsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_project, only: [:index, :show, :new, :edit, :create, :update, :destroy]
-  before_action :set_phase, only: [:index, :show, :new, :edit, :create, :update, :destroy]
-  before_action :set_sprint, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:index, :show, :new, :edit, :create, :update, :destroy, :update_experiment_assignment]
+  before_action :set_phase, only: [:index, :show, :new, :edit, :create, :update, :destroy, :update_experiment_assignment]
+  before_action :set_sprint, only: [:show, :edit, :update, :destroy, :update_experiment_assignment]
 
   # GET /sprints
   # GET /sprints.json
@@ -37,6 +37,14 @@ class SprintsController < ApplicationController
         format.html { render :new }
         format.json { render json: @sprint.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def update_experiment_assignment
+    if @sprint.update_experiment_assignment(params[:experiment_id])
+      redirect_to project_phase_sprint_path(@project.id, @phase.id, @sprint), notice: 'Experiment assignment was successfully updated.'
+    else
+      redirect_to project_phase_sprint_path(@project.id, @phase.id, @sprint), notice: 'Could not update the experiment assignment'
     end
   end
 

@@ -1,3 +1,16 @@
 // Place all the styles related to the Teams controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+
+table {
+  width: 80vw;
+}
+
+.border_top {
+  border-top:1pt solid black;
+  padding-top: 5vh;
+}
+
+.addmember {
+  display: inline-block;
+}
