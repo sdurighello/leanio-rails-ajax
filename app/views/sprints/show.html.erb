@@ -101,10 +101,8 @@
       </tr>
     <% end %>
   </table>
-  <br>
-  <%= link_to('Create new experiment', new_project_phase_experiment_path(@project.id, @phase.id), :class => 'btn btn-large btn-success')  %>
 </div>
 
 
 <%= link_to 'Edit', edit_project_phase_sprint_path(@project.id, @phase.id, @sprint) %> |
-<%= link_to 'List', project_phase_sprints_path(@project.id, @phase.id) %>
+<%= link_to 'Back to phase', project_phase_path(@project.id, @phase.id) %>

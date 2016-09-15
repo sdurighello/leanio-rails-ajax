@@ -3,4 +3,4 @@
 <%= render 'form' %>
 
 <%= link_to 'Show', project_phase_experiment_path(@project.id, @phase.id, @experiment) %> |
-<%= link_to 'Back', project_phase_experiments_path(@project.id, @phase.id) %>
+<%= link_to 'Back to phase', project_phase_path(@project.id, @phase.id) %>
