@@ -17,7 +17,7 @@ class SprintsController < ApplicationController
   def show
     @sprint_sequence = @phase.sprints.to_a.index(@sprint) + 1
     add_breadcrumb "Project: #{@project.name}", project_path(@project)
-    add_breadcrumb "Phase #{@phase.sequence}: #{@phase.name}", project_phase_path(@project, @phase)
+    add_breadcrumb "Phase #{@phase.sequence + 1}: #{@phase.name}", project_phase_path(@project, @phase)
     add_breadcrumb "Sprint #{@sprint_sequence}"
   end
 
@@ -30,7 +30,7 @@ class SprintsController < ApplicationController
   def edit
     @sprint_sequence = @phase.sprints.to_a.index(@sprint) + 1
     add_breadcrumb "Project: #{@project.name}", project_path(@project)
-    add_breadcrumb "Phase #{@phase.sequence}: #{@phase.name}", project_phase_path(@project, @phase)
+    add_breadcrumb "Phase #{@phase.sequence + 1}: #{@phase.name}", project_phase_path(@project, @phase)
     add_breadcrumb "Sprint #{@sprint_sequence}"
   end
 

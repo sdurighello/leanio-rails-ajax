@@ -16,14 +16,14 @@ class ExperimentsController < ApplicationController
   # GET /experiments/1.json
   def show
     add_breadcrumb "Project: #{@project.name}", project_path(@project)
-    add_breadcrumb "Phase #{@phase.sequence}: #{@phase.name}", project_phase_path(@project, @phase)
+    add_breadcrumb "Phase #{@phase.sequence + 1}: #{@phase.name}", project_phase_path(@project, @phase)
     add_breadcrumb "Experiment: #{@experiment.name}"
   end
 
   # GET /experiments/new
   def new
     add_breadcrumb "Project: #{@project.name}", project_path(@project)
-    add_breadcrumb "Phase #{@phase.sequence}: #{@phase.name}", project_phase_path(@project, @phase)
+    add_breadcrumb "Phase #{@phase.sequence + 1}: #{@phase.name}", project_phase_path(@project, @phase)
     add_breadcrumb "New Experiment"
     # @experiment = Experiment.new
 

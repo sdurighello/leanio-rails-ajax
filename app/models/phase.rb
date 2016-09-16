@@ -3,37 +3,29 @@ class Phase < ApplicationRecord
   has_many :experiments, dependent: :destroy
   has_many :sprints, dependent: :destroy
 
-  after_create :set_sprints_new
-  before_update :set_sprints_update
+  after_create :set_sprints
+  before_update :set_sprints
 
   def name
     Project::PHASES[self.sequence]
   end
 
-
   protected
 
-  def set_sprints_new
-    set_sprints(true)
-  end
+  def set_sprints
 
-  def set_sprints_update
-    set_sprints(false)
-  end
+    start_date_valid = self.start_date.present?
+    number_of_sprints_valid = self.number_of_sprints.present? && self.number_of_sprints > 0
+    sprint_length_valid = self.sprint_length.present? && self.sprint_length > 0
 
-  def set_sprints(new_resource)
-    ex_phase = Phase.find_by_id(self.id)
-    inputs_present = (self.start_date.present? && (self.number_of_sprints.present? && self.number_of_sprints > 0) && (self.sprint_length.present? && self.sprint_length > 0))
-    inputs_changed = ((self.start_date != ex_phase.start_date) || (self.number_of_sprints != ex_phase.number_of_sprints) || (self.sprint_length != ex_phase.sprint_length))
-    inputs_changed = true if new_resource
-    if inputs_present && inputs_changed
+    if start_date_valid && number_of_sprints_valid && sprint_length_valid
       # Add calculated end date to the phase
       phase_duration = self.number_of_sprints * self.sprint_length
       self.end_date = self.start_date + phase_duration.weeks - 1
       self.save!
       # Get an array of arrays of [start_day, end_day] for each sprint
       days = (Date.parse("#{self.start_date}")..Date.parse("#{self.end_date}")).to_a
-      weeks = days.each_slice(self.sprint_length * 7  ).to_a.map do |w|
+      weeks = days.each_slice(self.sprint_length * 7).to_a.map do |w|
         [w.first, w.last].map { |d| "#{d.year}-#{d.month}-#{d.day}" }
       end
       # Check existance of sprints
@@ -67,11 +59,9 @@ class Phase < ApplicationRecord
           end
         end
       end
-
     else
-      # do nothing
+      return nil
     end
-
   end
 
 end

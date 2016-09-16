@@ -1,54 +1,38 @@
 <h1>Step 2 - Experiment description</h1>
 
-<%= form_for([@project, @phase, @experiment], method: :put, url: wizard_path) do |f| %>
-  <% if @experiment.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@experiment.errors.count, "error") %> prohibited this experiment from being saved:</h2>
+<div class="row">
+  <div class="col-xs-6">
+    
+    <%= bootstrap_form_for([@project, @phase, @experiment], method: :put, url: wizard_path) do |f| %>
+      <% if @experiment.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@experiment.errors.count, "error") %> prohibited this experiment from being saved:</h2>
 
-      <ul>
-      <% @experiment.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
+          <ul>
+          <% @experiment.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
       <% end %>
-      </ul>
-    </div>
-  <% end %>
 
-  <div class="field">
-    <%= f.label :domain %>
-    <%= f.text_field :domain %>
-  </div>
+        <%= f.text_field :domain %>
 
-  <div class="field">
-    <%= f.label :assumption %>
-    <%= f.text_area :assumption %>
-  </div>
+        <%= f.text_area :assumption %>
 
-  <div class="field">
-    <%= f.label :method %>
-    <%= f.text_area :method %>
-  </div>
+        <%= f.text_area :method %>
 
-  <div class="field">
-    <%= f.label :action %>
-    <%= f.text_area :action %>
-  </div>
+        <%= f.text_area :action %>
 
-  <div class="field">
-    <%= f.label :observation %>
-    <%= f.text_area :observation %>
-  </div>
+        <%= f.text_area :observation %>
 
-  <div class="field">
-    <%= f.label :success_criteria %>
-    <%= f.text_area :success_criteria %>
-  </div>
+        <%= f.text_area :success_criteria %>
 
-  <div class="field">
-    <%= f.label :measure %>
-    <%= f.text_area :measure %>
-  </div>
+        <%= f.text_area :measure %>
 
-  <div class="actions">
-    <%= f.submit 'Next step' %>
+        <%= f.submit 'Next step' %>
+
+    <% end %>
+
   </div>
-<% end %>
+</div>

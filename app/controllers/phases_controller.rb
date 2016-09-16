@@ -15,7 +15,7 @@ class PhasesController < ApplicationController
   # GET /phases/1.json
   def show
     add_breadcrumb "Project: #{@project.name}", project_path(@project)
-    add_breadcrumb "Phase #{@phase.sequence}: #{@phase.name}", project_phase_path(@project, @phase)
+    add_breadcrumb "Phase #{@phase.sequence + 1}: #{@phase.name}", project_phase_path(@project, @phase)
   end
 
   # GET /phases/new
@@ -35,7 +35,7 @@ class PhasesController < ApplicationController
   # GET /phases/1/edit
   def edit
     add_breadcrumb "Project: #{@project.name}", project_path(@project)
-    add_breadcrumb "Phase #{@phase.sequence}: #{@phase.name}", project_phase_path(@project, @phase)
+    add_breadcrumb "Phase #{@phase.sequence + 1}: #{@phase.name}", project_phase_path(@project, @phase)
   end
 
   # POST /phases

@@ -65,4 +65,8 @@ gem "breadcrumbs_on_rails"
 
 gem 'wicked'
 
+# Forms
+
 gem 'simple_form'
+
+gem 'bootstrap_form'
