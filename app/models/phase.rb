@@ -22,7 +22,7 @@ class Phase < ApplicationRecord
       # Add calculated end date to the phase
       phase_duration = self.number_of_sprints * self.sprint_length
       self.end_date = self.start_date + phase_duration.weeks - 1
-      self.save!
+      # self.save!
       # Get an array of arrays of [start_day, end_day] for each sprint
       days = (Date.parse("#{self.start_date}")..Date.parse("#{self.end_date}")).to_a
       weeks = days.each_slice(self.sprint_length * 7).to_a.map do |w|
