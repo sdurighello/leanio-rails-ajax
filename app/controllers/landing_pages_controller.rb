@@ -1,6 +1,6 @@
 class LandingPagesController < ApplicationController
 
-  before_filter :disable_breadcrumb
+  before_action :disable_breadcrumb
 
   def index
 
