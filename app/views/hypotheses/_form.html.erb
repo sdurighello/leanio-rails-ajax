@@ -1,7 +1,7 @@
 
 <h3>Project: <em><%= @project.name %></em></h3>
 
-<%= form_for([@project, @hypothesis]) do |f| %>
+<%= bootstrap_form_for([@project, @hypothesis]) do |f| %>
   <% if @hypothesis.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@hypothesis.errors.count, "error") %> prohibited this hypothesis from being saved:</h2>

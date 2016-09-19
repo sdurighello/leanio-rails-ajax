@@ -4,8 +4,7 @@ class AreasController < ApplicationController
   before_action :set_canvas, only: [:index, :show, :new, :edit, :create, :update, :destroy]
   before_action :set_area, only: [:show, :edit, :update, :destroy]
 
-  add_breadcrumb "Project: #{@project.name}", project_path(@project)
-  add_breadcrumb "Canvas: #{@canvas.name}", project_canvas_path(@project, @canvas)
+  add_breadcrumb "Projects", :projects_path
 
   # GET /areas
   # GET /areas.json
@@ -19,6 +18,7 @@ class AreasController < ApplicationController
     add_breadcrumb "Project: #{@project.name}", project_path(@project)
     add_breadcrumb "Canvas: #{@canvas.name}", project_canvas_path(@project, @canvas)
     add_breadcrumb "Area: #{@area.name}", project_canvas_area_path(@project, @canvas, @area)
+    
   end
 
   # GET /areas/new
@@ -82,7 +82,7 @@ class AreasController < ApplicationController
       @project = Project.find(params[:project_id])
     end
     def set_canvas
-      @canvas = Canvas.find(params[:id])
+      @canvas = Canvas.find(params[:canvas_id])
     end
     def set_area
       @area = Area.find(params[:id])
@@ -90,6 +90,6 @@ class AreasController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def area_params
-      params.require(:area).permit(:project_id, :canvas_id, :name, :description, :area_identifier)
+      params.require(:area).permit(:canvas_id, {hypothesis_ids: []}, :name, :description, :area_identifier)
     end
 end
