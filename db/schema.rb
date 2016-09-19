@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160919140149) do
+ActiveRecord::Schema.define(version: 20160919140837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 20160919140149) do
     t.string   "area_identifier"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.integer  "canvas_id"
+    t.index ["canvas_id"], name: "index_areas_on_canvas_id", using: :btree
   end
 
   create_table "canvases", force: :cascade do |t|
@@ -153,6 +155,7 @@ ActiveRecord::Schema.define(version: 20160919140149) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "areas", "canvases", column: "canvas_id"
   add_foreign_key "experiments", "phases"
   add_foreign_key "phases", "projects"
   add_foreign_key "results", "experiments"
