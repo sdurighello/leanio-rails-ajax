@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160919150433) do
+ActiveRecord::Schema.define(version: 20160919184457) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,6 +73,8 @@ ActiveRecord::Schema.define(version: 20160919150433) do
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
     t.string   "area_identifier"
+    t.integer  "project_id"
+    t.index ["project_id"], name: "index_hypotheses_on_project_id", using: :btree
   end
 
   create_table "phases", force: :cascade do |t|
@@ -166,6 +168,7 @@ ActiveRecord::Schema.define(version: 20160919150433) do
   add_foreign_key "areas", "canvases"
   add_foreign_key "canvases", "projects"
   add_foreign_key "experiments", "phases"
+  add_foreign_key "hypotheses", "projects"
   add_foreign_key "phases", "projects"
   add_foreign_key "results", "experiments"
   add_foreign_key "results", "hypotheses"

@@ -2,6 +2,7 @@ class Project < ApplicationRecord
   has_many :canvases, dependent: :destroy
   has_many :phases, inverse_of: :project, dependent: :destroy
   has_many :teams, dependent: :destroy
+  has_many :hypotheses, dependent: :destroy, :nullify
 
   accepts_nested_attributes_for :phases, allow_destroy: true, reject_if: :all_blank
 
