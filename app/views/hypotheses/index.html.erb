@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Hypotheses</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @hypotheses.each do |hypothesis| %>
+      <tr>
+        <td><%= hypothesis.name %></td>
+        <td><%= hypothesis.description %></td>
+        <td><%= link_to 'Show', hypothesis %></td>
+        <td><%= link_to 'Edit', edit_hypothesis_path(hypothesis) %></td>
+        <td><%= link_to 'Destroy', hypothesis, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Hypothesis', new_hypothesis_path %>

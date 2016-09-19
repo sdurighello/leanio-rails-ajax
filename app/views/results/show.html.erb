@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Level:</strong>
+  <%= @result.level %>
+</p>
+
+<p>
+  <strong>Comment:</strong>
+  <%= @result.comment %>
+</p>
+
+<p>
+  <strong>Experiment:</strong>
+  <%= @result.experiment %>
+</p>
+
+<p>
+  <strong>Hypothesis:</strong>
+  <%= @result.hypothesis %>
+</p>
+
+<%= link_to 'Edit', edit_result_path(@result) %> |
+<%= link_to 'Back', results_path %>

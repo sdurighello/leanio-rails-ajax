@@ -10,10 +10,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160915051759) do
+ActiveRecord::Schema.define(version: 20160919140149) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "areas", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.string   "area_identifier"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+  end
+
+  create_table "canvases", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "experiments", force: :cascade do |t|
     t.string   "name"
@@ -43,6 +58,13 @@ ActiveRecord::Schema.define(version: 20160915051759) do
     t.integer "sprint_id",     null: false
   end
 
+  create_table "hypotheses", force: :cascade do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "phases", force: :cascade do |t|
     t.date     "start_date"
     t.date     "end_date"
@@ -63,6 +85,17 @@ ActiveRecord::Schema.define(version: 20160915051759) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.integer  "current_phase_id"
+  end
+
+  create_table "results", force: :cascade do |t|
+    t.integer  "level"
+    t.text     "comment"
+    t.integer  "experiment_id"
+    t.integer  "hypothesis_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["experiment_id"], name: "index_results_on_experiment_id", using: :btree
+    t.index ["hypothesis_id"], name: "index_results_on_hypothesis_id", using: :btree
   end
 
   create_table "sprints", force: :cascade do |t|
@@ -122,6 +155,8 @@ ActiveRecord::Schema.define(version: 20160915051759) do
 
   add_foreign_key "experiments", "phases"
   add_foreign_key "phases", "projects"
+  add_foreign_key "results", "experiments"
+  add_foreign_key "results", "hypotheses"
   add_foreign_key "sprints", "phases"
   add_foreign_key "team_members", "teams"
   add_foreign_key "team_members", "users"
