@@ -2,6 +2,8 @@ Rails.application.routes.draw do
 
 
 
+  resources :areas
+  resources :canvases
   root 'landing_pages#index'
 
   devise_for :users

@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Canvases</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @canvases.each do |canvase| %>
+      <tr>
+        <td><%= canvase.name %></td>
+        <td><%= canvase.description %></td>
+        <td><%= link_to 'Show', canvase %></td>
+        <td><%= link_to 'Edit', edit_canvase_path(canvase) %></td>
+        <td><%= link_to 'Destroy', canvase, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Canvase', new_canvase_path %>

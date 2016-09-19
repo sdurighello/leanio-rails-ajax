@@ -1,0 +1,1 @@
+json.partial! "canvases/canvase", canvase: @canvase

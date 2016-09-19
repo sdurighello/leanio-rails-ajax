@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @canvase.name %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @canvase.description %>
+</p>
+
+<%= link_to 'Edit', edit_canvase_path(@canvase) %> |
+<%= link_to 'Back', canvases_path %>

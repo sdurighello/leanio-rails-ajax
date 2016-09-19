@@ -1,0 +1,1 @@
+json.array! @canvases, partial: 'canvases/canvase', as: :canvase
