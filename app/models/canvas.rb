@@ -1,3 +1,4 @@
 class Canvas < ApplicationRecord
-  has_many :areas
+  belongs_to :project
+  has_many :areas, dependent: :destroy
 end
