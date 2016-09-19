@@ -15,12 +15,21 @@
   <%= @project.active %>
 </p>
 
+<br />
+
+<%= link_to 'Edit', edit_project_path(@project) %> |
+<%= link_to 'Destroy', @project, method: :delete, data: { confirm: 'Are you sure?' } %> |
+<%= link_to 'List', projects_path %>
+
+<hr />
+
 <!--  Phases -->
+<h6>Phases</h6>
 <div class="phase_overview">
   <table class="phase_table">
     <tr class="top_row">
       <th>Current</th>
-      <th>Phase</th>
+      <th>Name</th>
       <th>Start date</th>
       <th>End date</th>
     </tr>
@@ -49,10 +58,11 @@
 <br />
 
 <!-- Canvases -->
+<h6>Canvases</h6>
 <div class="phase_overview">
   <table class="phase_table">
     <tr class="top_row">
-      <th>Canvas</th>
+      <th>Name</th>
     </tr>
     <% @project.canvases.each do |canvas| %>
       <tr>
@@ -64,6 +74,21 @@
   <%= link_to 'New canvas', new_project_canvas_path(@project.id), :class => 'btn btn-large btn-success' %>
 </div>
 
-<%= link_to 'Edit', edit_project_path(@project) %> |
-<%= link_to 'Destroy', @project, method: :delete, data: { confirm: 'Are you sure?' } %> |
-<%= link_to 'List', projects_path %>
+<br />
+
+<!-- Hypothesis -->
+<h6>Hypotheses</h6>
+<div class="phase_overview">
+  <table class="phase_table">
+    <tr class="top_row">
+      <th>Name</th>
+    </tr>
+    <% @project.hypotheses.each do |hypothesis| %>
+      <tr>
+        <th><%= link_to hypothesis.name, project_hypothesis_path(@project.id, hypothesis) %></th>
+      </tr>
+    <% end %>
+  </table>
+  <br />
+  <%= link_to 'New hypothesis', new_project_hypothesis_path(@project.id), :class => 'btn btn-large btn-success' %>
+</div>

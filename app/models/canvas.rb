@@ -18,8 +18,8 @@ class Canvas < ApplicationRecord
 
   def self.get_list_of_areas
     list_of_areas = []
-    AREAS.each_with_index do |area, index|
-      list_of_areas << [area, index]
+    AREAS.each do |area, index|
+      list_of_areas << [area]
     end
     list_of_areas
   end
@@ -27,7 +27,7 @@ class Canvas < ApplicationRecord
   private
 
   def create_canvas_areas
-    AREAS.each_with_index do |area, index|
+    AREAS.each do |area|
       self.areas.build(name: area, area_identifier: area)
     end
   end

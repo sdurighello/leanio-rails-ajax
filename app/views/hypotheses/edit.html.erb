@@ -1,6 +1,5 @@
 <h1>Editing Hypothesis</h1>
 
-<%= render 'form', hypothesis: @hypothesis %>
+<%= render 'form' %>
 
-<%= link_to 'Show', @hypothesis %> |
-<%= link_to 'Back', hypotheses_path %>
+<%= link_to 'Show', project_hypothesis_path(@project.id, @hypothesis) %> |

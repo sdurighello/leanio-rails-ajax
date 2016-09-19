@@ -10,5 +10,7 @@
   <%= @hypothesis.description %>
 </p>
 
-<%= link_to 'Edit', edit_hypothesis_path(@hypothesis) %> |
-<%= link_to 'Back', hypotheses_path %>
+<br />
+
+<%= link_to 'Edit', edit_project_hypothesis_path(@hypothesis.project, @hypothesis) %> |
+<%= link_to 'Destroy', project_hypothesis_path(@project.id, @hypothesis), method: :delete, data: { confirm: 'Are you sure?' } %>

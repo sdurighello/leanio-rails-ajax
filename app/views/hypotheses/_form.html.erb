@@ -1,12 +1,24 @@
-<%= simple_form_for(@hypothesis) do |f| %>
-  <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.input :name %>
-    <%= f.input :description %>
-  </div>
+<h3>Project: <em><%= @project.name %></em></h3>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
+<%= form_for([@project, @hypothesis]) do |f| %>
+  <% if @hypothesis.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@hypothesis.errors.count, "error") %> prohibited this hypothesis from being saved:</h2>
+
+      <ul>
+      <% @hypothesis.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :project_id, value: @project.id %>
+  <%= f.select :area_identifier, Canvas.get_list_of_areas %>
+  <%= f.text_field :name %>
+  <%= f.text_area :description %>
+
+  <%= f.button :submit %>
+
 <% end %>
