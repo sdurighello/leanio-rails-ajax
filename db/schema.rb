@@ -70,9 +70,9 @@ ActiveRecord::Schema.define(version: 20160919150433) do
   create_table "hypotheses", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.string   "area"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "area_identifier"
   end
 
   create_table "phases", force: :cascade do |t|
@@ -163,7 +163,7 @@ ActiveRecord::Schema.define(version: 20160919150433) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
-  add_foreign_key "areas", "canvases", column: "canvas_id"
+  add_foreign_key "areas", "canvases"
   add_foreign_key "canvases", "projects"
   add_foreign_key "experiments", "phases"
   add_foreign_key "phases", "projects"

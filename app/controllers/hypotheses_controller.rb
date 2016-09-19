@@ -1,24 +1,34 @@
 class HypothesesController < ApplicationController
+  before_action :authenticate_user!
+  before_action :set_project, only: [:index, :show, :new, :edit, :create, :update, :destroy]
   before_action :set_hypothesis, only: [:show, :edit, :update, :destroy]
+
+  add_breadcrumb "Projects", :projects_path
 
   # GET /hypotheses
   # GET /hypotheses.json
   def index
-    @hypotheses = Hypothesis.all
+    @hypotheses = Hypothesis.where(project_id: params[:project_id])
   end
 
   # GET /hypotheses/1
   # GET /hypotheses/1.json
   def show
+    add_breadcrumb "Project: #{@project.name}", project_path(@project)
+    add_breadcrumb "Hypothesis: #{@hypothesis.name}", project_hypothesis_path(@project, @hypothesis)
   end
 
   # GET /hypotheses/new
   def new
+    add_breadcrumb "Project: #{@project.name}", project_path(@project)
+    add_breadcrumb "New Hypothesis"
     @hypothesis = Hypothesis.new
   end
 
   # GET /hypotheses/1/edit
   def edit
+    add_breadcrumb "Project: #{@project.name}", project_path(@project)
+    add_breadcrumb "Hypothesis: #{@hypothesis.name}", project_hypothesis_path(@project, @hypothesis)
   end
 
   # POST /hypotheses
@@ -28,7 +38,7 @@ class HypothesesController < ApplicationController
 
     respond_to do |format|
       if @hypothesis.save
-        format.html { redirect_to @hypothesis, notice: 'Hypothesis was successfully created.' }
+        format.html { redirect_to project_hypothesis_path(@project.id, @hypothesis), notice: 'Hypothesis was successfully created.' }
         format.json { render :show, status: :created, location: @hypothesis }
       else
         format.html { render :new }
@@ -42,7 +52,7 @@ class HypothesesController < ApplicationController
   def update
     respond_to do |format|
       if @hypothesis.update(hypothesis_params)
-        format.html { redirect_to @hypothesis, notice: 'Hypothesis was successfully updated.' }
+        format.html { redirect_to project_hypothesis_path(@project.id, @hypothesis), notice: 'Hypothesis was successfully updated.' }
         format.json { render :show, status: :ok, location: @hypothesis }
       else
         format.html { render :edit }
@@ -56,19 +66,22 @@ class HypothesesController < ApplicationController
   def destroy
     @hypothesis.destroy
     respond_to do |format|
-      format.html { redirect_to hypotheses_url, notice: 'Hypothesis was successfully destroyed.' }
+      format.html { redirect_to project_path(@project.id), notice: 'Hypothesis was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def set_project
+      @project = Project.find(params[:project_id])
+    end
     def set_hypothesis
       @hypothesis = Hypothesis.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def hypothesis_params
-      params.require(:hypothesis).permit(:name, :description)
+      params.require(:hypothesis).permit(:project_id, :area_identifier, :name, :description)
     end
 end
