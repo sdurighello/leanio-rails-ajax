@@ -16,6 +16,6 @@
 # end
 
 ActiveSupport::Inflector.inflections(:en) do |inflect|
-  inflect.plural 'canvas', 'canvases'
-  inflect.plural 'hypothesis', 'hypotheses'
+  inflect.irregular 'canvas', 'canvases'
+  inflect.irregular 'hypothesis', 'hypotheses'
 end

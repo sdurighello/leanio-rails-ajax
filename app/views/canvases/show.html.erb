@@ -2,13 +2,16 @@
 
 <p>
   <strong>Name:</strong>
-  <%= @canvase.name %>
+  <%= @canvas.name %>
 </p>
 
 <p>
   <strong>Description:</strong>
-  <%= @canvase.description %>
+  <%= @canvas.description %>
 </p>
 
-<%= link_to 'Edit', edit_canvase_path(@canvase) %> |
-<%= link_to 'Back', canvases_path %>
+<br>
+<%= link_to 'Edit', edit_project_canvas_path(@canvas.project, @canvas) %> |
+<%= link_to 'Destroy', project_canvas_path(@project.id, @canvas), method: :delete, data: { confirm: 'Are you sure?' } %>
+
+<hr>

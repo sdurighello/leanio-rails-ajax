@@ -1,1 +1,1 @@
-json.partial! "canvases/canvase", canvase: @canvase
+json.partial! "canvases/canvas", canvas: @canvas

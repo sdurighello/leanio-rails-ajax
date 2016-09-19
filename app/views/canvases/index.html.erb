@@ -12,13 +12,13 @@
   </thead>
 
   <tbody>
-    <% @canvases.each do |canvase| %>
+    <% @canvases.each do |canvas| %>
       <tr>
-        <td><%= canvase.name %></td>
-        <td><%= canvase.description %></td>
-        <td><%= link_to 'Show', canvase %></td>
-        <td><%= link_to 'Edit', edit_canvase_path(canvase) %></td>
-        <td><%= link_to 'Destroy', canvase, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= canvas.name %></td>
+        <td><%= canvas.description %></td>
+        <td><%= link_to 'Show', canvas %></td>
+        <td><%= link_to 'Edit', edit_canvas_path(canvas) %></td>
+        <td><%= link_to 'Destroy', canvas, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -26,4 +26,4 @@
 
 <br>
 
-<%= link_to 'New Canvase', new_canvase_path %>
+<%= link_to 'New canvas', new_canvas_path %>

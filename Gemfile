@@ -70,6 +70,4 @@ gem 'wicked'
 
 # Forms
 
-gem 'simple_form'
-
 gem 'bootstrap_form'

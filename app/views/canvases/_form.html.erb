@@ -1,12 +1,22 @@
-<%= simple_form_for(@canvase) do |f| %>
-  <%= f.error_notification %>
+<h3>Project: <em><%= @project.name %></em></h3>
 
-  <div class="form-inputs">
-    <%= f.input :name %>
-    <%= f.input :description %>
-  </div>
+<%= bootstrap_form_for([@project, @canvas]) do |f| %>
+  <% if @canvas.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@canvas.errors.count, "error") %> prohibited this @canvas from being saved:</h2>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
+      <ul>
+      <% @canvas.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :project_id, value: @project.id %>
+  <%= f.text_field :name %>
+  <%= f.text_area :description %>
+
+  <%= f.button :submit %>
+
 <% end %>

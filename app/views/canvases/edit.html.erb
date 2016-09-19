@@ -1,6 +1,5 @@
 <h1>Editing Canvase</h1>
 
-<%= render 'form', canvase: @canvase %>
+<%= render 'form' %>
 
-<%= link_to 'Show', @canvase %> |
-<%= link_to 'Back', canvases_path %>
+<%= link_to 'Show', project_canvas_path(@project.id, @canvas) %> |
