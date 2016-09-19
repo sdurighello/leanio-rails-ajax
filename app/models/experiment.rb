@@ -1,6 +1,6 @@
 class Experiment < ApplicationRecord
   belongs_to :phase
-  has_many :hypotheses, through :results
+  has_many :hypotheses, through: :results
   has_and_belongs_to_many :sprints
 
   validates :name, presence: true, if: -> { required_for_step?(:header) }
