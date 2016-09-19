@@ -8,7 +8,7 @@ class CanvasesController < ApplicationController
   # GET /canvases
   # GET /canvases.json
   def index
-    @canvases = Canvas..where(project_id: params[:project_id])
+    @canvases = Canvas.where(project_id: params[:project_id])
   end
 
   # GET /canvases/1

@@ -15,3 +15,20 @@
 <%= link_to 'Destroy', project_canvas_path(@project.id, @canvas), method: :delete, data: { confirm: 'Are you sure?' } %>
 
 <hr>
+
+<!-- Areas -->
+<div class="phase_overview">
+  <table class="phase_table">
+    <tr class="top_row">
+      <th>Name</th>
+      <th>other data here ....</th>
+    </tr>
+    <% @canvas.areas.each do |area| %>
+      <tr>
+        <th><%= link_to area.name, project_canvas_area_path(@project.id, @canvas.id, area) %></th>
+      </tr>
+    <% end %>
+  </table>
+  <br />
+  <%= link_to 'New area', new_project_canvas_area_path(@project.id, @canvas.id), :class => 'btn btn-large btn-success' %>
+</div>

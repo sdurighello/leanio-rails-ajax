@@ -1,13 +1,30 @@
-<%= simple_form_for(@area) do |f| %>
-  <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.input :name %>
-    <%= f.input :description %>
-    <%= f.input :area_identifier %>
-  </div>
+<h3>Project: <em><%= @project.name %></em> - Canvas: <em><%= @canvas.name %></em></h3>
 
-  <div class="form-actions">
-    <%= f.button :submit %>
-  </div>
+<%= bootstrap_form_for([@project, @canvas, @area]) do |f| %>
+
+  <% if @area.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@area.errors.count, "error") %> prohibited this area from being saved:</h2>
+
+      <ul>
+      <% @area.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :project_id, value: @project.id %>
+  <%= f.hidden_field :canvas_id, value: @canvas.id %>
+
+  <%= f.hidden_field :area_identifier, value: @area.area_identifier %>
+
+  <%= f.text_field :name %>
+  <%= f.text_area :description %>
+
+  <%= collection_check_boxes(:area, :hypothesis_ids, Hypothesis.where(area_identifier: @area.area_identifier), :id, :name) %>
+
+  <%= f.button :submit %>
+
 <% end %>
