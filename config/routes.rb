@@ -1,11 +1,5 @@
 Rails.application.routes.draw do
 
-
-
-  resources :results
-  resources :hypotheses
-  resources :areas
-  resources :canvases
   root 'landing_pages#index'
 
   devise_for :users
@@ -21,6 +15,11 @@ Rails.application.routes.draw do
       resources :sprints
       post 'update_experiment_assignment' => 'sprints#update_experiment_assignment'
     end
+    resources :canvases do
+      resources :areas
+    end
+    resources :hypotheses
+    resources :results
   end
 
 end
