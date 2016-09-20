@@ -21,15 +21,25 @@
 
 <!-- Hypotesis selected -->
 <h6>Hypotheses selected</h6>
+<%= bootstrap_form_tag url: "/projects/#{@project.id}/canvases/#{@canvas.id}/areas/#{@area.id}/add_hypothesis" do |f|%>
+  <%= f.hidden_field :id, value: @area.id %>
+  <%= f.select(:hypothesis_id,   options_for_select(Hypothesis.where(area_identifier: @area.area_identifier).map { |h| [h.name, h.id] }))   %>
+  <%= f.submit("Add hypothesis") %>
+<% end %>
+
+<hr>
+
 <div class="phase_overview">
   <table class="phase_table">
     <tr class="top_row">
       <th>Name</th>
-      <th>other data here ....</th>
     </tr>
-    <% @area.hypotheses.each do |hypothesis| %>
+    <% @area.hypotheses.each do |h| %>
       <tr>
-        <th><%= link_to hypothesis.name, project_hypothesis_path(@project.id, hypothesis) %></th>
+        <th><%= link_to h.name, project_hypothesis_path(@project.id, h) %></th>
+        <th>
+          <%= button_to("Remove", "/projects/#{@project.id}/canvases/#{@canvas.id}/areas/#{@area.id}/remove_hypothesis" , html_options = {method: "post", params:{project_id: @project.id, canvas_id: @canvas_id, id: @area.id, hypothesis_id: h.id}, class: 'btn btn-danger btn-xs' }) %>
+        </th>
       </tr>
     <% end %>
   </table>

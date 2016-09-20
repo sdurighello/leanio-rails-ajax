@@ -17,7 +17,7 @@ class Experiment < ApplicationRecord
   end
 
   def remove_hypothesis(result_id)
-    result = Result.find(result_id)
+    result = Result.find_by(id: result_id)
     if result.present?
       Result.destroy(result.id)
     else

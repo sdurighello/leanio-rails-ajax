@@ -22,8 +22,6 @@
   <%= f.text_field :name %>
   <%= f.text_area :description %>
 
-  <%= collection_check_boxes(:area, :hypothesis_ids, Hypothesis.where(area_identifier: @area.area_identifier), :id, :name) %>
-
   <%= f.button :submit %>
 
 <% end %>

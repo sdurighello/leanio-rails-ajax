@@ -32,17 +32,15 @@
 
     </div>
   </div>
+
+  <br>
+
   <div class="row">
-    <div class="col-xs-12">
-      <%= collection_check_boxes(:experiment, :hypothesis_ids, Hypothesis.all, :id, :name) %>
-    </div>
-  </div>
-  <div class="row">
-    <%= f.fields_for :results do |results_form, results_index| %>
+    <%= f.fields_for :results do |results_form| %>
       <div class="col-sm-4 col-xs-12">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h6 class="panel-title"><%= @experiment.results[results_index.to_i].hypothesis.name %></h6>
+            <h6 class="panel-title"><%= results_form.object.hypothesis.name %></h6>
           </div>
           <div class="panel-body">
             <%= results_form.number_field :level %>

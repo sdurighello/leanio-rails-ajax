@@ -20,7 +20,10 @@ Rails.application.routes.draw do
 
     end
     resources :canvases do
-      resources :areas
+      resources :areas do
+        post 'add_hypothesis' => 'areas#add_hypothesis'
+        post 'remove_hypothesis' => 'areas#remove_hypothesis'
+      end
     end
     resources :hypotheses
     resources :results
