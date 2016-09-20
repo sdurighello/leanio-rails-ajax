@@ -15,8 +15,7 @@
   <%= @area.area_identifier %>
 </p>
 
-<%= link_to 'Edit', edit_project_canvas_area_path(@project, @canvas, @area) %> |
-<%= link_to 'Destroy', project_canvas_area_path(@project.id, @canvas.id, @area), method: :delete, data: { confirm: 'Are you sure?' } %>
+<%= link_to 'Edit', edit_project_canvas_area_path(@project, @canvas, @area) %>
 
 <hr>
 
@@ -34,6 +33,4 @@
       </tr>
     <% end %>
   </table>
-  <br />
-  <%= link_to 'New hypothesis', new_project_hypothesis_path(@project.id), :class => 'btn btn-large btn-success' %>
 </div>

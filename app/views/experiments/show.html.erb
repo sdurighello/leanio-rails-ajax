@@ -7,59 +7,15 @@
         <h6 class="panel-title text-center"><%= @experiment.name %></h6>
       </div>
       <div class="panel-body">
-        <p>
-          <strong>Start date:</strong>
-          <%= @experiment.start_date %>
-        </p>
 
         <p>
-          <strong>End date:</strong>
-          <%= @experiment.end_date %>
+          <strong>Description</strong>
+          <%= @experiment.description %>
         </p>
 
         <p>
           <strong>Completed:</strong>
           <%= @experiment.completed %>
-        </p>
-
-        <p>
-          <strong>Domain:</strong>
-          <%= @experiment.domain %>
-        </p>
-
-        <p>
-          <strong>Assumption:</strong>
-          <%= @experiment.assumption %>
-        </p>
-
-        <p>
-          <strong>Method:</strong>
-          <%= @experiment.method %>
-        </p>
-
-        <p>
-          <strong>Observation:</strong>
-          <%= @experiment.observation %>
-        </p>
-
-        <p>
-          <strong>Measure:</strong>
-          <%= @experiment.measure %>
-        </p>
-
-        <p>
-          <strong>Learned:</strong>
-          <%= @experiment.learned %>
-        </p>
-
-        <p>
-          <strong>Success criteria:</strong>
-          <%= @experiment.success_criteria %>
-        </p>
-
-        <p>
-          <strong>Action:</strong>
-          <%= @experiment.action %>
         </p>
 
         <p>
@@ -86,6 +42,24 @@
           <%= link_to 'Edit', edit_project_phase_experiment_path(@project.id, @phase.id, @experiment) %> |
           <%= link_to 'Destroy', project_phase_experiment_path(@project.id, @phase.id, @experiment), method: :delete, data: { confirm: 'Are you sure?' } %>
         </div>
+
+        <!-- Hypotesis selected -->
+        <h6>Hypotheses selected</h6>
+        <div class="phase_overview">
+          <table class="phase_table">
+            <tr class="top_row">
+              <th>Name</th>
+              <th>other data here ....</th>
+            </tr>
+            <% @experiment.hypotheses.each do |hypothesis| %>
+              <tr>
+                <th><%= link_to hypothesis.name, project_hypothesis_path(@project.id, hypothesis) %></th>
+              </tr>
+            <% end %>
+          </table>
+        </div>
+
+
       </div>
     </div>
   </div>

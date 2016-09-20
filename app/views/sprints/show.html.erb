@@ -59,14 +59,13 @@
 
 <hr>
 
+<h6>Experiments</h6>
 <div class="phase_overview">
   <table class="phase_table">
     <tr class="top_row">
       <th>Added to sprint</th>
       <th>Completed</th>
       <th>Experiment</th>
-      <th>Start date</th>
-      <th>End date</th>
       <th>Interviews completion</th>
       <th>Early adopters conversion</th>
     </tr>
@@ -87,8 +86,6 @@
         <% end %>
         </th>
         <th><%= link_to experiment.name, project_phase_experiment_path(@project.id, @phase.id, experiment) %></th>
-        <th><%= experiment.start_date.present? ? experiment.start_date.strftime("%d %B %Y") : '-' %></th>
-        <th><%= experiment.end_date.present? ? experiment.end_date.strftime("%d %B %Y") : '-' %></th>
         <th><%= experiment.interviews_completion[:number] %>
           (<%= number_to_percentage(experiment.interviews_completion[:ratio] * 100, options = {precision: 2}) %>)
         </th>

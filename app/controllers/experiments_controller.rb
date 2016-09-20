@@ -25,14 +25,7 @@ class ExperimentsController < ApplicationController
     add_breadcrumb "Project: #{@project.name}", project_path(@project)
     add_breadcrumb "Phase #{@phase.sequence + 1}: #{@phase.name}", project_phase_path(@project, @phase)
     add_breadcrumb "New Experiment"
-    # @experiment = Experiment.new
-
-    # wicked
-    p Experiment.form_steps.first
     @experiment = Experiment.new
-    @experiment.save(validate: false)
-    redirect_to project_phase_experiment_step_path(@project.id, @phase.id, @experiment.id, Experiment.form_steps.first)
-
   end
 
   # GET /experiments/1/edit
@@ -96,6 +89,6 @@ class ExperimentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def experiment_params
-      params.require(:experiment).permit(:project_id, :phase_id, :name, :start_date, :end_date, :completed, :domain, :assumption, :method, :observation, :measure, :learned, :success_criteria, :action, :interviews_planned, :interviews_done, :early_adopters_planned, :early_adopters_converted)
+      params.require(:experiment).permit(:project_id, :phase_id, {hypothesis_ids: []}, :name, :description, :completed, :interviews_planned, :interviews_done, :early_adopters_planned, :early_adopters_converted)
     end
 end

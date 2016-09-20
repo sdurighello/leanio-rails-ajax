@@ -1,7 +1,7 @@
 
 <p><b>Project:</b> <em><%= @project.name %></em> - <b>Phase:</b> <em><%= @phase.name %></em></p>
 
-<%= form_for([@project, @phase, @experiment]) do |f| %>
+<%= bootstrap_form_for([@project, @phase, @experiment]) do |f| %>
   <% if @experiment.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@experiment.errors.count, "error") %> prohibited this experiment from being saved:</h2>
@@ -16,80 +16,20 @@
 
   <%= f.hidden_field :phase_id, value: @phase.id %>
 
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-  </div>
+  <%= f.text_field :name %>
 
-  <%= f.hidden_field :start_date, value: @experiment.start_date %>
-  <%= f.hidden_field :end_date, value: @experiment.end_date %>
+  <%= f.text_field :description %>
 
-  <div class="field">
-    <%= f.label :completed %>
-    <%= f.check_box :completed %>
-  </div>
+  <%= f.check_box :completed %>
 
-  <div class="field">
-    <%= f.label :domain %>
-    <%= f.text_field :domain %>
-  </div>
+  <%= f.number_field :interviews_planned %>
+  <%= f.number_field :interviews_done %>
 
-  <div class="field">
-    <%= f.label :assumption %>
-    <%= f.text_area :assumption %>
-  </div>
+  <%= f.number_field :early_adopters_planned %>
+  <%= f.number_field :early_adopters_converted %>
 
-  <div class="field">
-    <%= f.label :method %>
-    <%= f.text_area :method %>
-  </div>
+  <%= collection_check_boxes(:experiment, :hypothesis_ids, Hypothesis.all, :id, :name) %>
 
-  <div class="field">
-    <%= f.label :action %>
-    <%= f.text_area :action %>
-  </div>
+  <%= f.submit %>
 
-  <div class="field">
-    <%= f.label :observation %>
-    <%= f.text_area :observation %>
-  </div>
-
-  <div class="field">
-    <%= f.label :success_criteria %>
-    <%= f.text_area :success_criteria %>
-  </div>
-
-  <div class="field">
-    <%= f.label :measure %>
-    <%= f.text_area :measure %>
-  </div>
-
-  <div class="field">
-    <%= f.label :learned %>
-    <%= f.text_area :learned %>
-  </div>
-
-  <div class="field">
-    <%= f.label :interviews_planned %>
-    <%= f.number_field :interviews_planned %>
-  </div>
-
-  <div class="field">
-    <%= f.label :interviews_done %>
-    <%= f.number_field :interviews_done %>
-  </div>
-
-  <div class="field">
-    <%= f.label :early_adopters_planned %>
-    <%= f.number_field :early_adopters_planned %>
-  </div>
-
-  <div class="field">
-    <%= f.label :early_adopters_converted %>
-    <%= f.number_field :early_adopters_converted %>
-  </div>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
 <% end %>
