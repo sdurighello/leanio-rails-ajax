@@ -14,22 +14,45 @@
     </div>
   <% end %>
 
-  <%= f.hidden_field :phase_id, value: @phase.id %>
+  <div class="row">
+    <div class="col-xs-12">
+      <%= f.hidden_field :phase_id, value: @phase.id %>
 
-  <%= f.text_field :name %>
+      <%= f.text_field :name %>
 
-  <%= f.text_field :description %>
+      <%= f.text_area :description %>
 
-  <%= f.check_box :completed %>
+      <%= f.check_box :completed %>
 
-  <%= f.number_field :interviews_planned %>
-  <%= f.number_field :interviews_done %>
+      <%= f.number_field :interviews_planned %>
+      <%= f.number_field :interviews_done %>
 
-  <%= f.number_field :early_adopters_planned %>
-  <%= f.number_field :early_adopters_converted %>
+      <%= f.number_field :early_adopters_planned %>
+      <%= f.number_field :early_adopters_converted %>
 
-  <%= collection_check_boxes(:experiment, :hypothesis_ids, Hypothesis.all, :id, :name) %>
-
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12">
+      <%= collection_check_boxes(:experiment, :hypothesis_ids, Hypothesis.all, :id, :name) %>
+    </div>
+  </div>
+  <div class="row">
+    <%= f.fields_for :results do |results_form, results_index| %>
+      <div class="col-sm-4 col-xs-12">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h6 class="panel-title"><%= @experiment.results[results_index.to_i].hypothesis.name %></h6>
+          </div>
+          <div class="panel-body">
+            <%= results_form.number_field :level %>
+            <%= results_form.text_area :comment %>
+          </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
+  <br>
   <%= f.submit %>
 
 <% end %>

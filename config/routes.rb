@@ -9,9 +9,15 @@ Rails.application.routes.draw do
     resources :teams
     resources :team_members
     resources :phases do
-      resources :experiments
+
+      resources :experiments do
+        post 'add_hypothesis' => 'experiments#add_hypothesis'
+        post 'remove_hypothesis' => 'experiments#remove_hypothesis'
+      end
+
       resources :sprints
       post 'update_experiment_assignment' => 'sprints#update_experiment_assignment'
+
     end
     resources :canvases do
       resources :areas

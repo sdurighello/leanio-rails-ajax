@@ -4,6 +4,28 @@ class Experiment < ApplicationRecord
   has_many :hypotheses, through: :results
   has_and_belongs_to_many :sprints
 
+  accepts_nested_attributes_for :results
+
+  def add_hypothesis(hypothesis_id)
+    if Result.find_by(experiment_id:self.id, hypothesis_id: hypothesis_id).present?
+      self.errors.add :base, 'This hypothesis has been already added'
+      return false
+    else
+      self.results.build(hypothesis_id: hypothesis_id)
+      self.save!
+    end
+  end
+
+  def remove_hypothesis(result_id)
+    result = Result.find(result_id)
+    if result.present?
+      Result.destroy(result.id)
+    else
+      self.errors.add :base, 'This hypothesis has been already added'
+      return false
+    end
+  end
+
   def interviews_completion
     interviews_done = self.interviews_done ||= 0
     interviews_planned = self.interviews_planned ||= 0

@@ -1,10 +1,27 @@
 class ExperimentsController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_project, only: [:index, :show, :new, :edit, :create, :update, :destroy]
-  before_action :set_phase, only: [:index, :show, :new, :edit, :create, :update, :destroy]
-  before_action :set_experiment, only: [:show, :edit, :update, :destroy]
+  before_action :set_project, only: [:index, :show, :new, :edit, :create, :update, :destroy, :add_hypothesis, :remove_hypothesis]
+  before_action :set_phase, only: [:index, :show, :new, :edit, :create, :update, :destroy, :add_hypothesis, :remove_hypothesis]
+  before_action :set_experiment, only: [:show, :edit, :update, :destroy, :add_hypothesis, :remove_hypothesis]
 
   add_breadcrumb "Projects", :projects_path
+
+  # Adding / Removing hypotheses to/from experiments
+  def add_hypothesis
+    if @experiment.add_hypothesis(params[:hypothesis_id])
+      redirect_to project_phase_experiment_path(@project.id, @phase.id, @experiment), notice: 'Hypothesis was successfully added'
+    else
+      redirect_to project_phase_experiment_path(@project.id, @phase.id, @experiment), notice: 'Hypothesis cannot be added'
+    end
+  end
+
+  def remove_hypothesis
+    if @experiment.remove_hypothesis(params[:result_id])
+      redirect_to project_phase_experiment_path(@project.id, @phase.id, @experiment), notice: 'Hypothesis was successfully removed'
+    else
+      redirect_to project_phase_experiment_path(@project.id, @phase.id, @experiment), notice: 'Hypothesis cannot be removed'
+    end
+  end
 
   # GET /experiments
   # GET /experiments.json
@@ -89,6 +106,12 @@ class ExperimentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def experiment_params
-      params.require(:experiment).permit(:project_id, :phase_id, {hypothesis_ids: []}, :name, :description, :completed, :interviews_planned, :interviews_done, :early_adopters_planned, :early_adopters_converted)
+      params.require(:experiment).permit(
+      :project_id,
+      :phase_id,
+      {hypothesis_ids: []},
+      :name, :description, :completed, :interviews_planned,
+      :interviews_done, :early_adopters_planned, :early_adopters_converted,
+      results_attributes: [:id, :level, :comment])
     end
 end

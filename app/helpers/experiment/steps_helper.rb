@@ -1,2 +1,0 @@
-module Experiment::StepsHelper
-end

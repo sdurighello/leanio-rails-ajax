@@ -45,15 +45,24 @@
 
         <!-- Hypotesis selected -->
         <h6>Hypotheses selected</h6>
+        <%= bootstrap_form_tag url: "/projects/#{@project.id}/phases/#{@phase.id}/experiments/#{@experiment.id}/add_hypothesis" do |f|%>
+          <%= f.hidden_field :id, value: @experiment.id %>
+          <%= f.select(:hypothesis_id, grouped_options_for_select(Hypothesis.for_grouped_select)) %>
+          <%= f.submit("Add hypothesis") %>
+        <% end %>
         <div class="phase_overview">
           <table class="phase_table">
             <tr class="top_row">
               <th>Name</th>
-              <th>other data here ....</th>
+              <th>Validation level</th>
             </tr>
-            <% @experiment.hypotheses.each do |hypothesis| %>
+            <% @experiment.results.each do |result| %>
               <tr>
-                <th><%= link_to hypothesis.name, project_hypothesis_path(@project.id, hypothesis) %></th>
+                <th><%= link_to result.hypothesis.name, project_hypothesis_path(@project.id, result.hypothesis) %></th>
+                <th><%= Result::LEVELS[result.level] if result.level.present? %></th>
+                <th>
+                  <%= button_to("Remove", "/projects/#{@project.id}/phases/#{@phase.id}/experiments/#{@experiment.id}/remove_hypothesis" , html_options = {method: "post", params:{project_id: @project.id, phase_id: @phase_id, id: @experiment.id, result_id: result.id}, class: 'btn btn-danger btn-xs' }) %>
+                </th>
               </tr>
             <% end %>
           </table>
