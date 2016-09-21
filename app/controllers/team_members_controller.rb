@@ -1,7 +1,7 @@
 class TeamMembersController < ApplicationController
   before_action :authenticate_user!
   before_action :user_is_member
-  before_action :set_project, only: [:index, :show, :new, :edit, :create, :update, :destroy]
+  before_action :set_project
   before_action :set_team_member, only: [:show, :edit, :update, :destroy]
 
   # GET /team_members

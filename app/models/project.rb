@@ -7,8 +7,6 @@ class Project < ApplicationRecord
 
   accepts_nested_attributes_for :phases, allow_destroy: true, reject_if: :all_blank
 
-  before_create :set_membership
-
   # --- Constants
 
   PHASES = ['Problem/Solution Fit', 'Product/Market Fit', 'Scale']
@@ -49,13 +47,32 @@ class Project < ApplicationRecord
     self.users.any? { |u| u.id == user.id  }
   end
 
+  def creator
+    User.find_by(id: self.created_by)
+  end
+
+  def add_user(user_id)
+    if (user_id != self.created_by) && (!self.users.any? { |u| u.id == user_id  })
+      user = User.find_by(id: user_id)
+      if user.present?
+        self.users << user
+        self.save!
+      end
+    end
+  end
+
+  def remove_user(user_id)
+    if (user_id != self.created_by) && (self.users.any? { |u| u.id == user_id  })
+      user = User.find_by(id: user_id)
+      if user.present?
+        self.users.delete(user) # this doesn't destroy the user object but just the association
+        self.save!
+      end
+    end
+  end
+
   # --- Private methods ---
 
   private
-
-  def set_membership
-    user = User.find_by(id: self.created_by)
-    user.present? ? self.users << user : false
-  end
 
 end

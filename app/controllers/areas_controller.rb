@@ -1,15 +1,15 @@
 class AreasController < ApplicationController
   before_action :authenticate_user!
   before_action :user_is_member
-  before_action :set_project, only: [:index, :show, :new, :edit, :create, :update, :destroy, :add_hypothesis, :remove_hypothesis]
-  before_action :set_canvas, only: [:index, :show, :new, :edit, :create, :update, :destroy, :add_hypothesis, :remove_hypothesis]
-  before_action :set_area, only: [:show, :edit, :update, :destroy, :add_hypothesis, :remove_hypothesis]
+  before_action :set_project
+  before_action :set_canvas
+  before_action :set_area, except: [:index, :new]
 
   add_breadcrumb "Projects", :projects_path
 
   # Adding / Removing hypotheses to/from experiments
   def add_hypothesis
-    if @area.add_hypothesis(params[:hypothesis_id])
+    if @area.add_hypothesis(params[:hypothesis_id].to_i)
       redirect_to project_canvas_area_path(@project.id, @canvas.id, @area), notice: 'Hypothesis was successfully added'
     else
       redirect_to project_canvas_area_path(@project.id, @canvas.id, @area), notice: 'Hypothesis cannot be added'
@@ -17,7 +17,7 @@ class AreasController < ApplicationController
   end
 
   def remove_hypothesis
-    if @area.remove_hypothesis(params[:hypothesis_id])
+    if @area.remove_hypothesis(params[:hypothesis_id].to_i)
       redirect_to project_canvas_area_path(@project.id, @canvas.id, @area), notice: 'Hypothesis was successfully removed'
     else
       redirect_to project_canvas_area_path(@project.id, @canvas.id, @area), notice: 'Hypothesis cannot be removed'

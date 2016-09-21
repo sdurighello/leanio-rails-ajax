@@ -1,8 +1,8 @@
 class PhasesController < ApplicationController
   before_action :authenticate_user!
   before_action :user_is_member
-  before_action :set_project, only: [:index, :show, :new, :edit, :create, :update, :destroy]
-  before_action :set_phase, only: [:show, :edit, :update, :destroy]
+  before_action :set_project
+  before_action :set_phase, except: [:index, :new]
 
   add_breadcrumb "Projects", :projects_path
 

@@ -9,6 +9,9 @@ Rails.application.routes.draw do
   # Authorization: each ctrl checks that current_user is member of the project
   resources :projects do
 
+    post 'add_user' => 'projects#add_user'
+    post 'remove_user' => 'projects#remove_user'
+
     resources :teams
     resources :team_members
 

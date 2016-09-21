@@ -1,14 +1,30 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
-  before_action :user_is_member, only: [:show, :edit, :update, :destroy, :set_current_phase]
-  before_action :set_project, only: [:show, :edit, :update, :destroy, :set_current_phase]
+  before_action :user_is_member, except: [:index, :new]
+  before_action :set_project, except: [:index, :new]
 
   add_breadcrumb "Projects", :projects_path
 
+  # Manage user members
+  def add_user
+    if @project.add_user(params[:user_id].to_i)
+      redirect_to @project, notice: 'User was successfully added.'
+    else
+      redirect_to @project, notice: 'User cannot be added'
+    end
+  end
+
+  def remove_user
+    if @project.remove_user(params[:user_id].to_i)
+      redirect_to @project, notice: 'User was successfully removed.'
+    else
+      redirect_to @project, notice: 'User cannot be removed'
+    end
+  end
 
   # SET current phase
   def set_current_phase
-    if Project.set_current_phase(params[:id], params[:phase_id])
+    if Project.set_current_phase(params[:id].to_i, params[:phase_id].to_i)
       redirect_to @project, notice: 'Project was successfully updated.'
     else
       redirect_to @project, notice: 'Could not set the current phase'

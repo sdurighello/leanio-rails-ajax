@@ -1,15 +1,15 @@
 class ExperimentsController < ApplicationController
   before_action :authenticate_user!
   before_action :user_is_member
-  before_action :set_project, only: [:index, :show, :new, :edit, :create, :update, :destroy, :add_hypothesis, :remove_hypothesis]
-  before_action :set_phase, only: [:index, :show, :new, :edit, :create, :update, :destroy, :add_hypothesis, :remove_hypothesis]
-  before_action :set_experiment, only: [:show, :edit, :update, :destroy, :add_hypothesis, :remove_hypothesis]
+  before_action :set_project
+  before_action :set_phase
+  before_action :set_experiment, except: [:index, :new]
 
   add_breadcrumb "Projects", :projects_path
 
   # Adding / Removing hypotheses to/from experiments
   def add_hypothesis
-    if @experiment.add_hypothesis(params[:hypothesis_id])
+    if @experiment.add_hypothesis(params[:hypothesis_id].to_i)
       redirect_to project_phase_experiment_path(@project.id, @phase.id, @experiment), notice: 'Hypothesis was successfully added'
     else
       redirect_to project_phase_experiment_path(@project.id, @phase.id, @experiment), notice: 'Hypothesis cannot be added'
@@ -17,7 +17,7 @@ class ExperimentsController < ApplicationController
   end
 
   def remove_hypothesis
-    if @experiment.remove_hypothesis(params[:result_id])
+    if @experiment.remove_hypothesis(params[:result_id].to_i)
       redirect_to project_phase_experiment_path(@project.id, @phase.id, @experiment), notice: 'Hypothesis was successfully removed'
     else
       redirect_to project_phase_experiment_path(@project.id, @phase.id, @experiment), notice: 'Hypothesis cannot be removed'

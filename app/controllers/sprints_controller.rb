@@ -1,9 +1,9 @@
 class SprintsController < ApplicationController
   before_action :authenticate_user!
   before_action :user_is_member
-  before_action :set_project, only: [:index, :show, :new, :edit, :create, :update, :destroy, :update_experiment_assignment]
-  before_action :set_phase, only: [:index, :show, :new, :edit, :create, :update, :destroy, :update_experiment_assignment]
-  before_action :set_sprint, only: [:show, :edit, :update, :destroy, :update_experiment_assignment]
+  before_action :set_project
+  before_action :set_phase
+  before_action :set_sprint, except: [:index, :new]
 
   add_breadcrumb "Projects", :projects_path
 
@@ -52,7 +52,7 @@ class SprintsController < ApplicationController
   end
 
   def update_experiment_assignment
-    if @sprint.update_experiment_assignment(params[:experiment_id])
+    if @sprint.update_experiment_assignment(params[:experiment_id].to_i)
       redirect_to project_phase_sprint_path(@project.id, @phase.id, @sprint), notice: 'Experiment assignment was successfully updated.'
     else
       redirect_to project_phase_sprint_path(@project.id, @phase.id, @sprint), notice: 'Could not update the experiment assignment'
