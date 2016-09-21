@@ -116,7 +116,7 @@
         <th><%= user.name %></th>
         <th><%= user.email %></th>
         <th>
-          <%= button_to(name = "Remove", "/projects/#{@project.id}/remove_user" , html_options = {method: "post", params:{id: @project.id, user_id: user.id}, disabled: @project.created_by != current_user.id, class: 'btn btn-danger btn-xs'}) %>
+          <%= button_to(name = "Remove", "/projects/#{@project.id}/remove_user" , html_options = {method: "post", params:{id: @project.id, user_id: user.id}, class: 'btn btn-danger btn-xs'}) %>
         </th>
       </tr>
     <% end %>
