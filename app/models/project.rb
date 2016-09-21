@@ -51,8 +51,8 @@ class Project < ApplicationRecord
     User.find_by(id: self.created_by)
   end
 
-  def add_user(user_id)
-    if (user_id != self.created_by) && (!self.users.any? { |u| u.id == user_id  })
+  def add_user(user_id, current_user_id)
+    if (current_user_id == self.created_by) && (user_id != self.created_by) && (!self.users.any? { |u| u.id == user_id  })
       user = User.find_by(id: user_id)
       if user.present?
         self.users << user
@@ -61,8 +61,8 @@ class Project < ApplicationRecord
     end
   end
 
-  def remove_user(user_id)
-    if (user_id != self.created_by) && (self.users.any? { |u| u.id == user_id  })
+  def remove_user(user_id, current_user_id)
+    if (current_user_id == self.created_by) && (user_id != self.created_by) && (self.users.any? { |u| u.id == user_id  })
       user = User.find_by(id: user_id)
       if user.present?
         self.users.delete(user) # this doesn't destroy the user object but just the association

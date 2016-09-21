@@ -7,7 +7,7 @@ class ProjectsController < ApplicationController
 
   # Manage user members
   def add_user
-    if @project.add_user(params[:user_id].to_i)
+    if @project.add_user(params[:user_id].to_i, current_user.id)
       redirect_to @project, notice: 'User was successfully added.'
     else
       redirect_to @project, notice: 'User cannot be added'
@@ -15,7 +15,7 @@ class ProjectsController < ApplicationController
   end
 
   def remove_user
-    if @project.remove_user(params[:user_id].to_i)
+    if @project.remove_user(params[:user_id].to_i, current_user.id)
       redirect_to @project, notice: 'User was successfully removed.'
     else
       redirect_to @project, notice: 'User cannot be removed'
