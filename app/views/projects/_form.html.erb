@@ -22,7 +22,7 @@
   </div>
 
   <% if project.new_record? %>
-
+    <%= f.hidden_field :created_by, value: current_user.id %>
     <%= f.hidden_field :active, value: true %>
 
     <%= f.fields_for :phases do |m| %>

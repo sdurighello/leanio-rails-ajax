@@ -1,13 +1,24 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
+  before_action :user_is_member, only: [:show, :edit, :update, :destroy, :set_current_phase]
   before_action :set_project, only: [:show, :edit, :update, :destroy, :set_current_phase]
 
   add_breadcrumb "Projects", :projects_path
 
+
+  # SET current phase
+  def set_current_phase
+    if Project.set_current_phase(params[:id], params[:phase_id])
+      redirect_to @project, notice: 'Project was successfully updated.'
+    else
+      redirect_to @project, notice: 'Could not set the current phase'
+    end
+  end
+
   # GET /projects
   # GET /projects.json
   def index
-    @projects = Project.all
+    @projects = current_user.projects
   end
 
   # GET /projects/1
@@ -44,14 +55,6 @@ class ProjectsController < ApplicationController
     end
   end
 
-  def set_current_phase
-    if Project.set_current_phase(params[:id], params[:phase_id])
-      redirect_to @project, notice: 'Project was successfully updated.'
-    else
-      redirect_to @project, notice: 'Could not set the current phase'
-    end
-  end
-
   # PATCH/PUT /projects/1
   # PATCH/PUT /projects/1.json
   def update
@@ -78,12 +81,18 @@ class ProjectsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def user_is_member
+      project = Project.find(params[:id])
+      unless (current_user.id == project.created_by) || (project.users.any? { |u| u.id == current_user.id  })
+        flash[:error] = "You are not a member of this project"
+        redirect_to projects_path, notice: 'You are not a member of this project' # halts request cycle
+      end
+    end
     def set_project
       @project = Project.find(params[:id])
     end
-
     # Never trust parameters from the scary internet, only allow the white list through.
     def project_params
-      params.require(:project).permit(:name, :description, :active, phases_attributes: [:id,:sequence, :start_date])
+      params.require(:project).permit(:name, :description, :active, :created_by, phases_attributes: [:id,:sequence, :start_date])
     end
 end

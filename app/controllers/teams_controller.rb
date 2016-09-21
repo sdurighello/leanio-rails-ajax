@@ -1,5 +1,6 @@
 class TeamsController < ApplicationController
   before_action :authenticate_user!
+  before_action :user_is_member
   before_action :set_project, only: [:index, :show, :new, :edit, :create, :update, :destroy]
   before_action :set_team, only: [:show, :edit, :update, :destroy]
 
@@ -65,6 +66,13 @@ class TeamsController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def user_is_member
+      project = Project.find(params[:project_id])
+      unless (current_user.id == project.created_by) || (project.users.any? { |u| u.id == current_user.id  })
+        flash[:error] = "You are not a member of this project"
+        redirect_to projects_path, notice: 'You are not a member of this project' # halts request cycle
+      end
+    end
     def set_project
       @project = Project.find(params[:project_id])
     end

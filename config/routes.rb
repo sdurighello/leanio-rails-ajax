@@ -1,13 +1,18 @@
 Rails.application.routes.draw do
 
+  # Homepage, public
   root 'landing_pages#index'
 
+  # Authentication on all routes except landing page
   devise_for :users
 
-  post 'set_current_phase' => 'projects#set_current_phase'
+  # Authorization: each ctrl checks that current_user is member of the project
   resources :projects do
+
     resources :teams
     resources :team_members
+
+    post 'set_current_phase' => 'projects#set_current_phase'
     resources :phases do
 
       resources :experiments do
@@ -19,14 +24,17 @@ Rails.application.routes.draw do
       post 'update_experiment_assignment' => 'sprints#update_experiment_assignment'
 
     end
+
     resources :canvases do
       resources :areas do
         post 'add_hypothesis' => 'areas#add_hypothesis'
         post 'remove_hypothesis' => 'areas#remove_hypothesis'
       end
     end
+
     resources :hypotheses
     resources :results
+
   end
 
 end
