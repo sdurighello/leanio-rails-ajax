@@ -25,7 +25,7 @@ class ProjectsController < ApplicationController
 
   # SET current phase
   def set_current_phase
-    if Project.set_current_phase(params[:id].to_i, params[:phase_id].to_i)
+    if @project.set_current_phase(params[:phase_id].to_i)
       redirect_to @project, notice: 'Project was successfully updated.'
     else
       redirect_to @project, notice: 'Could not set the current phase'

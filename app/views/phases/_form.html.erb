@@ -36,10 +36,6 @@
 
   <% else %>
 
-    <div class="field">
-      <%= f.label :completed %>
-      <%= f.check_box :completed %>
-    </div>
     <%= f.hidden_field :end_date, value: @phase.end_date %>
     <%= f.hidden_field :project_id, value: @project.id %>
     <%= f.hidden_field :sequence, value: @phase.sequence %>

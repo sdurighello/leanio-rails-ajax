@@ -9,11 +9,10 @@
   <strong>Description:</strong>
   <%= @project.description %>
 </p>
-
-<p>
+<div>
   <strong><%= @project.active ? 'Active' : 'Inactive' %></strong>
-  <%= button_to(name = @project.active ? 'Set to Inactive' : 'Set to Active', "/projects/#{@project.id}/update_active_status" , html_options = {method: "post", params:{id: @project.id}, class: 'btn-link'}) %>
-</p>
+  <%= button_to(name = @project.active ? 'Set to Inactive' : 'Set to Active', "/projects/#{@project.id}/update_active_status" , html_options = {form: {style: 'display:inline-block'}, method: "post", params:{id: @project.id}, class: 'btn-link'}) %>
+</div>
 
 <br />
 
@@ -23,7 +22,7 @@
 <hr />
 
 <!--  Phases -->
-<h6>Phases</h6>
+<h4>Phases</h4>
 <div class="phase_overview">
   <table class="phase_table">
     <tr class="top_row">
@@ -45,7 +44,7 @@
         <th><%= phase.start_date.present? ? phase.start_date.strftime("%d %B %Y") : '-' %></th>
         <th><%= phase.end_date.present? ? phase.end_date.strftime("%d %B %Y") : '-' %></th>
         <th>
-          <%= button_to(name = "Set to current", "/projects/#{@project.id}/set_current_phase" , html_options = {method: "post", params:{phase_id: phase.id, id: @project.id}, disabled: @project.current_phase_id == phase.id, class: 'btn btn-info btn-xs'}) %>
+          <%= button_to(name = "Set to current", "/projects/#{@project.id}/set_current_phase" , html_options = {data: { confirm: 'Any previous phase will be set to complete. Continue?' }, method: "post", params:{phase_id: phase.id, id: @project.id}, disabled: @project.current_phase_id == phase.id, class: 'btn btn-info btn-xs' }) %>
         </th>
       </tr>
     <% end %>
@@ -57,7 +56,7 @@
 <br />
 
 <!-- Canvases -->
-<h6>Canvases</h6>
+<h4>Canvases</h4>
 <div class="phase_overview">
   <table class="phase_table">
     <tr class="top_row">
@@ -76,7 +75,7 @@
 <br />
 
 <!-- Hypothesis -->
-<h6>Hypotheses</h6>
+<h4>Hypotheses</h4>
 <div class="phase_overview">
   <table class="phase_table">
     <tr class="top_row">
@@ -95,7 +94,7 @@
 <br>
 
 <!-- Users -->
-<h6>Project members</h6>
+<h4>Project members</h4>
 <p>Project created by: <%= @project.creator.name %> - <%= @project.creator.email %></p>
 <p>
   <%= bootstrap_form_tag url: "/projects/#{@project.id}/add_user", layout: :inline do |f| %>
