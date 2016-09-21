@@ -2,7 +2,7 @@ class CanvasesController < ApplicationController
   before_action :authenticate_user!
   before_action :user_is_member
   before_action :set_project
-  before_action :set_canvas, except: [:index, :new]
+  before_action :set_canvas, except: [:index, :new, :create]
 
   add_breadcrumb "Projects", :projects_path
 

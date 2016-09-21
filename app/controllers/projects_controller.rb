@@ -1,7 +1,7 @@
 class ProjectsController < ApplicationController
   before_action :authenticate_user!
-  before_action :user_is_member, except: [:index, :new]
-  before_action :set_project, except: [:index, :new]
+  before_action :user_is_member, except: [:index, :new, :create]
+  before_action :set_project, except: [:index, :new, :create]
 
   add_breadcrumb "Projects", :projects_path
 

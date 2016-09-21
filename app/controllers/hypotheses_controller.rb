@@ -2,7 +2,7 @@ class HypothesesController < ApplicationController
   before_action :authenticate_user!
   before_action :user_is_member
   before_action :set_project
-  before_action :set_hypothesis, except: [:index, :new]
+  before_action :set_hypothesis, except: [:index, :new, :create]
 
   add_breadcrumb "Projects", :projects_path
 

@@ -3,7 +3,7 @@ class AreasController < ApplicationController
   before_action :user_is_member
   before_action :set_project
   before_action :set_canvas
-  before_action :set_area, except: [:index, :new]
+  before_action :set_area, except: [:index, :new, :create]
 
   add_breadcrumb "Projects", :projects_path
 

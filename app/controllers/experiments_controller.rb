@@ -3,7 +3,7 @@ class ExperimentsController < ApplicationController
   before_action :user_is_member
   before_action :set_project
   before_action :set_phase
-  before_action :set_experiment, except: [:index, :new]
+  before_action :set_experiment, except: [:index, :new, :create]
 
   add_breadcrumb "Projects", :projects_path
 
