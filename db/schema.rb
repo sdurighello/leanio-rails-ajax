@@ -33,8 +33,16 @@ ActiveRecord::Schema.define(version: 20160921063636) do
   create_table "canvases", force: :cascade do |t|
     t.string   "name"
     t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "customers_to_break_even"
+    t.decimal  "payback_period"
+    t.decimal  "gross_margin"
+    t.decimal  "market_size"
+    t.integer  "customer_pain_level"
+    t.integer  "market_ease_of_reach"
+    t.integer  "feasibility"
+    t.integer  "riskiness"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
     t.integer  "project_id"
     t.index ["project_id"], name: "index_canvases_on_project_id", using: :btree
   end
@@ -43,6 +51,7 @@ ActiveRecord::Schema.define(version: 20160921063636) do
     t.string   "name"
     t.text     "description"
     t.boolean  "completed"
+    t.string   "experiment_type"
     t.integer  "interviews_planned"
     t.integer  "interviews_done"
     t.integer  "early_adopters_planned"

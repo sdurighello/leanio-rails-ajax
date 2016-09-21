@@ -4,6 +4,8 @@ class CreateExperiments < ActiveRecord::Migration[5.0]
       t.string :name
       t.text :description
       t.boolean :completed
+      t.string :experiment_type
+      
       t.integer :interviews_planned
       t.integer :interviews_done
       t.integer :early_adopters_planned
