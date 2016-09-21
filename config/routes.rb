@@ -6,16 +6,16 @@ Rails.application.routes.draw do
   # Authentication on all routes except landing page
   devise_for :users
 
-  # Authorization: each ctrl checks that current_user is member of the project
+  # Authorization: each ctrl checks that current_user is member of the project and project is active
   resources :projects do
+
+    post 'update_active_status' => 'projects#update_active_status'
 
     post 'add_user' => 'projects#add_user'
     post 'remove_user' => 'projects#remove_user'
 
-    resources :teams
-    resources :team_members
-
     post 'set_current_phase' => 'projects#set_current_phase'
+
     resources :phases do
 
       resources :experiments do
@@ -37,6 +37,9 @@ Rails.application.routes.draw do
 
     resources :hypotheses
     resources :results
+
+    resources :teams # TODO teams
+    resources :team_members # TODO team_members
 
   end
 

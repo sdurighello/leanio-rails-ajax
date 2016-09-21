@@ -11,15 +11,14 @@
 </p>
 
 <p>
-  <strong>Active:</strong>
-  <%= @project.active %>
+  <strong><%= @project.active ? 'Active' : 'Inactive' %></strong>
+  <%= button_to(name = @project.active ? 'Set to Inactive' : 'Set to Active', "/projects/#{@project.id}/update_active_status" , html_options = {method: "post", params:{id: @project.id}, class: 'btn-link'}) %>
 </p>
 
 <br />
 
 <%= link_to 'Edit', edit_project_path(@project) %> |
-<%= link_to 'Destroy', @project, method: :delete, data: { confirm: 'Are you sure?' } %> |
-<%= link_to 'List', projects_path %>
+<%= link_to 'Destroy', @project, method: :delete, data: { confirm: 'Are you sure?' } %>
 
 <hr />
 

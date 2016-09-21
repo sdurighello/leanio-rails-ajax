@@ -3,6 +3,7 @@ class TeamMembersController < ApplicationController
   before_action :user_is_member
   before_action :set_project
   before_action :set_team_member, only: [:show, :edit, :update, :destroy]
+  before_action :project_is_active, except: [:index, :show] # TODO
 
   # GET /team_members
   # GET /team_members.json
@@ -71,6 +72,13 @@ class TeamMembersController < ApplicationController
       unless (current_user.id == project.created_by) || (project.users.any? { |u| u.id == current_user.id  })
         flash[:error] = "You are not a member of this project"
         redirect_to projects_path, notice: 'You are not a member of this project' # halts request cycle
+      end
+    end
+    def project_is_active # TODO
+      project = Project.find(params[:project_id])
+      unless project.active
+        flash[:error] = "This project is not active"
+        redirect_to project, notice: 'This project is not active' # halts request cycle
       end
     end
     def set_project

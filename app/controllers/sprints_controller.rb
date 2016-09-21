@@ -4,6 +4,7 @@ class SprintsController < ApplicationController
   before_action :set_project
   before_action :set_phase
   before_action :set_sprint, except: [:index, :new, :create]
+  before_action :project_is_active, except: [:index, :show]
 
   add_breadcrumb "Projects", :projects_path
 
@@ -90,6 +91,19 @@ class SprintsController < ApplicationController
       unless (current_user.id == project.created_by) || (project.users.any? { |u| u.id == current_user.id  })
         flash[:error] = "You are not a member of this project"
         redirect_to projects_path, notice: 'You are not a member of this project' # halts request cycle
+      end
+    end
+    def project_is_active
+      project = Project.find(params[:project_id])
+      phase = Phase.find(params[:phase_id])
+      sprint = Sprint.find(params[:id])
+      unless project.active
+        flash[:error] = "This project is not active"
+        if params[:id].present?
+          redirect_to project_phase_sprint_path(project.id, phase.id, sprint), notice: 'This project is not active' # halts request cycle
+        else
+          redirect_to project_phase_path(project.id, phase), notice: 'This project is not active'
+        end
       end
     end
     def set_project

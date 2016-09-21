@@ -21,19 +21,10 @@ class Project < ApplicationRecord
     list_of_phases
   end
 
-  def self.get_project_phases
-    project_phases = []
-    PHASES.each_with_index do |phase, index|
-      project_phase = Phase.find_by sequence: index
-      project_phases << [project_phase.name, project_phase.id]
-    end
-    project_phases
-  end
-
   def self.set_current_phase(project_id, phase_id)
     project = Project.find(project_id)
     project.current_phase_id = phase_id
-    project.save
+    project.save!
   end
 
   # --- Instance methdos
@@ -69,6 +60,13 @@ class Project < ApplicationRecord
         self.users.delete(user) # this doesn't destroy the user object but just the association
         self.save!
       end
+    end
+  end
+
+  def update_active_status(current_user_id)
+    if self.created_by == current_user_id
+      self.active ? self.active = false : self.active = true
+      self.save!
     end
   end
 

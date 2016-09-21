@@ -31,22 +31,10 @@
          <%= m.select :sequence, Project.get_list_of_phases %>
        </div>
     <% end %>
-
-  <% else %>
-
-    <div class="field">
-      <%= f.label :active %>
-      <%= f.select :active, [['Active', true], ['Inactive', false]] %>
-    </div>
-
-    <div class="field">
-      <%= f.label :current_phase_id %>
-      <%= f.select :current_phase_id, Project.get_project_phases %>
-    </div>
-
   <% end %>
 
   <div class="actions">
     <%= f.submit %>
   </div>
+
 <% end %>

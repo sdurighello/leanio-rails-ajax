@@ -2,6 +2,7 @@ class ResultsController < ApplicationController
   before_action :authenticate_user!
   before_action :user_is_member
   before_action :set_result, only: [:show, :edit, :update, :destroy]
+  before_action :project_is_active, except: [:index, :show]
 
   # GET /results
   # GET /results.json
@@ -70,6 +71,18 @@ class ResultsController < ApplicationController
       unless (current_user.id == project.created_by) || (project.users.any? { |u| u.id == current_user.id  })
         flash[:error] = "You are not a member of this project"
         redirect_to projects_path, notice: 'You are not a member of this project' # halts request cycle
+      end
+    end
+    def project_is_active
+      project = Project.find(params[:project_id])
+      result = Result.find(params[:id]) if params[:id].present?
+      unless project.active
+        flash[:error] = "This project is not active"
+        if params[:id].present?
+          redirect_to project_result_path(project.id, result), notice: 'This project is not active' # halts request cycle
+        else
+          redirect_to project_path(project), notice: 'This project is not active'
+        end
       end
     end
     def set_result

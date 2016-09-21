@@ -2,6 +2,7 @@ class ProjectsController < ApplicationController
   before_action :authenticate_user!
   before_action :user_is_member, except: [:index, :new, :create]
   before_action :set_project, except: [:index, :new, :create]
+  before_action :project_is_active, except: [:index, :new, :create, :show, :update_active_status]
 
   add_breadcrumb "Projects", :projects_path
 
@@ -31,10 +32,19 @@ class ProjectsController < ApplicationController
     end
   end
 
+  # UPDATE active status
+  def update_active_status
+    if @project.update_active_status(current_user.id)
+      redirect_to @project, notice: 'Project was successfully updated.'
+    else
+      redirect_to @project, notice: 'Could not update the project'
+    end
+  end
+
   # GET /projects
   # GET /projects.json
   def index
-    @projects = current_user.projects
+    @projects = current_user.all_projects_for_user
   end
 
   # GET /projects/1
@@ -102,6 +112,13 @@ class ProjectsController < ApplicationController
       unless (current_user.id == project.created_by) || (project.users.any? { |u| u.id == current_user.id  })
         flash[:error] = "You are not a member of this project"
         redirect_to projects_path, notice: 'You are not a member of this project' # halts request cycle
+      end
+    end
+    def project_is_active
+      project = Project.find(params[:id])
+      unless project.active
+        flash[:error] = "This project is not active"
+        redirect_to project, notice: 'This project is not active' # halts request cycle
       end
     end
     def set_project

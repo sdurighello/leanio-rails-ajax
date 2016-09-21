@@ -3,6 +3,7 @@ class HypothesesController < ApplicationController
   before_action :user_is_member
   before_action :set_project
   before_action :set_hypothesis, except: [:index, :new, :create]
+  before_action :project_is_active, except: [:index, :show]
 
   add_breadcrumb "Projects", :projects_path
 
@@ -79,6 +80,18 @@ class HypothesesController < ApplicationController
       unless (current_user.id == project.created_by) || (project.users.any? { |u| u.id == current_user.id  })
         flash[:error] = "You are not a member of this project"
         redirect_to projects_path, notice: 'You are not a member of this project' # halts request cycle
+      end
+    end
+    def project_is_active
+      project = Project.find(params[:project_id])
+      hypothesis = Hypothesis.find(params[:id]) if params[:id].present?
+      unless project.active
+        flash[:error] = "This project is not active"
+        if params[:id].present?
+          redirect_to project_hypothesis_path(project.id, hypothesis), notice: 'This project is not active' # halts request cycle
+        else
+          redirect_to project_path(project), notice: 'This project is not active'
+        end
       end
     end
     def set_project
