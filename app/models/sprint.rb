@@ -19,9 +19,14 @@ class Sprint < ApplicationRecord
   end
 
   def update_experiment_assignment(experiment_id)
-    experiment = Experiment.find(experiment_id)
-    self.experiments.include?(experiment) ? self.experiments.delete(experiment) : self.experiments << experiment
-    self.save
+    begin
+      experiment = Experiment.find(experiment_id)
+      self.experiments.include?(experiment) ? self.experiments.delete(experiment) : self.experiments << experiment
+      self.save!
+    rescue
+      self.errors.add :base, 'Experiment assignment cannot be updated'
+      return false
+    end
   end
 
 end

@@ -34,7 +34,12 @@ class Project < ApplicationRecord
   end
 
   def current_phase
-    Phase.find(self.current_phase_id)
+    begin
+      Phase.find(self.current_phase_id)
+    rescue
+      self.errors.add :base, 'Current phase id is not valid'
+      return false
+    end
   end
 
   def is_member?(user)
@@ -43,7 +48,12 @@ class Project < ApplicationRecord
   end
 
   def creator
-    User.find_by(id: self.created_by)
+    begin
+      User.find_by(id: self.created_by)
+    rescue
+      self.errors.add :base, 'Creator has invalid id'
+      return false
+    end
   end
 
   def add_user(user_id, current_user_id)

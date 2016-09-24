@@ -47,7 +47,7 @@ class Phase < ApplicationRecord
     sprints.each_with_index do |s, i|
       s.start_date = phase_weeks[i][0]
       s.end_date = phase_weeks[i][1]
-      s.save!
+      s.save
       break if i + 1 == phase_weeks.length # don't allow to go beyond the new number_of_sprints
     end
   end

@@ -11,17 +11,22 @@ class Experiment < ApplicationRecord
       self.errors.add :base, 'This hypothesis has been already added'
       return false
     else
-      self.results.build(hypothesis_id: hypothesis_id)
-      self.save!
+      begin
+        self.results.build(hypothesis_id: hypothesis_id)
+        self.save!
+      rescue
+        self.errors.add :base, 'This hypothesis cannot be added'
+        return false
+      end
     end
   end
 
   def remove_hypothesis(result_id)
-    result = Result.find_by(id: result_id)
-    if result.present?
+    begin
+      result = Result.find(result_id)
       Result.destroy(result.id)
-    else
-      self.errors.add :base, 'This hypothesis has been already added'
+    rescue
+      self.errors.add :base, 'This hypothesis cannot be added'
       return false
     end
   end
