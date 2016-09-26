@@ -1,4 +1,3 @@
-<h3>Project: <em><%= @project.name %></em></h3>
 
 <%= bootstrap_form_for([@project, @canvas]) do |f| %>
   <% if @canvas.errors.any? %>
@@ -17,6 +16,10 @@
   <%= f.text_field :name %>
   <%= f.text_area :description %>
 
-  <%= f.button :submit %>
+  <%= f.submit "Save", class:"btn btn-success" %>
+  <% if !@canvas.new_record? %>
+    <%= link_to 'Delete', project_canvas_path(@project.id, @canvas), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+  <% end %>
+  <%= link_to 'Cancel', @canvas.new_record? ? project_path(id: @project.id, selected_tab: 1) : project_canvas_path(@project.id, @canvas), class:"btn btn-info" %>
 
 <% end %>

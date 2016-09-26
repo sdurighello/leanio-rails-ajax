@@ -23,7 +23,7 @@ class CanvasesController < ApplicationController
   # GET /canvases/new
   def new
     add_breadcrumb "Project: #{@project.name}", project_path(@project)
-    add_breadcrumb "New Phase"
+    add_breadcrumb "New Canvas"
     @canvas = Canvas.new
   end
 

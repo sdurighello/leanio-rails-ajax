@@ -1,33 +1,46 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @canvas.name %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @canvas.description %>
-</p>
-
-<br>
-<%= link_to 'Edit', edit_project_canvas_path(@canvas.project, @canvas) %> |
-<%= link_to 'Destroy', project_canvas_path(@project.id, @canvas), method: :delete, data: { confirm: 'Are you sure?' } %>
-
-<hr>
-
-<!-- Areas -->
-<h6>Areas</h6>
-<div class="phase_overview">
-  <table class="phase_table">
-    <tr class="top_row">
-      <th>Name</th>
-      <th>other data here ....</th>
-    </tr>
-    <% @canvas.areas.each do |area| %>
-      <tr>
-        <th><%= link_to area.name, project_canvas_area_path(@project.id, @canvas.id, area) %></th>
-      </tr>
-    <% end %>
-  </table>
+<div class="row">
+  <div class="col-xs-12">
+    <div class="panel panel-default panel-body">
+      <p>
+        <strong>Name:</strong>
+        <%= @canvas.name %>
+      </p>
+      <p>
+        <strong>Description:</strong>
+        <%= @canvas.description %>
+      </p>
+      <%= link_to 'Edit', edit_project_canvas_path(@canvas.project, @canvas), class:'btn btn-success' %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <% @canvas.areas.each do |area| %>
+    <div class="col-xs-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h6 class="panel-title text-center"><%= area.name %><%= link_to 'Edit', edit_project_canvas_area_path(@project, @canvas, area), class:'btn btn-xs btn-success pull-right' %></h6>
+        </div>
+        <div class="panel-body">
+          <p><%= area.description %></p>
+          <%= bootstrap_form_tag url: "/projects/#{@project.id}/canvases/#{@canvas.id}/areas/#{area.id}/add_hypothesis", layout: :inline do |f|%>
+            <%= f.hidden_field :id, value: area.id %>
+            <%= f.select(:hypothesis_id, options_for_select(Hypothesis.where(area_identifier: area.area_identifier).map { |h| [h.name, h.id] }), hide_label: true) %>
+            <%= f.submit "Add hypothesis" %>
+          <% end %>
+          <hr>
+          <% area.hypotheses.each do |h| %>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+              <div class="panel panel-info panel-heading" style="height: 120px">
+                <%= link_to h.name, project_hypothesis_path(@project.id, h) %>
+                <hr style="margin: 5px">
+                <%= button_to("Remove", "/projects/#{@project.id}/canvases/#{@canvas.id}/areas/#{area.id}/remove_hypothesis" , html_options = {method: "post", params:{project_id: @project.id, canvas_id: @canvas_id, id: area.id, hypothesis_id: h.id}, class: 'btn btn-danger btn-xs' }) %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
 </div>

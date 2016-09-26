@@ -1,4 +1,4 @@
-<%= form_for(project) do |f| %>
+<%= bootstrap_form_for(project) do |f| %>
   <% if project.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(project.errors.count, "error") %> prohibited this project from being saved:</h2>
@@ -11,30 +11,23 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-  </div>
+  <%= f.text_field :name %>
 
-  <div class="field">
-    <%= f.label :description %>
-    <%= f.text_area :description %>
-  </div>
+  <%= f.text_area :description %>
 
   <% if project.new_record? %>
     <%= f.hidden_field :created_by, value: current_user.id %>
     <%= f.hidden_field :active, value: true %>
 
     <%= f.fields_for :phases do |m| %>
-       <div class="field">
-         <%= m.label 'Current phase' %><br>
-         <%= m.select :sequence, Project.get_list_of_phases %>
-       </div>
+       <%= m.select :sequence, Project.get_list_of_phases, label: "Starting phase" %>
     <% end %>
   <% end %>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+  <%= f.submit "Save", class:"btn btn-success" %>
+  <% if !project.new_record? %>
+    <%= link_to 'Destroy', @project, method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+  <% end %>
+  <%= link_to 'Cancel', project.new_record? ? projects_path : @project, class:"btn btn-info" %>
 
 <% end %>

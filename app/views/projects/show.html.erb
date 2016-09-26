@@ -20,12 +20,11 @@
         <%= @project.description %>
       </p>
       <div>
-        <strong><%= @project.active ? 'Project is Active' : 'Project is Inactive' %></strong>
-        <%= button_to(name = @project.active ? 'Set to Inactive' : 'Set to Active', "/projects/#{@project.id}/update_active_status" , html_options = {form: {style: 'display:inline-block'}, method: "post", params:{id: @project.id}, class: 'btn-link'}) %>
+        <p style="display: inline" class="form-control"><%= @project.active ? 'Project is Active' : 'Project is Inactive' %></p>
+        <%= button_to(name = @project.active ? 'Set to Inactive' : 'Set to Active', "/projects/#{@project.id}/update_active_status" , html_options = {form: {style: 'display:inline-block'}, method: "post", params:{id: @project.id}, class: 'btn btn-xs btn-info'}) %>
       </div>
       <br />
-      <%= link_to 'Edit', edit_project_path(@project) %> |
-      <%= link_to 'Destroy', @project, method: :delete, data: { confirm: 'Are you sure?' } %>
+      <%= link_to 'Edit', edit_project_path(@project), class:'btn btn-success' %>
     </div>
     <!-- Canvas -->
     <div id="tabs-1">
