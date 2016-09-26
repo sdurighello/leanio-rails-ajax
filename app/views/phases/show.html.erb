@@ -1,105 +1,159 @@
 <p id="notice"><%= notice %></p>
 
-<h1>
-  Phase <%= @phase.sequence + 1 %>: <%= @phase.name %>
-</h1>
-
-<p>
-  <strong>Start date:</strong>
-  <%= @phase.start_date %>
-</p>
-
-<p>
-  <strong>End date:</strong>
-  <%= @phase.end_date %>
-</p>
-
-<p>
-  <strong>Number of sprints:</strong>
-  <%= @phase.number_of_sprints %>
-</p>
-
-<p>
-  <strong>Sprint length:</strong>
-  <%= @phase.sprint_length %>
-</p>
-
-<p>
-  <strong>Completed</strong>
-  <%= @phase.completed %>
-</p>
-
-<br>
-<%= link_to 'Edit', edit_project_phase_path(@phase.project, @phase) %> |
-<%= link_to 'Destroy', project_phase_path(@project.id, @phase), method: :delete, data: { confirm: 'Are you sure?' } %>
-
-<hr>
-<h6>Experiments</h6>
-<div class="phase_overview">
-  <table class="phase_table">
-    <tr class="top_row">
-      <th>Completed</th>
-      <th>Name</th>
-      <th>Interviews completion</th>
-      <th>Early adopters conversion</th>
-    </tr>
-    <% @phase.experiments.each do |experiment| %>
-      <tr>
-        <th>
-        <% if experiment.completed %>
-          [x]
-        <% else %>
-          [ ]
-        <% end %>
-        </th>
-        <th><%= link_to experiment.name, project_phase_experiment_path(@project.id, @phase.id, experiment) %></th>
-        <th><%= experiment.interviews_completion[:number] %>
-          (<%= number_to_percentage(experiment.interviews_completion[:ratio] * 100, options = {precision: 2}) %>)
-        </th>
-        <th><%= experiment.early_adopters_conversion[:number] %>
-          (<%= number_to_percentage(experiment.early_adopters_conversion[:ratio] * 100, options = {precision: 2}) %>)
-        </th>
-      </tr>
-    <% end %>
-  </table>
-  <br>
-  <%= link_to('Create new experiment', new_project_phase_experiment_path(@project.id, @phase.id), :class => 'btn btn-large btn-success')  %>
+<div class="row" id="phase_header">
+  <div class="col-xs-12">
+    <div class="panel panel-default panel-body">
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form form-horizontal">
+            <div class="form-group col-lg-2 col-md-3 col-sm-4 col-xs-6" style="margin: 1px">
+              <label for="">Start date</label>
+              <input type="text" class="form-control" id="" placeholder="no date yet" value="<%= @phase.start_date.strftime("%d %B %Y") %>" disabled>
+            </div>
+            <div class="form-group col-lg-2 col-md-3 col-sm-4 col-xs-6" style="margin: 1px">
+              <label for="">End date</label>
+              <input type="text" class="form-control" id="" placeholder="no date yet" value="<%= @phase.end_date.strftime("%d %B %Y") %>" disabled>
+            </div>
+            <div class="form-group col-lg-2 col-md-3 col-sm-4 col-xs-6" style="margin: 1px">
+              <label for="">N. of sprints</label>
+              <input type="text" class="form-control" id="" placeholder="no date yet" value="<%= @phase.number_of_sprints %>" disabled>
+            </div>
+            <div class="form-group col-lg-2 col-md-3 col-sm-4 col-xs-6" style="margin: 1px">
+              <label for="">Sprints length</label>
+              <input type="text" class="form-control" id="" placeholder="no date yet" value="<%= @phase.sprint_length %>" disabled>
+            </div>
+          </div>
+        </div>
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-xs-12">
+          <div class="form">
+            <div class="form-group col-lg-4 col-md-6 col-sm-6 col-xs-6">
+              <input type="text" class="form-control" id="" placeholder="no date yet" value="<%= @phase.completed ? 'Phase is completed' : 'Phase is not completed' %>" disabled>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <%= link_to 'Edit', edit_project_phase_path(@phase.project, @phase), class:'btn btn-success btn-sm' %>
+    </div>
+  </div>
 </div>
 
-<hr>
-
-<h6>Sprints</h6>
-<div class="phase_overview">
-  <table class="phase_table">
-    <tr class="top_row">
-      <th>Completed</th>
-      <th>Sprint #</th>
-      <th>Start date</th>
-      <th>End date</th>
-      <th>Stories completion</th>
-      <th>Points completion</th>
-      <th>Happiness</th>
-    </tr>
-    <% @phase.sprints.order(:start_date).each do |sprint| %>
-      <tr>
-        <th>
-        <% if sprint.completed %>
-          [x]
-        <% else %>
-          [ ]
-        <% end %>
-        </th>
-        <th><%= link_to "sprint #{@phase.sprints.find_index(sprint) + 1}", project_phase_sprint_path(@project.id, @phase.id, sprint) %></th>
-        <th><%= sprint.start_date.present? ? sprint.start_date.strftime("%d %B %Y") : '-' %></th>
-        <th><%= sprint.end_date.present? ? sprint.end_date.strftime("%d %B %Y") : '-' %></th>
-        <th><%= sprint.stories_completion[:number] %>
-          (<%= number_to_percentage(sprint.stories_completion[:ratio] * 100, options = {precision: 2}) %>)
-        </th>
-        <th><%= sprint.points_completion[:number] %>
-          (<%= number_to_percentage(sprint.points_completion[:ratio] * 100, options = {precision: 2}) %>)
-        </th>
-        <th><%= sprint.happiness %></th>
-      </tr>
-    <% end %>
-  </table>
+<div class="row">
+  <div class="col-xs-12">
+    <div id="tabs" data-selected-tab="<%= params[:selected_tab] || 0 %>" style="border: 0">
+      <ul>
+        <li><a href="#tabs-0">Sprints</a></li>
+        <li><a href="#tabs-1">Experiments</a></li>
+      </ul>
+      <div class="panel panel-default panel-body">
+        <!-- Sprints -->
+        <div id="tabs-0">
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover table-condensed">
+              <thead>
+                <tr>
+                  <th>Completed</th>
+                  <th>Sprint</th>
+                  <th>Start date</th>
+                  <th>End date</th>
+                  <th>Stories</th>
+                  <th>Points</th>
+                  <th>Happiness</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @phase.sprints.order(:start_date).each do |sprint| %>
+                  <tr>
+                    <td>
+                    <% if sprint.completed %>
+                      [x]
+                    <% else %>
+                      [ ]
+                    <% end %>
+                    </td>
+                    <td>
+                      <%= "Sprint #{@phase.sprints.find_index(sprint) + 1}" %>
+                    </td>
+                    <td>
+                      <%= sprint.start_date.present? ? sprint.start_date.strftime("%d %B %Y") : '-' %>
+                    </td>
+                    <td>
+                      <%= sprint.end_date.present? ? sprint.end_date.strftime("%d %B %Y") : '-' %>
+                    </td>
+                    <td><%= sprint.stories_completion[:number] %>
+                      (<%= number_to_percentage(sprint.stories_completion[:ratio] * 100, options = {precision: 2}) %>)
+                    </td>
+                    <td><%= sprint.points_completion[:number] %>
+                      (<%= number_to_percentage(sprint.points_completion[:ratio] * 100, options = {precision: 2}) %>)
+                    </td>
+                    <td>
+                      <%= sprint.happiness %>
+                    </td>
+                    <td>
+                      <%= link_to project_phase_sprint_path(@project.id, @phase.id, sprint), class: "btn btn-sm btn-success" do %>
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true">
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <!-- Experiments -->
+        <div id="tabs-1">
+          <%= link_to('Add new experiment', new_project_phase_experiment_path(@project.id, @phase.id), :class => 'btn btn-success')  %>
+          <hr>
+          <div class="table-responsive">
+            <table class="table table-bordered table-hover table-condensed">
+              <thead>
+                <tr>
+                  <th>Completed</th>
+                  <th>Name</th>
+                  <th>Interviews</th>
+                  <th>Early adopters</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% @phase.experiments.each do |experiment| %>
+                  <tr>
+                    <td>
+                      <% if experiment.completed %>
+                        [x]
+                      <% else %>
+                        [ ]
+                      <% end %>
+                    </td>
+                    <td>
+                      <%= experiment.name %>
+                    </td>
+                    <td><%= experiment.interviews_completion[:number] %>
+                      (<%= number_to_percentage(experiment.interviews_completion[:ratio] * 100, options = {precision: 2}) %>)
+                    </td>
+                    <td><%= experiment.early_adopters_conversion[:number] %>
+                      (<%= number_to_percentage(experiment.early_adopters_conversion[:ratio] * 100, options = {precision: 2}) %>)
+                    </td>
+                    <td>
+                      <%= link_to project_phase_experiment_path(@project.id, @phase.id, experiment), class: "btn btn-sm btn-success" do %>
+                        <span class="glyphicon glyphicon-pencil" aria-hidden="true">
+                      <% end %>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+  </div>
 </div>
+
+<script>
+  $( function() {
+    var selectedTab = $("#tabs").data("selected-tab")
+    $( "#tabs" ).tabs({ active: selectedTab });
+  });
+</script>

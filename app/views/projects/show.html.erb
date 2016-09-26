@@ -54,12 +54,15 @@
       <hr>
       <div class="row">
         <% @project.phases.order(:sequence).each do |phase| %>
-          <div class="col-sm-3">
+          <div class="col-md-4 col-xs-6">
             <div class="panel <%= @project.current_phase_id == phase.id ? 'panel-info' : 'panel-default' %>">
               <div class="panel-heading">
-                <p><%= link_to phase.name, project_phase_path(@project.id, phase) %></p>
-                <p><%= phase.start_date.present? ? phase.start_date.strftime("%d %B %Y") : '--' %> - <%= phase.end_date.present? ? phase.end_date.strftime("%d %B %Y") : '--' %></p>
-                <%= button_to(name = "Set to current", "/projects/#{@project.id}/set_current_phase" , html_options = {data: { confirm: 'Any previous phase will be set to complete. Continue?' }, method: "post", params:{phase_id: phase.id, id: @project.id}, disabled: @project.current_phase_id == phase.id, class: 'btn btn-info btn-xs' }) %>
+                <p class="text-center"><b><%= phase.name %></b></p>
+                <p>
+                  <%= phase.start_date.present? ? phase.start_date.strftime("%d %b %Y") : '--' %> - <%= phase.end_date.present? ? phase.end_date.strftime("%d %b %Y") : '--' %></p>
+                </p>
+                <%= button_to(name = "Set to current", "/projects/#{@project.id}/set_current_phase" , html_options = {form: {style: 'display:inline-block;'}, data: { confirm: 'Any previous phase will be set to complete. Continue?' }, method: "post", params:{phase_id: phase.id, id: @project.id}, disabled: @project.current_phase_id == phase.id, class: 'btn btn-info' }) %>
+                <%= link_to 'Edit', project_phase_path(@project.id, phase), class:'btn btn-success' %>
               </div>
             </div>
           </div>
@@ -78,7 +81,9 @@
         <% @project.hypotheses.each do |hypothesis| %>
           <div class="col-sm-3">
             <div class="panel panel-default panel-heading">
-              <p><%= link_to hypothesis.name, project_hypothesis_path(@project.id, hypothesis) %></p>
+              <p>
+                <%= link_to hypothesis.name, project_hypothesis_path(@project.id, hypothesis) %>
+              </p>
             </div>
           </div>
         <% end %>
