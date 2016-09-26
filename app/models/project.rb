@@ -1,7 +1,6 @@
 class Project < ApplicationRecord
   has_many :canvases, dependent: :destroy
   has_many :phases, inverse_of: :project, dependent: :destroy
-  has_many :teams, dependent: :destroy
   has_many :hypotheses, dependent: :destroy
   has_and_belongs_to_many :users
 

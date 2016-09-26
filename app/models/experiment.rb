@@ -3,6 +3,7 @@ class Experiment < ApplicationRecord
   has_many :results, dependent: :destroy
   has_many :hypotheses, through: :results
   has_and_belongs_to_many :sprints
+  has_and_belongs_to_many :users
 
   accepts_nested_attributes_for :results
 
