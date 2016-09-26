@@ -38,10 +38,6 @@ Rails.application.routes.draw do
     resources :hypotheses
     resources :results
 
-    resources :teams do
-      resources :team_members
-    end
-
   end
 
 end

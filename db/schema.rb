@@ -134,25 +134,6 @@ ActiveRecord::Schema.define(version: 20160921063636) do
     t.index ["phase_id"], name: "index_sprints_on_phase_id", using: :btree
   end
 
-  create_table "team_members", force: :cascade do |t|
-    t.string   "role"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer  "user_id"
-    t.integer  "team_id"
-    t.index ["team_id"], name: "index_team_members_on_team_id", using: :btree
-    t.index ["user_id"], name: "index_team_members_on_user_id", using: :btree
-  end
-
-  create_table "teams", force: :cascade do |t|
-    t.string   "name"
-    t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.integer  "project_id"
-    t.index ["project_id"], name: "index_teams_on_project_id", using: :btree
-  end
-
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
@@ -179,7 +160,4 @@ ActiveRecord::Schema.define(version: 20160921063636) do
   add_foreign_key "results", "experiments"
   add_foreign_key "results", "hypotheses"
   add_foreign_key "sprints", "phases"
-  add_foreign_key "team_members", "teams"
-  add_foreign_key "team_members", "users"
-  add_foreign_key "teams", "projects"
 end
