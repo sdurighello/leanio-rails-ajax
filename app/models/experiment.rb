@@ -5,6 +5,9 @@ class Experiment < ApplicationRecord
   has_and_belongs_to_many :sprints
   has_and_belongs_to_many :users
 
+  validates :users, inclusion: { in: :project_users,
+    message: "%{value} is not a project user" }, allow_nil: true
+
   accepts_nested_attributes_for :results
 
   def add_hypothesis(hypothesis_id)
@@ -46,6 +49,12 @@ class Experiment < ApplicationRecord
     number = early_adopters_converted - early_adopters_planned
     ratio = number.to_f != 0 ? number.to_f / self.early_adopters_planned : 0
     {number: number, ratio: ratio}
+  end
+
+  private
+
+  def project_users
+    self.phase.project.users
   end
 
 
