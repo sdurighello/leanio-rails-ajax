@@ -38,8 +38,9 @@ Rails.application.routes.draw do
     resources :hypotheses
     resources :results
 
-    resources :teams # TODO teams
-    resources :team_members # TODO team_members
+    resources :teams do
+      resources :team_members
+    end
 
   end
 

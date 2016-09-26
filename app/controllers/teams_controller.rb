@@ -2,8 +2,10 @@ class TeamsController < ApplicationController
   before_action :authenticate_user!
   before_action :user_is_member
   before_action :set_project
-  before_action :set_team, only: [:show, :edit, :update, :destroy]
-  before_action :project_is_active, except: [:index, :show] # TODO
+  before_action :set_team, except: [:index, :new, :create]
+  before_action :project_is_active, except: [:index, :show]
+
+  add_breadcrumb "Projects", :projects_path
 
   # GET /teams
   # GET /teams.json
@@ -14,15 +16,21 @@ class TeamsController < ApplicationController
   # GET /teams/1
   # GET /teams/1.json
   def show
+    add_breadcrumb "Project: #{@project.name}", project_path(@project)
+    add_breadcrumb "Team: #{@team.name}", project_teams_path(@project, @team)
   end
 
   # GET /teams/new
   def new
+    add_breadcrumb "Project: #{@project.name}", project_path(@project)
+    add_breadcrumb "New Team"
     @team = Team.new
   end
 
   # GET /teams/1/edit
   def edit
+    add_breadcrumb "Project: #{@project.name}", project_path(@project)
+    add_breadcrumb "Team: #{@team.name}", project_teams_path(@project, @team)
   end
 
   # POST /teams
@@ -60,25 +68,30 @@ class TeamsController < ApplicationController
   def destroy
     @team.destroy
     respond_to do |format|
-      format.html { redirect_to project_teams_path(@project.id), notice: 'Team was successfully destroyed.' }
+      format.html { redirect_to project_path(@project.id), notice: 'Team was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
+    def project_is_active
+      project = Project.find(params[:project_id])
+      team = Team.find(params[:id]) if params[:id].present?
+      unless project.active
+        flash[:error] = "This project is not active"
+        if params[:id].present?
+          redirect_to project_teams_path(project.id, team), notice: 'This project is not active' # halts request cycle
+        else
+          redirect_to project_path(project), notice: 'This project is not active'
+        end
+      end
+    end
     def user_is_member
       project = Project.find(params[:project_id])
       unless (current_user.id == project.created_by) || (project.users.any? { |u| u.id == current_user.id  })
         flash[:error] = "You are not a member of this project"
         redirect_to projects_path, notice: 'You are not a member of this project' # halts request cycle
-      end
-    end
-    def project_is_active
-      project = Project.find(params[:project_id])
-      unless project.active
-        flash[:error] = "This project is not active"
-        redirect_to project, notice: 'This project is not active' # halts request cycle
       end
     end
     def set_project

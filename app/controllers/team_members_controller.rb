@@ -2,22 +2,31 @@ class TeamMembersController < ApplicationController
   before_action :authenticate_user!
   before_action :user_is_member
   before_action :set_project
-  before_action :set_team_member, only: [:show, :edit, :update, :destroy]
-  before_action :project_is_active, except: [:index, :show] # TODO
+  before_action :set_team
+  before_action :set_team_member, except: [:index, :new, :create]
+  before_action :project_is_active, except: [:index, :show]
+
+  add_breadcrumb "Projects", :projects_path
 
   # GET /team_members
   # GET /team_members.json
   def index
-    @team_members = TeamMember.where(project_id: params[:project_id])
+    @team_members = TeamMember.where(team_id: params[:team_id])
   end
 
   # GET /team_members/1
   # GET /team_members/1.json
   def show
+    add_breadcrumb "Project: #{@project.name}", project_path(@project)
+    add_breadcrumb "Team: #{@team.name}", project_team_path(@project, @team)
+    add_breadcrumb "Team member: #{@team_member.user.name}", project_team_team_member_path(@project, @team, @team_member)
   end
 
   # GET /team_members/new
   def new
+    add_breadcrumb "Project: #{@project.name}", project_path(@project)
+    add_breadcrumb "Team: #{@team.name}", project_team_path(@project, @team)
+    add_breadcrumb "New team member"
     @team_member = TeamMember.new
   end
 
@@ -74,15 +83,24 @@ class TeamMembersController < ApplicationController
         redirect_to projects_path, notice: 'You are not a member of this project' # halts request cycle
       end
     end
-    def project_is_active # TODO
+    def project_is_active
       project = Project.find(params[:project_id])
+      team = Team.find(params[:team_id])
+      team_member = TeamMember.find(params[:id]) if params[:id].present?
       unless project.active
         flash[:error] = "This project is not active"
-        redirect_to project, notice: 'This project is not active' # halts request cycle
+        if params[:id].present?
+          redirect_to project_team_team_member_path(project.id, team.id, team_member), notice: 'This project is not active' # halts request cycle
+        else
+          redirect_to project_team_path(project.id, team), notice: 'This project is not active'
+        end
       end
     end
     def set_project
       @project = Project.find(params[:project_id])
+    end
+    def set_team
+      @team = Team.find(params[:team_id])
     end
     def set_team_member
       @team_member = TeamMember.find(params[:id])
@@ -90,6 +108,6 @@ class TeamMembersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def team_member_params
-      params.require(:team_member).permit(:project_id, :role)
+      params.require(:team_member).permit(:team_id, :user_id, :role)
     end
 end
