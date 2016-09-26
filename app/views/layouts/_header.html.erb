@@ -1,5 +1,4 @@
-
-<nav class="navbar navbar-default">
+<nav class="navbar navbar-inverse">
   <div class="container-fluid">
     <!-- Brand and toggle get grouped for better mobile display -->
     <div class="navbar-header">
@@ -9,36 +8,37 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <%= link_to('Running Lean on Rails', root_path, class: 'navbar-brand')%>
+      <a class="navbar-brand" href="#" style="color: red">
+        Running Lean on Rails
+      </a>
     </div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-      <% if  user_signed_in? %>
-        <ul class="nav navbar-nav">
-            <li><%= link_to "Projects", projects_path , :class => "btn btn-info darkblue" %></li>
-        </ul>
-        <div class="input-group navbar-form navbar-left">
-          <%= form_tag(new_project_path, :method => "get", id: "srch-term", class: 'navbar-form navbar-left') do %>
-            <%= text_field_tag :search, params[:search], placeholder: "Search", class: 'form-control lightblue' %>
-            <span class="input-group-btn">
-              <%= button_tag(type: "submit", class: 'btn btn-default darkblue') do %>
-               <i class="glyphicon glyphicon-search"></i>
-              <% end %>
-            </span>
-          <% end %>
+      <ul class="nav navbar-nav">
+        <li><%= link_to "Projects", projects_path %></li>
+      </ul>
+      <div class="input-group navbar-form navbar-left" style="margin: 0">
+        <%= form_tag(new_project_path, :method => "get", id: "srch-term", class: 'navbar-form navbar-left') do %>
+          <%= text_field_tag :search, params[:search], placeholder: "Search", class: 'form-control' %>
+          <span class="input-group-btn">
+            <%= button_tag(type: "submit", class: 'btn btn-default') do %>
+             <i class="glyphicon glyphicon-search"></i>
+            <% end %>
+          </span>
+        <% end %>
+      </div>
+      <!-- <form class="navbar-form navbar-left">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
         </div>
-      <% end %>
+        <button type="submit" class="btn btn-default">Submit</button>
+      </form> -->
       <ul class="nav navbar-nav navbar-right">
         <% if !user_signed_in? %>
           <li><%= link_to "Sign up", new_user_registration_path %></li>
           <li><%= link_to "Sign in", new_user_session_path %></li>
         <% else %>
-          <li>
-            <%= link_to  new_project_path , :class => "btn btn-info darkblue" do %>
-               <i class="glyphicon glyphicon-plus"></i>
-            <% end %>
-          </li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
               <%= current_user.name %> <span class="caret"></span>

@@ -1,5 +1,160 @@
 <p id="notice"><%= notice %></p>
 
+<div>
+  <ul class="nav nav-tabs">
+		<li class="active">
+      <a  href="#header" data-toggle="tab">Header</a>
+		</li>
+    <li>
+      <a href="#canvases" data-toggle="tab">Canvases</a>
+		</li>
+		<li>
+      <a href="#phases" data-toggle="tab">Phases</a>
+		</li>
+		<li>
+      <a href="#hypotheses" data-toggle="tab">Hypotheses</a>
+		</li>
+    <li>
+      <a href="#members" data-toggle="tab">Members</a>
+		</li>
+	</ul>
+
+	<div class="tab-content container">
+
+	  <div class="tab-pane active" id="header">
+      <br>
+      <p>
+        <strong>Name:</strong>
+        <%= @project.name %>
+      </p>
+      <p>
+        <strong>Description:</strong>
+        <%= @project.description %>
+      </p>
+      <div>
+        <strong><%= @project.active ? 'Active' : 'Inactive' %></strong>
+        <%= button_to(name = @project.active ? 'Set to Inactive' : 'Set to Active', "/projects/#{@project.id}/update_active_status" , html_options = {form: {style: 'display:inline-block'}, method: "post", params:{id: @project.id}, class: 'btn-link'}) %>
+      </div>
+      <br />
+      <%= link_to 'Edit', edit_project_path(@project) %> |
+      <%= link_to 'Destroy', @project, method: :delete, data: { confirm: 'Are you sure?' } %>
+		</div>
+
+		<div class="tab-pane" id="canvases">
+      <br>
+      <div class="phase_overview">
+        <table class="phase_table">
+          <tr class="top_row">
+            <th>Name</th>
+          </tr>
+          <% @project.canvases.each do |canvas| %>
+            <tr>
+              <th><%= link_to canvas.name, project_canvas_path(@project.id, canvas) %></th>
+            </tr>
+          <% end %>
+        </table>
+        <br />
+        <%= link_to 'New canvas', new_project_canvas_path(@project.id), :class => 'btn btn-large btn-success' %>
+      </div>
+		</div>
+
+    <div class="tab-pane" id="phases">
+      <br>
+      <div class="phase_overview">
+        <table class="phase_table">
+          <tr class="top_row">
+            <th>Current</th>
+            <th>Name</th>
+            <th>Start date</th>
+            <th>End date</th>
+          </tr>
+          <% @project.phases.order(:sequence).each do |phase| %>
+            <tr>
+              <th>
+              <% if @project.current_phase_id == phase.id %>
+                [x]
+              <% else %>
+                [ ]
+              <% end %>
+              </th>
+              <th><%= link_to phase.name, project_phase_path(@project.id, phase) %></th>
+              <th><%= phase.start_date.present? ? phase.start_date.strftime("%d %B %Y") : '-' %></th>
+              <th><%= phase.end_date.present? ? phase.end_date.strftime("%d %B %Y") : '-' %></th>
+              <th>
+                <%= button_to(name = "Set to current", "/projects/#{@project.id}/set_current_phase" , html_options = {data: { confirm: 'Any previous phase will be set to complete. Continue?' }, method: "post", params:{phase_id: phase.id, id: @project.id}, disabled: @project.current_phase_id == phase.id, class: 'btn btn-info btn-xs' }) %>
+              </th>
+            </tr>
+          <% end %>
+        </table>
+        <br />
+        <%= link_to 'New phase', new_project_phase_path(@project.id), :class => 'btn btn-large btn-success' %>
+      </div>
+		</div>
+
+    <div class="tab-pane" id="hypotheses">
+      <br>
+      <div class="phase_overview">
+        <table class="phase_table">
+          <tr class="top_row">
+            <th>Name</th>
+          </tr>
+          <% @project.hypotheses.each do |hypothesis| %>
+            <tr>
+              <th><%= link_to hypothesis.name, project_hypothesis_path(@project.id, hypothesis) %></th>
+            </tr>
+          <% end %>
+        </table>
+        <br />
+        <%= link_to 'New hypothesis', new_project_hypothesis_path(@project.id), :class => 'btn btn-large btn-success' %>
+      </div>
+		</div>
+
+    <div class="tab-pane" id="members">
+      <br>
+      <p>Project created by: <%= @project.creator.name %> - <%= @project.creator.email %></p>
+      <p>
+        <%= bootstrap_form_tag url: "/projects/#{@project.id}/add_user", layout: :inline do |f| %>
+          <%= f.hidden_field :id, value: @project.id %>
+          <%= f.select(:user_id, options_for_select(User.all.map { |h| [h.name, h.id] }), hide_label: true) %>
+          <%= f.submit 'Add' %>
+        <% end %>
+      </p>
+      <div class="phase_overview">
+        <table class="phase_table">
+          <tr class="top_row">
+            <th>Name</th>
+            <th>Email</th>
+          </tr>
+          <% @project.users.each do |user| %>
+            <tr>
+              <th><%= user.name %></th>
+              <th><%= user.email %></th>
+              <th>
+                <%= button_to(name = "Remove", "/projects/#{@project.id}/remove_user" , html_options = {method: "post", params:{id: @project.id, user_id: user.id}, class: 'btn btn-danger btn-xs'}) %>
+              </th>
+            </tr>
+          <% end %>
+        </table>
+      </div>
+		</div>
+
+	</div>
+</div>
+
+
+
+<br>
+<br>
+<br>
+
+
+
+
+
+
+
+
+
 <p>
   <strong>Name:</strong>
   <%= @project.name %>
