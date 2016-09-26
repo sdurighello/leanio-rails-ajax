@@ -8,7 +8,7 @@ class ExperimentsController < ApplicationController
 
   add_breadcrumb "Projects", :projects_path
 
-  # Adding / Removing hypotheses to/from experiments
+  # Adding / Removing HYPOTHESES to/from experiments
   def add_hypothesis
     if @experiment.add_hypothesis(params[:hypothesis_id].to_i)
       redirect_to project_phase_experiment_path(@project.id, @phase.id, @experiment), notice: 'Hypothesis was successfully added'
@@ -22,6 +22,23 @@ class ExperimentsController < ApplicationController
       redirect_to project_phase_experiment_path(@project.id, @phase.id, @experiment), notice: 'Hypothesis was successfully removed'
     else
       redirect_to project_phase_experiment_path(@project.id, @phase.id, @experiment), notice: 'Hypothesis cannot be removed'
+    end
+  end
+
+  # Adding / Removing USERS to/from experiments
+  def add_user
+    if @experiment.add_user(params[:user_id].to_i)
+      redirect_to project_phase_experiment_path(@project.id, @phase.id, @experiment), notice: 'User was successfully added'
+    else
+      redirect_to project_phase_experiment_path(@project.id, @phase.id, @experiment), notice: 'User cannot be added'
+    end
+  end
+
+  def remove_user
+    if @experiment.remove_user(params[:user_id].to_i)
+      redirect_to project_phase_experiment_path(@project.id, @phase.id, @experiment), notice: 'User was successfully removed'
+    else
+      redirect_to project_phase_experiment_path(@project.id, @phase.id, @experiment), notice: 'User cannot be removed'
     end
   end
 

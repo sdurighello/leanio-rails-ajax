@@ -21,6 +21,8 @@ Rails.application.routes.draw do
       resources :experiments do
         post 'add_hypothesis' => 'experiments#add_hypothesis'
         post 'remove_hypothesis' => 'experiments#remove_hypothesis'
+        post 'add_user' => 'experiments#add_user'
+        post 'remove_user' => 'experiments#remove_user'
       end
 
       resources :sprints

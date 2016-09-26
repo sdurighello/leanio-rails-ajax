@@ -68,6 +68,33 @@
           </table>
         </div>
 
+        <!-- Experiment Users -->
+        <h6>Project members assigned to experiment</h6>
+        <%= bootstrap_form_tag url: "/projects/#{@project.id}/phases/#{@phase.id}/experiments/#{@experiment.id}/add_user" do |f|%>
+          <%= f.hidden_field :id, value: @experiment.id %>
+          <%= f.select(:user_id, @experiment.phase.project.users.collect {|u| [ u.name, u.id ] },) %>
+          <%= f.submit("Add user") %>
+        <% end %>
+        <table class="table table-bordered table-condensed">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @experiment.users.each do |user| %>
+              <tr>
+                <td><%= user.name %></td>
+                <td><%= user.email %></td>
+                <td>
+                  <%= button_to("Remove", "/projects/#{@project.id}/phases/#{@phase.id}/experiments/#{@experiment.id}/remove_user" , html_options = {method: "post", params:{project_id: @project.id, phase_id: @phase_id, id: @experiment.id, user_id: user.id}, class: 'btn btn-danger btn-xs' }) %>
+                </td>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
 
       </div>
     </div>

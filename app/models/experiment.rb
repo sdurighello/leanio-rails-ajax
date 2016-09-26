@@ -5,14 +5,11 @@ class Experiment < ApplicationRecord
   has_and_belongs_to_many :sprints
   has_and_belongs_to_many :users
 
-  validates :users, inclusion: { in: :project_users,
-    message: "%{value} is not a project user" }, allow_nil: true
-
   accepts_nested_attributes_for :results
 
   def add_hypothesis(hypothesis_id)
     if Result.find_by(experiment_id:self.id, hypothesis_id: hypothesis_id).present?
-      self.errors.add :base, 'This hypothesis has been already added'
+      self.errors.add :base, 'This hypothesis has already been added'
       return false
     else
       begin
@@ -30,8 +27,43 @@ class Experiment < ApplicationRecord
       result = Result.find(result_id)
       Result.destroy(result.id)
     rescue
-      self.errors.add :base, 'This hypothesis cannot be added'
+      self.errors.add :base, 'This hypothesis cannot be removed'
       return false
+    end
+  end
+
+  def add_user(user_id)
+    user = User.find_by(id: user_id)
+    if !self.phase.project.users.include?(user)
+      self.errors.add :base, 'This user is not a project user'
+      return false
+    elsif self.users.include?(user)
+      self.errors.add :base, 'This user has already been added'
+      return false
+    else
+      begin
+        self.users << user
+        self.save!
+      rescue
+        self.errors.add :base, 'This user cannot be added'
+        return false
+      end
+    end
+  end
+
+  def remove_user(user_id)
+    user = User.find_by(id: user_id)
+    if !self.users.include?(user)
+      self.errors.add :base, 'This user was not added to the experiment'
+      return false
+    else
+      begin
+        self.users.destroy(user)
+        self.save!
+      rescue
+        self.errors.add :base, 'This user cannot be removed'
+        return false
+      end
     end
   end
 
@@ -50,12 +82,5 @@ class Experiment < ApplicationRecord
     ratio = number.to_f != 0 ? number.to_f / self.early_adopters_planned : 0
     {number: number, ratio: ratio}
   end
-
-  private
-
-  def project_users
-    self.phase.project.users
-  end
-
 
 end
