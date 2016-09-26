@@ -4,11 +4,11 @@
 
 <div class="container block">
     <% @projects.each do |project| %>
-        <% if project.active == true %>
+        <% if project.active %>
             <div class="col-md-3 col-sm-6">
                 <%= link_to project do %>
-                    <div class="panel panel-default activeblock">
-                        <div class="panel-body" style="height: 80px">
+                    <div class="panel panel-info">
+                        <div class="panel-heading" style="height: 80px">
                           <td><%= project.name %></td><br>
                         </div>
                     </div>
@@ -33,11 +33,11 @@
 
 <div class="container block">
     <% @projects.each do |project| %>
-        <% if project.active == false %>
+        <% if !project.active %>
             <div class="col-md-3 col-sm-6">
                 <%= link_to project do %>
                     <div class="panel panel-default">
-                        <div class="panel-body" style="height: 80px">
+                        <div class="panel-heading" style="height: 80px">
                             <td><%= project.name %></td><br>
                         </div>
                     </div>

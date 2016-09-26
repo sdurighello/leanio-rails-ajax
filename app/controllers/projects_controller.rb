@@ -9,26 +9,26 @@ class ProjectsController < ApplicationController
   # Manage user members
   def add_user
     if @project.add_user(params[:user_id].to_i, current_user.id)
-      redirect_to @project, notice: 'User was successfully added.'
+      redirect_to project_path(id: @project.id, selected_tab: 4), notice: 'User was successfully added'
     else
-      redirect_to @project, notice: 'User cannot be added'
+      redirect_to project_path(id: @project.id, selected_tab: 4), notice: 'User cannot be added'
     end
   end
 
   def remove_user
     if @project.remove_user(params[:user_id].to_i, current_user.id)
-      redirect_to @project, notice: 'User was successfully removed.'
+      redirect_to project_path(id: @project.id, selected_tab: 4), notice: 'User was successfully removed'
     else
-      redirect_to @project, notice: 'User cannot be removed'
+      redirect_to project_path(id: @project.id, selected_tab: 4), notice: 'User cannot be removed'
     end
   end
 
   # SET current phase
   def set_current_phase
     if @project.set_current_phase(params[:phase_id].to_i)
-      redirect_to @project, notice: 'Project was successfully updated.'
+      redirect_to project_path(id: @project.id, selected_tab: 4), notice: 'Project was successfully updated'
     else
-      redirect_to @project, notice: 'Could not set the current phase'
+      redirect_to project_path(id: @project.id, selected_tab: 4), notice: 'Could not update the current phase'
     end
   end
 
