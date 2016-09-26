@@ -4,7 +4,7 @@ class User < ApplicationRecord
   has_many :team_members, dependent: :destroy
 
   def all_projects_for_user
-    self.projects + Project.where(created_by: self.id)
+    (self.projects + Project.where(created_by: self.id)).uniq
   end
 
   # Include default devise modules. Others available are:
