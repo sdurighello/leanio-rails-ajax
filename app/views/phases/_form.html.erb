@@ -1,48 +1,45 @@
 
-<h3>Project: <em><%= @project.name %></em> - Phase <%= @phase.sequence + 1 %>: <em><%= @phase.name %></em></h3>
+<div class="col-md-4 col-sm-6 col-xs-12">
+  <%= bootstrap_form_for([@project, @phase]) do |f| %>
 
-<%= form_for([@project, @phase]) do |f| %>
-  <% if @phase.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@phase.errors.count, "error") %> prohibited this @phase from being saved:</h2>
-      <ul>
-      <% @phase.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+    <% if @phase.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@phase.errors.count, "error") %> prohibited this @phase from being saved:</h2>
+        <ul>
+        <% @phase.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="form-inline">
+      <%= f.date_select :start_date %>
     </div>
-  <% end %>
+    <br>
 
-  <div class="field">
-    <%= f.label :start_date %>
-    <%= f.date_select :start_date %>
-  </div>
-
-  <div class="field">
-    <%= f.label :number_of_sprints %>
     <%= f.number_field :number_of_sprints %>
-  </div>
-
-  <div class="field">
-    <%= f.label :sprint_length %>
     <%= f.number_field :sprint_length %>
-  </div>
 
-  <% if @phase.new_record? %>
+    <% if @phase.new_record? %>
 
-    <%= f.hidden_field :completed, value: false %>
-    <%= f.hidden_field :project_id, value: @project.id %>
-    <%= f.hidden_field :sequence, value: @phase.sequence %>
+      <%= f.hidden_field :completed, value: false %>
+      <%= f.hidden_field :project_id, value: @project.id %>
+      <%= f.hidden_field :sequence, value: @phase.sequence %>
 
-  <% else %>
+    <% else %>
 
-    <%= f.hidden_field :end_date, value: @phase.end_date %>
-    <%= f.hidden_field :project_id, value: @project.id %>
-    <%= f.hidden_field :sequence, value: @phase.sequence %>
+      <%= f.hidden_field :end_date, value: @phase.end_date %>
+      <%= f.hidden_field :project_id, value: @project.id %>
+      <%= f.hidden_field :sequence, value: @phase.sequence %>
+
+    <% end %>
+
+    <%= f.submit "Save", class:"btn btn-success" %>
+    <% if !@phase.new_record? %>
+      <%= link_to 'Delete phase', project_phase_path(@project.id, @phase), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+    <% end %>
+    <%= link_to 'Cancel', @phase.new_record? ? project_path(id: @project.id, selected_tab: 1) : project_phase_path(@project.id, @phase), class:"btn btn-info" %>
 
   <% end %>
-
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+</div>
