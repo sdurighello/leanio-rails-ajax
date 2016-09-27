@@ -1,80 +1,59 @@
 
-<p><b>Project:</b> <em><%= @project.name %></em> - <b>Phase:</b> <em><%= @phase.name %></em></p>
+<div class="col-xs-12">
+  <%= bootstrap_form_for([@project, @phase, @sprint]) do |f| %>
+    <% if @sprint.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@sprint.errors.count, "error") %> prohibited this sprint from being saved:</h2>
 
-<%= form_for([@project, @phase, @sprint]) do |f| %>
-  <% if @sprint.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@sprint.errors.count, "error") %> prohibited this sprint from being saved:</h2>
+        <ul>
+        <% @sprint.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
 
-      <ul>
-      <% @sprint.errors.full_messages.each do |message| %>
-        <li><%= message %></li>
-      <% end %>
-      </ul>
+    <%= f.hidden_field :phase_id, value: @phase.id %>
+    <%= f.hidden_field :start_date, value: @sprint.start_date %>
+    <%= f.hidden_field :end_date, value: @sprint.end_date %>
+
+    <div class="panel panel-body">
+      <p style="display: inline">
+        <span class="control-label" style="display: inline">Start date:</span>
+        <span class="form-control" style="display: inline"><%= @sprint.start_date %></span>
+
+      </p>
+      &nbsp;
+      <p style="display: inline">
+        <span class="control-label" style="display: inline">End date:</span>
+        <span class="form-control" style="display: inline"><%= @sprint.end_date %></span>
+      </p>
+      &nbsp;
+      <p style="display: inline" class="pull-right">
+        <%= f.check_box :completed, inline: :true %>
+      </p>
     </div>
-  <% end %>
 
-  <%= f.hidden_field :start_date, value: @sprint.start_date %>
-  <%= f.hidden_field :end_date, value: @sprint.end_date %>
+    <hr>
 
-  <p>
-    <strong>Start date:</strong>
-    <%= @sprint.start_date %>
-  </p>
-
-  <p>
-    <strong>End date:</strong>
-    <%= @sprint.end_date %>
-  </p>
-
-  <div class="field">
-    <%= f.label :completed %>
-    <%= f.check_box :completed %>
-  </div>
-
-  <div class="field">
-    <%= f.label :things_done %>
     <%= f.text_area :things_done %>
-  </div>
 
-  <div class="field">
-    <%= f.label :things_learned %>
     <%= f.text_area :things_learned %>
-  </div>
 
-  <div class="field">
-    <%= f.label :stories_estimated %>
     <%= f.number_field :stories_estimated %>
-  </div>
 
-  <div class="field">
-    <%= f.label :stories_completed %>
     <%= f.number_field :stories_completed %>
-  </div>
 
-  <div class="field">
-    <%= f.label :points_estimated %>
     <%= f.number_field :points_estimated %>
-  </div>
 
-  <div class="field">
-    <%= f.label :points_completed %>
     <%= f.number_field :points_completed %>
-  </div>
 
-  <div class="field">
-    <%= f.label :happiness %>
     <%= f.number_field :happiness %>
-  </div>
 
-  <div class="field">
-    <%= f.label :impediments %>
     <%= f.text_area :impediments %>
-  </div>
 
-  <%= f.hidden_field :phase_id, value: @phase.id %>
+    <%= f.submit "Save", class:"btn btn-success" %>
+    <%= link_to 'Cancel', @sprint.new_record? ? project_phase_path(@project.id, @phase.id) : project_phase_sprint_path(@project.id, @phase.id, @sprint), class:"btn btn-info" %>
 
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+  <% end %>
+</div>
