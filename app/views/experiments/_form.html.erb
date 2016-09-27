@@ -1,6 +1,4 @@
 
-<p><b>Project:</b> <em><%= @project.name %></em> - <b>Phase:</b> <em><%= @phase.name %></em></p>
-
 <%= bootstrap_form_for([@project, @phase, @experiment]) do |f| %>
   <% if @experiment.errors.any? %>
     <div id="error_explanation">
@@ -33,7 +31,7 @@
     </div>
   </div>
 
-  <br>
+  <hr>
 
   <div class="row">
     <%= f.fields_for :results do |results_form| %>
@@ -50,7 +48,19 @@
       </div>
     <% end %>
   </div>
+
+  <hr>
+
+  <div class="row">
+    <div class="col-xs-12">
+      <%= f.submit "Save", class:"btn btn-success" %>
+      <% if !@experiment.new_record? %>
+        <%= link_to 'Delete', project_phase_experiment_path(@project.id, @phase.id, @experiment), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+      <% end %>
+      <%= link_to 'Cancel', @experiment.new_record? ? project_phase_path(@project.id, @phase, selected_tab: 1) : project_phase_experiment_path(@project.id, @phase.id, @experiment), class:"btn btn-info" %>
+    </div>
+  </div>
+
   <br>
-  <%= f.submit %>
 
 <% end %>

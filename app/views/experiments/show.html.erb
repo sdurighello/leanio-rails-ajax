@@ -4,62 +4,58 @@
   <div class="panel-heading">
     <h6 class="panel-title text-center">
       <%= "Experiment: #{@experiment.name}" %>
-      <%= link_to 'Edit', edit_project_phase_path(@phase.project, @phase), class:'btn btn-success btn-xs pull-right' %>
+      <%= link_to 'Edit', edit_project_phase_experiment_path(@project.id, @phase.id, @experiment), class:'btn btn-success btn-xs pull-right' %>
     </h6>
   </div>
   <div class="panel-body">
-    <div class="row">
-      <div class="col-xs-12">
-        <div id="accordion">
-          <h3>Description</h3>
-          <div class="panel panel-default panel-heading">
-            <div class="form-group">
-              <textarea class="form-control" title="description" placeholder=" -- " value="<%= @experiment.description %>" disabled></textarea>
+    <div id="accordion">
+      <h3>Description</h3>
+      <div class="panel panel-default panel-heading">
+        <div class="form-group">
+          <textarea class="form-control" title="description" placeholder=" -- " value="<%= @experiment.description %>" disabled></textarea>
+        </div>
+      </div>
+      <h3>Results</h3>
+      <div class="panel panel-default panel-heading">
+        <div class="row">
+          <div class="form">
+            <div class="form-group col-sm-6 col-xs-6" style="margin: 1px">
+              <label class="small">Completion</label>
+              <input type="text" class="form-control" id="" value="<%= @experiment.completed ? 'Experiment is completed' : 'Experiment is not completed' %>" disabled>
             </div>
           </div>
-          <h3>Results</h3>
-          <div class="panel panel-default panel-heading">
-            <div class="row">
-              <div class="form">
-                <div class="form-group col-sm-6 col-xs-6" style="margin: 1px">
-                  <label class="small">Completion</label>
-                  <input type="text" class="form-control" id="" value="<%= @experiment.completed ? 'Experiment is completed' : 'Experiment is not completed' %>" disabled>
-                </div>
-              </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="form form-horizontal">
+            <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
+              <label class="small">Interviews planned</label>
+              <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @experiment.interviews_planned %>" disabled>
             </div>
-            <br>
-            <div class="row">
-              <div class="form form-horizontal">
-                <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
-                  <label class="small">Interviews planned</label>
-                  <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @experiment.interviews_planned %>" disabled>
-                </div>
-                <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
-                  <label class="small">Interviews done</label>
-                  <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @experiment.interviews_done %>" disabled>
-                </div>
-                <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
-                  <label class="small">Iterviews completion</label>
-                  <input type="text" class="form-control" id="" value="<%= @experiment.interviews_completion[:number] %> (<%= number_to_percentage(@experiment.interviews_completion[:ratio] * 100, options = {precision: 2}) %>) " disabled>
-                </div>
-              </div>
+            <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
+              <label class="small">Interviews done</label>
+              <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @experiment.interviews_done %>" disabled>
             </div>
-            <br>
-            <div class="row">
-              <div class="form form-horizontal">
-                <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
-                  <label class="small">Early adopters planned</label>
-                  <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @experiment.early_adopters_planned %>" disabled>
-                </div>
-                <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
-                  <label class="small">Early adopters converted</label>
-                  <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @experiment.early_adopters_converted %>" disabled>
-                </div>
-                <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
-                  <label class="small">Early adopters conversion</label>
-                  <input type="text" class="form-control" id="" value="<%= @experiment.early_adopters_conversion[:number] %> (<%= number_to_percentage(@experiment.early_adopters_conversion[:ratio] * 100, options = {precision: 2}) %>) " disabled>
-                </div>
-              </div>
+            <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
+              <label class="small">Iterviews completion</label>
+              <input type="text" class="form-control" id="" value="<%= @experiment.interviews_completion[:number] %> (<%= number_to_percentage(@experiment.interviews_completion[:ratio] * 100, options = {precision: 2}) %>) " disabled>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="form form-horizontal">
+            <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
+              <label class="small">Early adopters planned</label>
+              <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @experiment.early_adopters_planned %>" disabled>
+            </div>
+            <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
+              <label class="small">Early adopters converted</label>
+              <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @experiment.early_adopters_converted %>" disabled>
+            </div>
+            <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
+              <label class="small">Early adopters conversion</label>
+              <input type="text" class="form-control" id="" value="<%= @experiment.early_adopters_conversion[:number] %> (<%= number_to_percentage(@experiment.early_adopters_conversion[:ratio] * 100, options = {precision: 2}) %>) " disabled>
             </div>
           </div>
         </div>
