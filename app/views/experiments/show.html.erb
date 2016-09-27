@@ -1,104 +1,123 @@
 <p id="notice"><%= notice %></p>
 
-<div class="row">
-  <div class="col-sm-6 col-md-offset-3">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h6 class="panel-title text-center"><%= @experiment.name %></h6>
-      </div>
-      <div class="panel-body">
-
-        <p>
-          <strong>Description</strong>
-          <%= @experiment.description %>
-        </p>
-
-        <p>
-          <strong>Completed:</strong>
-          <%= @experiment.completed %>
-        </p>
-
-        <p>
-          <strong>Interviews planned:</strong>
-          <%= @experiment.interviews_planned %>
-        </p>
-
-        <p>
-          <strong>Interviews done:</strong>
-          <%= @experiment.interviews_done %>
-        </p>
-
-        <p>
-          <strong>Early adopters planned:</strong>
-          <%= @experiment.early_adopters_planned %>
-        </p>
-
-        <p>
-          <strong>Early adopters converted:</strong>
-          <%= @experiment.early_adopters_converted %>
-        </p>
-        <hr>
-        <div class="from-group pull-right">
-          <%= link_to 'Edit', edit_project_phase_experiment_path(@project.id, @phase.id, @experiment) %> |
-          <%= link_to 'Destroy', project_phase_experiment_path(@project.id, @phase.id, @experiment), method: :delete, data: { confirm: 'Are you sure?' } %>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h6 class="panel-title text-center">
+      <%= "Experiment: #{@experiment.name}" %>
+      <%= link_to 'Edit', edit_project_phase_path(@phase.project, @phase), class:'btn btn-success btn-xs pull-right' %>
+    </h6>
+  </div>
+  <div class="panel-body">
+    <div class="row">
+      <div class="col-xs-12">
+        <div id="accordion">
+          <h3>Description</h3>
+          <div class="panel panel-default panel-heading">
+            <div class="form-group">
+              <textarea class="form-control" title="description" placeholder=" -- " value="<%= @experiment.description %>" disabled></textarea>
+            </div>
+          </div>
+          <h3>Results</h3>
+          <div class="panel panel-default panel-heading">
+            <div class="row">
+              <div class="form">
+                <div class="form-group col-sm-6 col-xs-6" style="margin: 1px">
+                  <label class="small">Completion</label>
+                  <input type="text" class="form-control" id="" value="<%= @experiment.completed ? 'Experiment is completed' : 'Experiment is not completed' %>" disabled>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="form form-horizontal">
+                <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
+                  <label class="small">Interviews planned</label>
+                  <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @experiment.interviews_planned %>" disabled>
+                </div>
+                <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
+                  <label class="small">Interviews done</label>
+                  <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @experiment.interviews_done %>" disabled>
+                </div>
+                <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
+                  <label class="small">Iterviews completion</label>
+                  <input type="text" class="form-control" id="" value="<%= @experiment.interviews_completion[:number] %> (<%= number_to_percentage(@experiment.interviews_completion[:ratio] * 100, options = {precision: 2}) %>) " disabled>
+                </div>
+              </div>
+            </div>
+            <br>
+            <div class="row">
+              <div class="form form-horizontal">
+                <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
+                  <label class="small">Early adopters planned</label>
+                  <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @experiment.early_adopters_planned %>" disabled>
+                </div>
+                <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
+                  <label class="small">Early adopters converted</label>
+                  <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @experiment.early_adopters_converted %>" disabled>
+                </div>
+                <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
+                  <label class="small">Early adopters conversion</label>
+                  <input type="text" class="form-control" id="" value="<%= @experiment.early_adopters_conversion[:number] %> (<%= number_to_percentage(@experiment.early_adopters_conversion[:ratio] * 100, options = {precision: 2}) %>) " disabled>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <!-- Hypotesis selected -->
-        <h6>Hypotheses selected</h6>
-        <%= bootstrap_form_tag url: "/projects/#{@project.id}/phases/#{@phase.id}/experiments/#{@experiment.id}/add_hypothesis" do |f|%>
-          <%= f.hidden_field :id, value: @experiment.id %>
-          <%= f.select(:hypothesis_id, grouped_options_for_select(Hypothesis.for_grouped_select)) %>
-          <%= f.submit("Add hypothesis") %>
-        <% end %>
-        <div class="phase_overview">
-          <table class="phase_table">
-            <tr class="top_row">
-              <th>Name</th>
-              <th>Validation level</th>
-            </tr>
-            <% @experiment.results.each do |result| %>
-              <tr>
-                <th><%= link_to result.hypothesis.name, project_hypothesis_path(@project.id, result.hypothesis) %></th>
-                <th><%= Result::LEVELS[result.level] if result.level.present? %></th>
-                <th>
-                  <%= button_to("Remove", "/projects/#{@project.id}/phases/#{@phase.id}/experiments/#{@experiment.id}/remove_hypothesis" , html_options = {method: "post", params:{project_id: @project.id, phase_id: @phase_id, id: @experiment.id, result_id: result.id}, class: 'btn btn-danger btn-xs' }) %>
-                </th>
-              </tr>
-            <% end %>
-          </table>
-        </div>
-
-        <!-- Experiment Users -->
-        <h6>Project members assigned to experiment</h6>
-        <%= bootstrap_form_tag url: "/projects/#{@project.id}/phases/#{@phase.id}/experiments/#{@experiment.id}/add_user" do |f|%>
-          <%= f.hidden_field :id, value: @experiment.id %>
-          <%= f.select(:user_id, @experiment.phase.project.users.collect {|u| [ u.name, u.id ] },) %>
-          <%= f.submit("Add user") %>
-        <% end %>
-        <table class="table table-bordered table-condensed">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Email</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @experiment.users.each do |user| %>
-              <tr>
-                <td><%= user.name %></td>
-                <td><%= user.email %></td>
-                <td>
-                  <%= button_to("Remove", "/projects/#{@project.id}/phases/#{@phase.id}/experiments/#{@experiment.id}/remove_user" , html_options = {method: "post", params:{project_id: @project.id, phase_id: @phase_id, id: @experiment.id, user_id: user.id}, class: 'btn btn-danger btn-xs' }) %>
-                </td>
-              </tr>
-            <% end %>
-          </tbody>
-        </table>
-
       </div>
     </div>
   </div>
 </div>
 
+<div id="tabs" data-selected-tab="<%= params[:selected_tab] || 0 %>" style="border: 0">
+  <ul>
+    <li><a href="#tabs-0">Hypotheses</a></li>
+    <li><a href="#tabs-1">Project members</a></li>
+  </ul>
+  <div class="panel panel-default panel-body">
+    <!-- Hypotheses -->
+    <div id="tabs-0">
+      <%= bootstrap_form_tag url: "/projects/#{@project.id}/phases/#{@phase.id}/experiments/#{@experiment.id}/add_hypothesis", layout: :inline do |f|%>
+        <%= f.hidden_field :id, value: @experiment.id %>
+        <%= f.select(:hypothesis_id, grouped_options_for_select(Hypothesis.for_grouped_select), hide_label: true) %>
+        <%= f.submit("Add hypothesis") %>
+      <% end %>
+      <hr>
+      <% @experiment.results.each do |result| %>
+        <div class="col-sm-3">
+          <div class="panel panel-default panel-heading">
+            <p><%= link_to result.hypothesis.name, project_hypothesis_path(@project.id, result.hypothesis) %></p>
+            <p><%= Result::LEVELS[result.level] if result.level.present? %></p>
+            <%= button_to("Remove", "/projects/#{@project.id}/phases/#{@phase.id}/experiments/#{@experiment.id}/remove_hypothesis" , html_options = {method: "post", params:{project_id: @project.id, phase_id: @phase_id, id: @experiment.id, result_id: result.id}, class: 'btn btn-danger btn-xs' }) %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+    <!-- Project members -->
+    <div id="tabs-1">
+      <%= bootstrap_form_tag url: "/projects/#{@project.id}/phases/#{@phase.id}/experiments/#{@experiment.id}/add_user", layout: :inline do |f| %>
+      <%= f.hidden_field :id, value: @experiment.id %>
+      <%= f.select(:user_id, @experiment.phase.project.users.collect {|u| [ u.name, u.id ] }, hide_label: true) %>
+      <%= f.submit("Add user") %>
+      <% end %>
+      <hr>
+      <% @experiment.users.each do |user| %>
+        <div class="col-sm-3">
+          <div class="panel panel-default panel-heading">
+            <p><%= user.name %></p>
+            <p><%= user.email %></p>
+            <%= button_to(name = "Remove", "/projects/#{@project.id}/phases/#{@phase.id}/experiments/#{@experiment.id}/remove_user" , html_options = {method: "post", params:{project_id: @project.id, phase_id: @phase_id, id: @experiment.id, user_id: user.id}, class: 'btn btn-danger btn-xs'}) %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+</div>
+
 <%= link_to 'Back to phase', project_phase_path(@project.id, @phase.id) %>
+
+<script>
+  $( function() {
+    $( "#accordion" ).accordion({collapsible: true, active: false});
+    var selectedTab = $("#tabs").data("selected-tab")
+    $( "#tabs" ).tabs({ active: selectedTab });
+  });
+</script>

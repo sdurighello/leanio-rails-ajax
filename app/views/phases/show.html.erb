@@ -2,42 +2,47 @@
 
 <div class="row">
   <div class="col-xs-12">
-    <div class="panel panel-default panel-body">
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="form form-horizontal">
-            <div class="form-group col-lg-2 col-md-3 col-sm-4 col-xs-6" style="margin: 1px">
-              <label for="">Start date</label>
-              <input type="text" class="form-control" id="" placeholder="no date yet" value="<%= @phase.start_date.strftime("%d %B %Y") %>" disabled>
-            </div>
-            <div class="form-group col-lg-2 col-md-3 col-sm-4 col-xs-6" style="margin: 1px">
-              <label for="">End date</label>
-              <input type="text" class="form-control" id="" placeholder="no date yet" value="<%= @phase.end_date.strftime("%d %B %Y") %>" disabled>
-            </div>
-            <div class="form-group col-lg-3 col-md-4 col-sm-6 col-xs-6" style="margin: 1px">
-              <label for="">Completion</label>
-              <input type="text" class="form-control" id="" value="<%= @phase.completed ? 'Phase is completed' : 'Phase is not completed' %>" disabled>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h6 class="panel-title text-center"><%= "Phase #{@phase.sequence + 1}: #{@phase.name}" %></h6>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form form-horizontal">
+              <div class="form-group col-lg-2 col-md-3 col-sm-4 col-xs-6" style="margin: 1px">
+                <label for="">Start date</label>
+                <input type="text" class="form-control" id="" placeholder="no date yet" value="<%= @phase.start_date.strftime("%d %B %Y") %>" disabled>
+              </div>
+              <div class="form-group col-lg-2 col-md-3 col-sm-4 col-xs-6" style="margin: 1px">
+                <label for="">End date</label>
+                <input type="text" class="form-control" id="" placeholder="no date yet" value="<%= @phase.end_date.strftime("%d %B %Y") %>" disabled>
+              </div>
+              <div class="form-group col-lg-3 col-md-4 col-sm-6 col-xs-6" style="margin: 1px">
+                <label for="">Completion</label>
+                <input type="text" class="form-control" id="" value="<%= @phase.completed ? 'Phase is completed' : 'Phase is not completed' %>" disabled>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <br>
-      <div class="row">
-        <div class="col-xs-12">
-          <div class="form form-horizontal">
-            <div class="form-group col-lg-2 col-md-3 col-sm-4 col-xs-6" style="margin: 1px">
-              <label for="">N. of sprints</label>
-              <input type="text" class="form-control" id="" placeholder="no date yet" value="<%= @phase.number_of_sprints %>" disabled>
-            </div>
-            <div class="form-group col-lg-2 col-md-3 col-sm-4 col-xs-6" style="margin: 1px">
-              <label for="">Sprints length</label>
-              <input type="text" class="form-control" id="" placeholder="no length yet" value="<%= @phase.sprint_length %>" disabled>
+        <br>
+        <div class="row">
+          <div class="col-xs-12">
+            <div class="form form-horizontal">
+              <div class="form-group col-lg-2 col-md-3 col-sm-4 col-xs-6" style="margin: 1px">
+                <label for="">N. of sprints</label>
+                <input type="text" class="form-control" id="" placeholder="no date yet" value="<%= @phase.number_of_sprints %>" disabled>
+              </div>
+              <div class="form-group col-lg-2 col-md-3 col-sm-4 col-xs-6" style="margin: 1px">
+                <label for="">Sprints length</label>
+                <input type="text" class="form-control" id="" placeholder="no length yet" value="<%= @phase.sprint_length %>" disabled>
+              </div>
             </div>
           </div>
         </div>
+        <hr>
+        <%= link_to 'Edit', edit_project_phase_path(@phase.project, @phase), class:'btn btn-success btn-sm' %>
       </div>
-      <hr>
-      <%= link_to 'Edit', edit_project_phase_path(@phase.project, @phase), class:'btn btn-success btn-sm' %>
     </div>
   </div>
 </div>
