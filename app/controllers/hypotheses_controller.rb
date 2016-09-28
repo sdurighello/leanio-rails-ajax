@@ -18,6 +18,10 @@ class HypothesesController < ApplicationController
   def show
     add_breadcrumb "Project: #{@project.name}", project_path(@project)
     add_breadcrumb "Hypothesis: #{@hypothesis.name}", project_hypothesis_path(@project, @hypothesis)
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # GET /hypotheses/new

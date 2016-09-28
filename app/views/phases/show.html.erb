@@ -81,7 +81,7 @@
                     <% end %>
                     </td>
                     <td>
-                      <%= "Sprint #{@phase.sprints.find_index(sprint) + 1}" %>
+                      <%= link_to "Sprint #{@phase.sprints.find_index(sprint) + 1}", project_phase_sprint_path(@project.id, @phase.id, sprint) %>
                     </td>
                     <td>
                       <%= sprint.start_date.present? ? sprint.start_date.strftime("%d %B %Y") : '-' %>
@@ -97,11 +97,6 @@
                     </td>
                     <td>
                       <%= sprint.happiness %>
-                    </td>
-                    <td>
-                      <%= link_to project_phase_sprint_path(@project.id, @phase.id, sprint), class: "btn btn-sm btn-success" do %>
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true">
-                      <% end %>
                     </td>
                   </tr>
                 <% end %>
@@ -134,18 +129,13 @@
                       <% end %>
                     </td>
                     <td>
-                      <%= experiment.name %>
+                      <%= link_to experiment.name, project_phase_experiment_path(@project.id, @phase.id, experiment) %>
                     </td>
                     <td><%= experiment.interviews_completion[:number] %>
                       (<%= number_to_percentage(experiment.interviews_completion[:ratio] * 100, options = {precision: 2}) %>)
                     </td>
                     <td><%= experiment.early_adopters_conversion[:number] %>
                       (<%= number_to_percentage(experiment.early_adopters_conversion[:ratio] * 100, options = {precision: 2}) %>)
-                    </td>
-                    <td>
-                      <%= link_to project_phase_experiment_path(@project.id, @phase.id, experiment), class: "btn btn-sm btn-success" do %>
-                        <span class="glyphicon glyphicon-pencil" aria-hidden="true">
-                      <% end %>
                     </td>
                   </tr>
                 <% end %>

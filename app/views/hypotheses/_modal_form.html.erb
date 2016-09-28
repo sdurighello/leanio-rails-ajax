@@ -1,0 +1,30 @@
+<div class="modal-dialog" role="document">
+   <div class="modal-content">
+      <div class="modal-header">
+         <h4 class="modal-title"><%= @hypothesis.name %></h4>
+      </div>
+      <div class="modal-body">
+         <%= bootstrap_form_for([@project, @hypothesis]) do |f| %>
+          <% if @hypothesis.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@hypothesis.errors.count, "error") %> prohibited this hypothesis from being saved:</h2>
+
+              <ul>
+              <% @hypothesis.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <%= f.hidden_field :project_id, value: @project.id %>
+          <%= f.select :area_identifier, Canvas.get_list_of_areas %>
+          <%= f.text_field :name %>
+          <%= f.text_area :description %>
+      </div>
+      <div class="modal-footer">
+         <%= f.submit "Save", class:"btn btn-success" %>
+         <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+      </div>
+        <% end %>
+   </div>
+</div>

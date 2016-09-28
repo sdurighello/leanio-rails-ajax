@@ -1,11 +1,8 @@
 
-<h3>Project: <em><%= @project.name %></em></h3>
-
 <%= bootstrap_form_for([@project, @hypothesis]) do |f| %>
   <% if @hypothesis.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@hypothesis.errors.count, "error") %> prohibited this hypothesis from being saved:</h2>
-
       <ul>
       <% @hypothesis.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -13,12 +10,22 @@
       </ul>
     </div>
   <% end %>
-
-  <%= f.hidden_field :project_id, value: @project.id %>
-  <%= f.select :area_identifier, Canvas.get_list_of_areas %>
-  <%= f.text_field :name %>
-  <%= f.text_area :description %>
-
-  <%= f.button :submit %>
-
+  <div class="row">
+      <%= f.hidden_field :project_id, value: @project.id %>
+      <div class="col-md-4 col-xs-8">
+        <%= f.select :area_identifier, Canvas.get_list_of_areas %>
+      </div>
+      <%= f.text_field :name, wrapper: {class: 'col-md-4 col-xs-8'} %>
+      <%= f.text_area :description, wrapper: {class: 'col-xs-12'} %>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-xs-12">
+      <%= f.submit "Save", class:"btn btn-success" %>
+      <% if !@hypothesis.new_record? %>
+        <%= link_to 'Delete', project_hypothesis_path(@project.id, @hypothesis), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+      <% end %>
+      <%= link_to 'Cancel', @hypothesis.new_record? ? project_path(@project, selected_tab: 3) : project_hypothesis_path(@project.id, @hypothesis), class:"btn btn-info" %>
+    </div>
+  </div>
 <% end %>

@@ -79,12 +79,14 @@
           <div class="form-group">
             <textarea class="form-control" title="description" placeholder="enter description" value="<%= area.description %>" disabled></textarea>
           </div>
-          <%= bootstrap_form_tag url: "/projects/#{@project.id}/canvases/#{@canvas.id}/areas/#{area.id}/add_hypothesis", layout: :inline do |f|%>
-            <%= f.hidden_field :id, value: area.id %>
-            <%= f.select(:hypothesis_id, options_for_select(area.options_for_select_hypotheses), hide_label: true) %>
-            <%= f.submit "Add hypothesis" %>
-          <% end %>
-          <hr style="border: 2px">
+          <div style="display: <%=  'none' if area.options_for_select_hypotheses.empty? %>">
+            <%= bootstrap_form_tag url: "/projects/#{@project.id}/canvases/#{@canvas.id}/areas/#{area.id}/add_hypothesis", layout: :inline do |f|%>
+              <%= f.hidden_field :id, value: area.id %>
+              <%= f.select(:hypothesis_id, options_for_select(area.options_for_select_hypotheses), {hide_label: true}) %>
+              <%= f.submit "Add hypothesis" %>
+            <% end %>
+          </div>
+          <hr>
           <% area.hypotheses.each do |h| %>
             <div class="col-md-3 col-sm-6 col-xs-12">
               <div class="panel panel-info panel-heading" style="height: 120px">
