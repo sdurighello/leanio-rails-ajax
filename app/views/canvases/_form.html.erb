@@ -13,13 +13,34 @@
   <% end %>
 
   <%= f.hidden_field :project_id, value: @project.id %>
-  <%= f.text_field :name %>
-  <%= f.text_area :description %>
 
-  <%= f.submit "Save", class:"btn btn-success" %>
-  <% if !@canvas.new_record? %>
-    <%= link_to 'Delete', project_canvas_path(@project.id, @canvas), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
-  <% end %>
-  <%= link_to 'Cancel', @canvas.new_record? ? project_path(id: @project.id, selected_tab: 1) : project_canvas_path(@project.id, @canvas), class:"btn btn-info" %>
+  <div class="row">
+    <%= f.text_field :name, wrapper: {class: 'col-sm-6 col-xs-12'} %>
+    <%= f.text_area :description, wrapper: {class: 'col-xs-12'} %>
+  </div>
+
+  <div class="row">
+    <%= f.number_field :customers_to_break_even, wrapper:{class: 'col-sm-4'} %>
+    <%= f.number_field :payback_period, wrapper:{class: 'col-sm-4'} %>
+    <%= f.number_field :gross_margin, wrapper:{class: 'col-sm-4'} %>
+    <%= f.number_field :market_size, wrapper:{class: 'col-sm-4'} %>
+    <%= f.number_field :customer_pain_level, wrapper:{class: 'col-sm-4'} %>
+    <%= f.number_field :market_ease_of_reach, wrapper:{class: 'col-sm-4'} %>
+    <%= f.number_field :feasibility, wrapper:{class: 'col-sm-4'} %>
+    <%= f.number_field :riskiness, wrapper:{class: 'col-sm-4'} %>
+  </div>
+  <hr>
+  <div class="row">
+    <div class="col-xs-12">
+      <%= f.submit "Save", class:"btn btn-success" %>
+      <% if !@canvas.new_record? %>
+        <%= link_to 'Delete', project_canvas_path(@project.id, @canvas),
+          method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+      <% end %>
+      <%= link_to 'Cancel',
+        @canvas.new_record? ? project_path(id: @project.id, selected_tab: 1) : project_canvas_path(@project.id, @canvas),
+        class:"btn btn-info" %>
+    </div>
+  </div>
 
 <% end %>

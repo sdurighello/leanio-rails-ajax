@@ -103,6 +103,10 @@ class CanvasesController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def canvas_params
-      params.require(:canvas).permit(:project_id, :name, :description)
+      params.require(:canvas).permit(:project_id,
+        :name, :description,
+        :customers_to_break_even, :payback_period, :gross_margin,
+        :market_size, :customer_pain_level, :market_ease_of_reach,
+        :feasibility, :riskiness)
     end
 end

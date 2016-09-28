@@ -2,16 +2,69 @@
 
 <div class="row">
   <div class="col-xs-12">
-    <div class="panel panel-default panel-body">
-      <p>
-        <strong>Name:</strong>
-        <%= @canvas.name %>
-      </p>
-      <p>
-        <strong>Description:</strong>
-        <%= @canvas.description %>
-      </p>
-      <%= link_to 'Edit', edit_project_canvas_path(@canvas.project, @canvas), class:'btn btn-success' %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h6 class="panel-title text-center">
+          <%= @canvas.name %><%= link_to 'Edit', edit_project_canvas_path(@canvas.project, @canvas), class:'btn btn-xs btn-success pull-right' %>
+        </h6>
+      </div>
+      <div class="panel-body">
+        <div class="row">
+          <div class="form form-horizontal">
+            <div class="form-group col-xs-12" style="margin: 1px">
+              <label class="small">Description</label>
+              <textarea type="text" class="form-control" id="" placeholder="enter description" value="<%= @canvas.description %>" disabled></textarea>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="form form-horizontal">
+            <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
+              <label class="small">Market size</label>
+              <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @canvas.market_size %>" disabled>
+            </div>
+            <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
+              <label class="small">Customers to breakeven</label>
+              <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @canvas.customers_to_break_even %>" disabled>
+            </div>
+            <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
+              <label class="small">Payback period</label>
+              <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @canvas.payback_period %>" disabled>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="form form-horizontal">
+            <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
+              <label class="small">Customer pain level</label>
+              <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @canvas.customer_pain_level %>" disabled>
+            </div>
+            <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
+              <label class="small">Market ease of reach</label>
+              <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @canvas.market_ease_of_reach %>" disabled>
+            </div>
+            <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
+              <label class="small">Gross margin</label>
+              <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @canvas.gross_margin %>" disabled>
+            </div>
+          </div>
+        </div>
+        <br>
+        <div class="row">
+          <div class="form form-horizontal">
+            <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
+              <label class="small">Feasibility</label>
+              <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @canvas.feasibility %>" disabled>
+            </div>
+            <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
+              <label class="small">Riskiness</label>
+              <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @canvas.riskiness %>" disabled>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -24,7 +77,7 @@
         </div>
         <div class="panel-body">
           <div class="form-group">
-            <textarea class="form-control" title="description" placeholder=" no description yet " value="<%= area.description %>" disabled></textarea>
+            <textarea class="form-control" title="description" placeholder="enter description" value="<%= area.description %>" disabled></textarea>
           </div>
           <%= bootstrap_form_tag url: "/projects/#{@project.id}/canvases/#{@canvas.id}/areas/#{area.id}/add_hypothesis", layout: :inline do |f|%>
             <%= f.hidden_field :id, value: area.id %>
