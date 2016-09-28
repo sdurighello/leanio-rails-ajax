@@ -13,13 +13,14 @@
   <% end %>
 
   <div class="row">
-    <div class="col-xs-12">
+
       <%= f.hidden_field :phase_id, value: @phase.id %>
 
-      <%= f.text_field :name %>
+      <%= f.text_field :name, wrapper: {class: 'col-md-4 col-xs-8'} %>
 
-      <%= f.text_area :description %>
+      <%= f.text_area :description, wrapper: {class: 'col-xs-12'} %>
 
+    <div class="col-xs-3">
       <%= f.check_box :completed %>
 
       <%= f.number_field :interviews_planned %>
@@ -27,8 +28,8 @@
 
       <%= f.number_field :early_adopters_planned %>
       <%= f.number_field :early_adopters_converted %>
-
     </div>
+
   </div>
 
   <hr>

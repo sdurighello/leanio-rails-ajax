@@ -23,13 +23,15 @@
           <h6 class="panel-title text-center"><%= area.name %><%= link_to 'Edit', edit_project_canvas_area_path(@project, @canvas, area), class:'btn btn-xs btn-success pull-right' %></h6>
         </div>
         <div class="panel-body">
-          <p><%= area.description %></p>
+          <div class="form-group">
+            <textarea class="form-control" title="description" placeholder=" no description yet " value="<%= area.description %>" disabled></textarea>
+          </div>
           <%= bootstrap_form_tag url: "/projects/#{@project.id}/canvases/#{@canvas.id}/areas/#{area.id}/add_hypothesis", layout: :inline do |f|%>
             <%= f.hidden_field :id, value: area.id %>
-            <%= f.select(:hypothesis_id, options_for_select(Hypothesis.where(area_identifier: area.area_identifier).map { |h| [h.name, h.id] }), hide_label: true) %>
+            <%= f.select(:hypothesis_id, options_for_select(area.options_for_select_hypotheses), hide_label: true) %>
             <%= f.submit "Add hypothesis" %>
           <% end %>
-          <hr>
+          <hr style="border: 2px">
           <% area.hypotheses.each do |h| %>
             <div class="col-md-3 col-sm-6 col-xs-12">
               <div class="panel panel-info panel-heading" style="height: 120px">
@@ -44,3 +46,11 @@
     </div>
   <% end %>
 </div>
+
+<script>
+  $( function() {
+    $( "#accordion" ).accordion({collapsible: true, active: false});
+    var selectedTab = $("#tabs").data("selected-tab")
+    $( "#tabs" ).tabs({ active: selectedTab });
+  });
+</script>
