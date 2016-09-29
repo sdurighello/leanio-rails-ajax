@@ -23,6 +23,7 @@
          </div>
       </div>
       <div class="modal-footer">
+         <%= link_to 'Edit', edit_project_hypothesis_path(@project.id, @hypothesis), remote: true, class: 'btn btn-success' %>
          <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
       </div>
    </div>

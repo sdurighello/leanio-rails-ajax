@@ -1,0 +1,48 @@
+// Dislay the modal content
+$("#show-hypothesis").html("<%= escape_javascript(render 'hypotheses/modal_edit') %>");
+
+// Edit function
+function saveHypothesis(event){
+  event.preventDefault();
+  // get IDs
+  var modalDialog = $(".modal-dialog");
+  var projectId = modalDialog.data('project-id');
+  var hypothesisId = modalDialog.data('hypothesis-id');
+  // get EDITED object
+  var editedHypothesis = {
+    id: hypothesisId,
+    project_id: projectId,
+    area_identifier: $("#hypothesis_area_identifier").val(),
+    name: $("#hypothesis_name").val(),
+    description: $("#hypothesis_description").val()
+  };
+  // Go AJAX, go!
+  $.ajax({
+    type: "PUT",
+    url: "/projects/"+projectId+"/hypotheses/"+hypothesisId+".json",
+    data: JSON.stringify({
+        hypothesis: editedHypothesis
+    }),
+    contentType: "application/json",
+    dataType: "json"})
+
+    .done(function(data) {
+      console.log(data);
+      // Close modal
+      // $("#close-modal-button").click()
+      
+
+    })
+
+    .fail(function(error) {
+      console.log(error);
+
+    }
+  );
+
+}
+
+// After loading: bind submit event, close modal if success
+$(document).ready(function() {
+  $(".btn.btn-success").bind('click', saveHypothesis);
+});

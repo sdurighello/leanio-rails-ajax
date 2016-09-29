@@ -59,7 +59,7 @@ class HypothesesController < ApplicationController
     respond_to do |format|
       if @hypothesis.update(hypothesis_params)
         format.html { redirect_to project_hypothesis_path(@project.id, @hypothesis), notice: 'Hypothesis was successfully updated.' }
-        format.json { render :show, status: :ok, location: @hypothesis }
+        format.json { @hypothesis }
       else
         format.html { render :edit }
         format.json { render json: @hypothesis.errors, status: :unprocessable_entity }

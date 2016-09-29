@@ -18,7 +18,7 @@ class Canvas < ApplicationRecord
 
   def self.get_list_of_areas
     list_of_areas = []
-    AREAS.each do |area, index|
+    AREAS.each do |area|
       list_of_areas << [area]
     end
     list_of_areas

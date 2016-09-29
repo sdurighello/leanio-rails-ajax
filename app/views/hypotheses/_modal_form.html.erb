@@ -1,10 +1,10 @@
-<div class="modal-dialog" role="document">
+<div class="modal-dialog" role="document" data-hypothesis-id="<%= @hypothesis.id %>" data-project-id="<%= @project.id %>">
    <div class="modal-content">
       <div class="modal-header">
          <h4 class="modal-title"><%= @hypothesis.name %></h4>
       </div>
       <div class="modal-body">
-         <%= bootstrap_form_for([@project, @hypothesis]) do |f| %>
+         <%= bootstrap_form_for([@project, @hypothesis], remote: true) do |f| %>
           <% if @hypothesis.errors.any? %>
             <div id="error_explanation">
               <h2><%= pluralize(@hypothesis.errors.count, "error") %> prohibited this hypothesis from being saved:</h2>
@@ -22,8 +22,8 @@
           <%= f.text_area :description %>
       </div>
       <div class="modal-footer">
-         <%= f.submit "Save", class:"btn btn-success" %>
-         <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+         <%= f.submit "Save", remote: true, class:"btn btn-success" %>
+         <button id="close-modal-button" type="button" class="btn btn-info" data-dismiss="modal">Close</button>
       </div>
         <% end %>
    </div>
