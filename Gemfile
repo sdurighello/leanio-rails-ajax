@@ -39,6 +39,7 @@ group :development, :test do
   gem 'selenium-webdriver'
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platform: :mri
+  gem 'rails-erd', github: 'ready4god2513/rails-erd', branch: 'rails-4.2-support-fix'
 end
 
 group :development do
