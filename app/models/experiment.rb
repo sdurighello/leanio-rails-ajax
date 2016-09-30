@@ -83,4 +83,23 @@ class Experiment < ApplicationRecord
     {number: number, ratio: ratio}
   end
 
+  # To be used in grouped select as grouped_options_for_select
+  def hypothesis_for_grouped_select
+    # Get only hypotheses that have not yet been associated with this experiment
+    h_not_associated = Hypothesis.includes(:experiments).where(experiments: {id: nil})
+    h_not_this_experiment = Hypothesis.includes(:experiments).where.not(experiments: {id: self.id})
+    all_hypotheses = (h_not_associated + h_not_this_experiment)
+    # Create grouped hash of arrays
+    select_hash = {}
+    Canvas::AREAS.each do |area|
+      select_hash[area] = []
+    end
+    all_hypotheses.each do |h|
+      select_hash[h.area_identifier] << [h.name, h.id]
+    end
+    select_hash
+  end
+
+
+
 end

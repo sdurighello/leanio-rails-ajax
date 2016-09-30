@@ -11,17 +11,17 @@ class AreasController < ApplicationController
   # Adding / Removing hypotheses to/from experiments
   def add_hypothesis
     if @area.add_hypothesis(params[:hypothesis_id].to_i)
-      redirect_to project_canvas_area_path(@project.id, @canvas.id, @area), notice: 'Hypothesis was successfully added'
+      redirect_to project_canvas_path(@project.id, @canvas), notice: 'Hypothesis was successfully added'
     else
-      redirect_to project_canvas_area_path(@project.id, @canvas.id, @area), notice: 'Hypothesis cannot be added'
+      redirect_to project_canvas_path(@project.id, @canvas), notice: 'Hypothesis cannot be added'
     end
   end
 
   def remove_hypothesis
     if @area.remove_hypothesis(params[:hypothesis_id].to_i)
-      redirect_to project_canvas_area_path(@project.id, @canvas.id, @area), notice: 'Hypothesis was successfully removed'
+      redirect_to project_canvas_path(@project.id, @canvas), notice: 'Hypothesis was successfully removed'
     else
-      redirect_to project_canvas_area_path(@project.id, @canvas.id, @area), notice: 'Hypothesis cannot be removed'
+      redirect_to project_canvas_path(@project.id, @canvas), notice: 'Hypothesis cannot be removed'
     end
   end
 

@@ -74,7 +74,7 @@
     <div id="tabs-0">
       <%= bootstrap_form_tag url: "/projects/#{@project.id}/phases/#{@phase.id}/experiments/#{@experiment.id}/add_hypothesis", layout: :inline do |f|%>
         <%= f.hidden_field :id, value: @experiment.id %>
-        <%= f.select(:hypothesis_id, grouped_options_for_select(Hypothesis.for_grouped_select), hide_label: true) %>
+        <%= f.select(:hypothesis_id, grouped_options_for_select(@experiment.hypothesis_for_grouped_select), hide_label: true) %>
         <%= f.submit("Add hypothesis") %>
       <% end %>
       <hr>
