@@ -6,7 +6,7 @@ class Area < ApplicationRecord
     begin
       hypothesis = Hypothesis.find(hypothesis_id)
       if self.hypotheses.include?(hypothesis)
-        self.errors.add :base, 'This hypothesis has been already added'
+        self.errors.add :base, 'This hypothesis has already been added'
         return false
       else
         self.hypotheses << hypothesis
@@ -25,7 +25,7 @@ class Area < ApplicationRecord
         self.hypotheses.delete(hypothesis)
         self.save!
       else
-        self.errors.add :base, 'This hypothesis has been already added'
+        self.errors.add :base, 'This hypothesis has already been added'
         return false
       end
     rescue
