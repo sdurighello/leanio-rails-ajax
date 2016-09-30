@@ -29,6 +29,10 @@ class HypothesesController < ApplicationController
     add_breadcrumb "Project: #{@project.name}", project_path(@project)
     add_breadcrumb "New Hypothesis"
     @hypothesis = Hypothesis.new
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # GET /hypotheses/1/edit
@@ -45,7 +49,7 @@ class HypothesesController < ApplicationController
     respond_to do |format|
       if @hypothesis.save
         format.html { redirect_to project_hypothesis_path(@project.id, @hypothesis), notice: 'Hypothesis was successfully created.' }
-        format.json { render :show, status: :created, location: @hypothesis }
+        format.json { render json: @hypothesis, status: :ok }
       else
         format.html { render :new }
         format.json { render json: @hypothesis.errors, status: :unprocessable_entity }

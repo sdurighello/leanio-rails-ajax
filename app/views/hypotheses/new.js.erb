@@ -1,13 +1,8 @@
-// Dislay the modal content
-$("#show-hypothesis").html("<%= escape_javascript(render 'hypotheses/modal_edit') %>");
+$("#show-hypothesis").html("<%= escape_javascript(render 'hypotheses/modal_new') %>");
 
 // Get IDs
 var modalDialog = $(".modal-dialog");
 var projectId = modalDialog.data('project-id');
-var hypothesisId = modalDialog.data('hypothesis-id');
-
-// Get current area_identifier
-var hypothesisAreaIdentifier = modalDialog.data('hypothesis-area-identifier');
 
 // Show error message
 function showError(message) {
@@ -60,13 +55,12 @@ function createNewLinkPanel(data, areaCol){
   areaCol.find('.panel-body').append(col.append(heading.append(p.append(newLink))));
 }
 
-// EDIT hypothesis
-function editHypothesis(event){
+// CREATE hypothesis
+function createHypothesis(event){
   event.preventDefault();
 
-  // get edited object
-  var editedHypothesis = {
-    id: hypothesisId,
+  // get new object
+  var newHypothesis = {
     project_id: projectId,
     area_identifier: $("#hypothesis_area_identifier").val(),
     name: $("#hypothesis_name").val(),
@@ -74,30 +68,24 @@ function editHypothesis(event){
   };
 
   $.ajax({
-    type: "PUT",
-    url: "/projects/"+projectId+"/hypotheses/"+hypothesisId+".json",
+    type: "POST",
+    url: "/projects/"+projectId+"/hypotheses.json",
     data: JSON.stringify({
-        hypothesis: editedHypothesis
+        hypothesis: newHypothesis
     }),
     contentType: "application/json",
     dataType: "json"})
 
     .done(function(data) {
-      // If the area_identifier changed, delete old panel and create a new one in the right area
-      // however, the right area may not exist yet becuse before it had no hypotheses.
-      if(hypothesisAreaIdentifier !== data.area_identifier){
-        // Remove old hypothesis
-        $("#hypothesis-col-"+hypothesisId).remove();
-        // Create a new area if the area doesn't exist
-        var areaCol = $("#area-col-" + data.area_identifier.split(" ").join("-"));
-        if(areaCol.length === 0){
-          areaCol = getNewArea(data);
-        }
-        // Create and append the new link panel
-        createNewLinkPanel(data, areaCol);
+      // Create a new area if the area doesn't exist
+      var areaCol = $("#area-col-" + data.area_identifier.split(" ").join("-"));
+      if(areaCol.length === 0){
+        areaCol = getNewArea(data);
       }
+      // Create and append the new link panel
+      createNewLinkPanel(data, areaCol);
       // Update link name on project show view
-      $("#hypothesis-link-"+hypothesisId).html(data.name);
+      $("#hypothesis-link-"+data.id).html(data.name);
       // Close modal
       $("button#close-modal").click();
     })
@@ -110,32 +98,8 @@ function editHypothesis(event){
   );
 }
 
-// DELETE hypothesis
-function deleteHypothesis(event){
-  event.preventDefault();
-
-  $.ajax({
-    type: "DELETE",
-    url: "/projects/"+projectId+"/hypotheses/"+hypothesisId+".json",
-    contentType: "application/json",
-    dataType: "json"})
-
-    .done(function(data) {
-      // Remove hypothesis
-      $("#hypothesis-col-"+data.id).remove();
-      // Close modal
-      $("button#close-modal").click();
-    })
-    .fail(function(error) {
-      console.log(error);
-      error_message = error.responseJSON.title[0];
-      showError(error_message);
-    }
-  );
-}
 
 // After loading: bind submit event
 $(document).ready(function() {
-  $("#submit-edit").bind('click', editHypothesis);
-  $("button#delete").bind('click', deleteHypothesis);
+  $("#submit-create").bind('click', createHypothesis);
 });
