@@ -109,19 +109,21 @@
       <hr>
       <!-- Modal -->
       <div id="show-hypothesis" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
-      <div class="row">
+      <div class="row" id="areas-row">
         <% (@project.hypotheses.group_by { |h| h.area_identifier }).each do |k, v| %>
-          <div class="col-xs-12">
+          <div class="col-xs-12" id="area-col-<%= k.gsub(' ', '-') %>">
             <div class="panel panel-default">
               <div class="panel-heading">
                 <h6 class="panel-title"><%= k.capitalize %></h6>
               </div>
               <div class="panel-body">
                 <% v.each do |hypothesis| %>
-                  <div class="col-sm-3">
+                  <div class="col-sm-3" id="hypothesis-col-<%= hypothesis.id %>">
                     <div class="panel panel-primary panel-heading" style="height: 80px; overflow: hidden; white-space: normal;">
                       <p>
-                        <%= link_to hypothesis.name, project_hypothesis_path(@project.id, hypothesis), {:remote => true, 'data-toggle' =>  "modal", 'data-target' => '#show-hypothesis'} %>
+                        <%= link_to hypothesis.name, project_hypothesis_path(@project.id, hypothesis),
+                          { remote: true, 'data-toggle': "modal", 'data-target': '#show-hypothesis',
+                            id: "hypothesis-link-#{hypothesis.id}"} %>
                         <!-- <%= link_to hypothesis.name, project_hypothesis_path(@project.id, hypothesis) %> -->
                       </p>
                     </div>

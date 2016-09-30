@@ -1,13 +1,64 @@
 // Dislay the modal content
 $("#show-hypothesis").html("<%= escape_javascript(render 'hypotheses/modal_edit') %>");
 
-// Edit function
+// Edit
+
+function showError(message) {
+  $(".modal-dialog").addClass("error");
+  var errorElement = $("<small></small>")
+    .attr('id', 'error_message')
+    .addClass('error')
+    .html(message);
+  $(errorElement).appendTo('form .field');
+}
+
+function getNewArea(data){
+  var areasRow = $("#areas-row");
+  areasRow.append(
+    $('<div/>', {'class': 'col-xs-12', 'id': 'area-col-' + data.area_identifier.split(" ").join("-")}).append(
+      $('<div/>', {'class': 'panel panel-default'})
+      .append(
+        $('<div/>', {'class': 'panel-heading'}).append(
+          $('<h6/>', {'class': 'panel-title', 'text': data.area_identifier})
+        )
+      )
+      .append(
+        $('<div/>', {'class': 'panel-body'})
+      )
+    )
+  );
+  return $("#area-col-" + data.area_identifier.split(" ").join("-"));
+}
+
+function createNewLinkPanel(data, areaCol){
+  var col = $("<div></div>");
+  col.addClass("col-sm-3");
+  col.attr('id', "hypothesis-col-" + data.id);
+
+  var heading = $("<div></div>");
+  heading.addClass("panel panel-primary panel-heading");
+  heading.attr('style', "height: 80px; overflow: hidden; white-space: normal;");
+
+  var p = $("<p></p>");
+
+  var newLink = $("<a></a>")
+  newLink.attr('data-toggle', "modal");
+  newLink.attr('data-target', "#show-hypothesis");
+  newLink.attr('id', "hypothesis-link-" + data.id);
+  newLink.attr('data-remote', "true");
+  newLink.attr('href', "/projects/"+data.project_id+"/hypotheses/"+data.id);
+
+  areaCol.find('.panel-body').append(col.append(heading.append(p.append(newLink))));
+}
+
 function saveHypothesis(event){
   event.preventDefault();
   // get IDs
   var modalDialog = $(".modal-dialog");
   var projectId = modalDialog.data('project-id');
   var hypothesisId = modalDialog.data('hypothesis-id');
+  // get current area_identifier
+  var hypothesisAreaIdentifier = modalDialog.data('hypothesis-area-identifier');
   // get EDITED object
   var editedHypothesis = {
     id: hypothesisId,
@@ -27,22 +78,34 @@ function saveHypothesis(event){
     dataType: "json"})
 
     .done(function(data) {
-      console.log(data);
+      // If the area_identifier changed, delete old panel and create a new one in the right area
+      // however, the right area may not exist yet becuse before it had no hypotheses.
+      if(hypothesisAreaIdentifier !== data.area_identifier){
+        $("#hypothesis-col-"+hypothesisId).remove();
+        var areaCol = $("#area-col-" + data.area_identifier.split(" ").join("-"));
+        // Create a new area if the area doesn't exist
+        if(areaCol.length === 0){
+          areaCol = getNewArea(data);
+        }
+        // Create and append the new link panel
+        createNewLinkPanel(data, areaCol);
+      }
+      // Update link name on project show view
+      $("#hypothesis-link-"+hypothesisId).html(data.name);
       // Close modal
-      // $("#close-modal-button").click()
-      
-
+      $("#close-modal-button").click();
     })
 
     .fail(function(error) {
       console.log(error);
-
+      error_message = error.responseJSON.title[0];
+      showError(error_message);
     }
   );
 
 }
 
-// After loading: bind submit event, close modal if success
+// After loading: bind submit event
 $(document).ready(function() {
   $(".btn.btn-success").bind('click', saveHypothesis);
 });
