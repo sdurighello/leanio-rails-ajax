@@ -12,21 +12,21 @@ describe Sprint do
     end
   end
 
-  describe '#update_experiment_assignment(experiment_id)' do
-    let!(:experiment) { Experiment.create(phase: phase, name: 'experiment') }
-    let!(:sprint_with_experiment) { Sprint.create(phase: phase) }
-    let!(:sprint_without_experiment) { Sprint.create(phase: phase) }
-
-    before { sprint_with_experiment.experiment_ids << experiment.id }
-
-    it 'adds an experiment to the sprint if not added yet' do
-      sprint_without_experiment.update_experiment_assignment(experiment.id)
-      expect(sprint_without_experiment.experiments.length).to eq(1)
-    end
-    it 'removes an experiment from the sprint if already present' do
-      sprint_with_experiment.update_experiment_assignment(experiment.id)
-      expect(sprint_with_experiment.experiments).to be_empty
-    end
-  end
+  # describe '#update_experiment_assignment(experiment_id)' do
+  #   let!(:experiment) { Experiment.create(phase: phase, name: 'experiment') }
+  #   let!(:sprint_with_experiment) { Sprint.create(phase: phase) }
+  #   let!(:sprint_without_experiment) { Sprint.create(phase: phase) }
+  #
+  #   before { sprint_with_experiment.experiment_ids << experiment.id }
+  #
+  #   it 'adds an experiment to the sprint if not added yet' do
+  #     sprint_without_experiment.update_experiment_assignment(experiment.id)
+  #     expect(sprint_without_experiment.experiments.length).to eq(1)
+  #   end
+  #   it 'removes an experiment from the sprint if already present' do
+  #     sprint_with_experiment.update_experiment_assignment(experiment.id)
+  #     expect(sprint_with_experiment.experiments).to be_empty
+  #   end
+  # end
 
 end
