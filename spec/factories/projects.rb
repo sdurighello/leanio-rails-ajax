@@ -1,7 +1,7 @@
 FactoryGirl.define do
    factory :project do
-     name 'project'
-     description 'description for project'
+     name { Faker::Commerce.product_name }
+     description { Faker::Lorem.paragraph }
      active true
    end
- end
+end
