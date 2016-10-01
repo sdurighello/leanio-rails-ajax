@@ -1,3 +1,27 @@
 // Place all the styles related to the LandingPages controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.wallpaper {
+  background-image: image-url('wallpaper.png');
+  height: 100vh;
+  width: auto;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  position: fixed;
+  margin-top: 50px;
+  left: 0;
+  top: 0;
+  right: 0;
+}
+
+
+.landing-content {
+  position: absolute;
+  left: 0;
+  top: 0;
+  right: 0;
+}

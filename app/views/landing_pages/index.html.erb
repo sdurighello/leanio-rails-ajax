@@ -1,48 +1,53 @@
+<div class="wallpaper"></div>
 
-<div class="jumbotron">
-  <h1>Leanio</h1>
-  <h2>Use the <em>Running Lean</em> and <em>Lean Startup</em> methodologies in a clear and simple way</h2>
-  <h3>Build something customers really want</h3>
-  <% if user_signed_in? %>
-    <p><a class="btn btn-primary btn-lg" href="/projects" role="button" style="color: white">Go to your projects</a></p>
-  <% else %>
-    <p><a class="btn btn-primary btn-lg" href="/users/sign_up" role="button" style="color: white">Sign up</a></p>
-  <% end %>
-</div>
-
-<div class="row">
-  <div class="col-md-4 col-sm-12">
-    <div class="panel panel-default">
-      <div class="panel-heading" style="min-height: 230px">
-        <h6 class="panel-title text-center">Lean canvas your ideas on solid hypothesis</h6>
-        <hr>
-        <p><span class="glyphicon glyphicon-ok"></span> Create a project for each idea and invite others to help you</p>
-        <p><span class="glyphicon glyphicon-ok"></span> Capture all the hypothesis that would make it a success</p>
-        <p><span class="glyphicon glyphicon-ok"></span> Compare multiple Lean Canvases and their value</p>
+<div class="container landing-content">
+  <div class="container text-center" style="background-color: rgba(211,211,211,0.8); margin-top: 20vh; margin-bottom: 10vh;">
+    <h1 style="color: red">Leanio</h1>
+    <h2><em>Running Lean</em> + <em>Lean Startup</em> made simple</h2>
+    <h3>Build something customers really want</h3>
+    <hr>
+    <p>
+      <% if user_signed_in? %>
+        <p><a class="btn btn-primary btn-lg" href="/projects" role="button" style="color: white">Go to your projects</a></p>
+      <% else %>
+        <a class="btn btn-danger btn-lg" href="/users/sign_up" role="button" style="color: white">Sign up</a>
+        <a class="btn btn-lg" style="background-color: transparent; border: 2px solid white; color: red" href="/users/sign_in" role="button" style="color: white">Sign in</a>
+      <% end %>
+    </p>
+  </div>
+  <div class="row">
+    <div class="col-md-4 col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-heading" style="min-height: 230px">
+          <h6 class="panel-title text-center">Validate through experimentation</h6>
+          <hr>
+          <p><span class="glyphicon glyphicon-ok"></span> Create as many experiments as you need</p>
+          <p><span class="glyphicon glyphicon-ok"></span> Test, rate and improve your hypothesis</p>
+          <p><span class="glyphicon glyphicon-ok"></span> Ensure all canvas areas are validated before making costly mistakes</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-heading" style="min-height: 230px">
+          <h6 class="panel-title text-center">Validate through experimentation</h6>
+          <hr>
+          <p><span class="glyphicon glyphicon-ok"></span> Create as many experiments as you need</p>
+          <p><span class="glyphicon glyphicon-ok"></span> Test, rate and improve your hypothesis</p>
+          <p><span class="glyphicon glyphicon-ok"></span> Ensure all canvas areas are validated before making costly mistakes</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-heading" style="min-height: 230px">
+          <h6 class="panel-title text-center">Move swiftly from problem/solution to scale</h6>
+          <hr>
+          <p><span class="glyphicon glyphicon-ok"></span> Use Scrum sprints to manage your work</p>
+          <p><span class="glyphicon glyphicon-ok"></span> Keep track of the status of your work and its efficiency</p>
+          <p><span class="glyphicon glyphicon-ok"></span> Convert early adopters till you cross the chasm</p>
+        </div>
       </div>
     </div>
   </div>
-  <div class="col-md-4 col-sm-12">
-    <div class="panel panel-default">
-      <div class="panel-heading" style="min-height: 230px">
-        <h6 class="panel-title text-center">Validate through experimentation</h6>
-        <hr>
-        <p><span class="glyphicon glyphicon-ok"></span> Create as many experiments as you need</p>
-        <p><span class="glyphicon glyphicon-ok"></span> Test, rate and improve your hypothesis</p>
-        <p><span class="glyphicon glyphicon-ok"></span> Ensure all canvas areas are validated before making costly mistakes</p>
-      </div>
-    </div>
-  </div>
-  <div class="col-md-4 col-sm-12">
-    <div class="panel panel-default">
-      <div class="panel-heading" style="min-height: 230px">
-        <h6 class="panel-title text-center">Move swiftly from problem/solution to scale</h6>
-        <hr>
-        <p><span class="glyphicon glyphicon-ok"></span> Use Scrum sprints to manage your work</p>
-        <p><span class="glyphicon glyphicon-ok"></span> Keep track of the status of your work and its efficiency</p>
-        <p><span class="glyphicon glyphicon-ok"></span> Convert early adopters till you cross the chasm</p>
-      </div>
-    </div>
-  </div>
-
 </div>

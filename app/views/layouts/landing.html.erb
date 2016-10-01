@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Leanio</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all' %>
+    <%= javascript_include_tag 'application' %>
+
+    <!-- Landing page only CSS -->
+    <style>
+      .navbar {
+        margin-bottom: 0;
+        position: fixed;
+        right: 0;
+        left: 0;
+        top: 0;
+        z-index: 1;
+      }
+    </style>
+
+  </head>
+
+  <body>
+
+    <%= render "layouts/header" %>
+
+    <main>
+
+      <%= yield %>
+
+    </main>
+
+    <%= render "layouts/footer" %>
+
+  </body>
+</html>
