@@ -44,6 +44,7 @@ class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
   def index
+    @show_search_bar = true
     @projects = current_user.all_projects_for_user
   end
 
