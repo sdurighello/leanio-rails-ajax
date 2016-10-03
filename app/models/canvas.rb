@@ -39,7 +39,11 @@ class Canvas < ApplicationRecord
   end
 
   def customer_pain_level_string
-    CUSTOMER_PAIN_LEVEL[self.customer_pain_level]
+    if self.customer_pain_level.present?
+      CUSTOMER_PAIN_LEVEL[self.customer_pain_level]
+    else
+      '-'
+    end
   end
 
   MARKET_EASE_OF_REACH = ['Very low', 'Low', 'Medium', 'High', 'Very high']
@@ -53,7 +57,11 @@ class Canvas < ApplicationRecord
   end
 
   def market_ease_of_reach_string
-    MARKET_EASE_OF_REACH[self.market_ease_of_reach]
+    if self.market_ease_of_reach.present?
+      MARKET_EASE_OF_REACH[self.market_ease_of_reach]
+    else
+      "-"
+    end
   end
 
   FEASIBILITY = ['Very low', 'Low', 'Medium', 'High', 'Very high']
@@ -67,7 +75,11 @@ class Canvas < ApplicationRecord
   end
 
   def feasibility_string
-    FEASIBILITY[self.feasibility]
+    if self.feasibility.present?
+      FEASIBILITY[self.feasibility]
+    else
+      "-"
+    end
   end
 
   RISKINESS = ['Very low', 'Low', 'Medium', 'High', 'Very high']
@@ -82,7 +94,11 @@ class Canvas < ApplicationRecord
   end
 
   def riskiness_string
-    RISKINESS[self.riskiness]
+    if self.riskiness.present?
+      RISKINESS[self.riskiness]
+    else
+      "-"
+    end
   end
 
 # ---- Private methods ----
