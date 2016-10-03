@@ -2,6 +2,8 @@ class Sprint < ApplicationRecord
   belongs_to :phase
   has_and_belongs_to_many :experiments
 
+  HAPPINESS = ['Very low', 'Low', 'Medium', 'High', 'Very high']
+
   def stories_completion
     stories_completed = self.stories_completed ||= 0
     stories_estimated = self.stories_estimated ||= 0

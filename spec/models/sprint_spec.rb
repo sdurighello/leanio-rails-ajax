@@ -2,6 +2,10 @@ require 'rails_helper'
 
 describe Sprint do
 
+  it 'has a valid factory' do
+    expect(build(:sprint)).to be_valid
+  end
+
   let(:project) { Project.create(name: 'project') }
   let(:phase) { Phase.create(sequence:0, project: project) }
 
