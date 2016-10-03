@@ -79,7 +79,7 @@
       <hr>
       <div class="row">
         <% @project.phases.order(:sequence).each do |phase| %>
-          <div class="col-md-4 col-xs-6">
+          <div class="col-md-4 col-sm-12">
             <div class="panel <%= @project.current_phase_id == phase.id ? 'panel-info' : 'panel-default' %>">
               <div class="panel-heading">
                 <p class="text-center">
