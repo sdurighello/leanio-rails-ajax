@@ -10,8 +10,6 @@ class Project < ApplicationRecord
 
   PHASES = ['Problem/Solution Fit', 'Product/Market Fit', 'Scale']
 
-  # --- Class methods
-
   def self.get_list_of_phases
     list_of_phases = []
     PHASES.each_with_index do |phase, index|

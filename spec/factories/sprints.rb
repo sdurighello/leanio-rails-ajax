@@ -9,7 +9,7 @@ FactoryGirl.define do
       stories_completed {rand(5..20)}
       points_estimated {rand(50..200)}
       points_completed {rand(50..200)}
-      happiness { (Sprint::HAPPINESS).index((Sprint::HAPPINESS).sample) }
+      happiness { Sprint::HAPPINESS.index(Sprint::HAPPINESS.sample) }
       impediments { Faker::Lorem.paragraph }
       association :phase
    end

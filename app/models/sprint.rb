@@ -4,6 +4,14 @@ class Sprint < ApplicationRecord
 
   HAPPINESS = ['Very low', 'Low', 'Medium', 'High', 'Very high']
 
+  def self.get_list_of_happiness
+    array_of_arrays = []
+    HAPPINESS.each_with_index do |word, index|
+      array_of_arrays << [word, index]
+    end
+    array_of_arrays
+  end
+
   def stories_completion
     stories_completed = self.stories_completed ||= 0
     stories_estimated = self.stories_estimated ||= 0

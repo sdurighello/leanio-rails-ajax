@@ -20,16 +20,32 @@
   </div>
 
   <div class="row">
+    <!-- integer -->
     <%= f.number_field :customers_to_break_even, wrapper:{class: 'col-sm-4'} %>
+    <!-- decimal -->
     <%= f.number_field :payback_period, wrapper:{class: 'col-sm-4'} %>
     <%= f.number_field :gross_margin, wrapper:{class: 'col-sm-4'} %>
     <%= f.number_field :market_size, wrapper:{class: 'col-sm-4'} %>
-    <%= f.number_field :customer_pain_level, wrapper:{class: 'col-sm-4'} %>
-    <%= f.number_field :market_ease_of_reach, wrapper:{class: 'col-sm-4'} %>
-    <%= f.number_field :feasibility, wrapper:{class: 'col-sm-4'} %>
-    <%= f.number_field :riskiness, wrapper:{class: 'col-sm-4'} %>
   </div>
+
+  <div class="row">
+    <!-- integer from select -->
+    <div class="col-sm-4">
+      <%= f.select :customer_pain_level, Canvas.list_of_customer_pain_levels %>
+    </div>
+    <div class="col-sm-4">
+      <%= f.select :market_ease_of_reach, Canvas.list_of_market_ease_of_reach %>
+    </div>
+    <div class="col-sm-4">
+      <%= f.select :feasibility, Canvas.list_of_feasibility %>
+    </div>
+    <div class="col-sm-4">
+      <%= f.select :riskiness, Canvas.list_of_riskiness %>
+    </div>
+  </div>
+
   <hr>
+  
   <div class="row">
     <div class="col-xs-12">
       <%= f.submit "Save", class:"btn btn-success" %>
