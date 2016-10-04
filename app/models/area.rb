@@ -35,9 +35,9 @@ class Area < ApplicationRecord
   end
 
   def options_for_select_hypotheses
-    # Get only hypotheses with that area_identifier that have not yet been associated with this area
-    h_not_associated = Hypothesis.includes(:areas).where(area_identifier: self.area_identifier).where(areas: {id: nil})
-    h_not_this_area = Hypothesis.includes(:areas).where(area_identifier: self.area_identifier).where.not(areas: {id: self.id})
+    # Get only hypotheses with that area_identifier (and belonging to the right project) that have not yet been associated with this area
+    h_not_associated = Hypothesis.includes(:areas).where(area_identifier: self.area_identifier, project: self.canvas.project).where(areas: {id: nil})
+    h_not_this_area = Hypothesis.includes(:areas).where(area_identifier: self.area_identifier, project: self.canvas.project).where.not(areas: {id: self.id})
     (h_not_associated + h_not_this_area).map { |h| [h.name, h.id] }
   end
 
