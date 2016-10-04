@@ -102,7 +102,7 @@ ActiveRecord::Schema.define(version: 20160926125302) do
     t.datetime "created_at",       null: false
     t.datetime "updated_at",       null: false
     t.integer  "current_phase_id"
-    t.integer  "created_by"
+    t.integer  "created_by_id"
   end
 
   create_table "projects_users", id: false, force: :cascade do |t|
