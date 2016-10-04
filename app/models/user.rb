@@ -4,13 +4,14 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :recoverable, :rememberable, :trackable, :validatable
 
+  has_many :created_projects, class_name: "Project", foreign_key: "created_by_id", dependent: :destroy
   has_and_belongs_to_many :projects
   has_and_belongs_to_many :experiments
 
   after_create :populate_example_data
 
   def all_projects_for_user
-    (self.projects + Project.where(created_by: self.id)).uniq
+    (self.projects + self.created_projects).uniq
   end
 
   private
@@ -25,7 +26,7 @@ class User < ApplicationRecord
         'trade scenester mlkshk plaid. Banjo venmo chambray cold-pressed ' +
         'typewriter. Fap skateboard intelligentsia.',
       active: true,
-      created_by: self.id
+      created_by: self
     )
 
     # Create the phases

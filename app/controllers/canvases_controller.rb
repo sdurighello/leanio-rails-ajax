@@ -89,7 +89,7 @@ class CanvasesController < ApplicationController
     end
     def user_is_member
       project = Project.find(params[:project_id])
-      unless (current_user.id == project.created_by) || (project.users.any? { |u| u.id == current_user.id  })
+      unless (current_user.id == project.created_by.id) || (project.users.any? { |u| u.id == current_user.id  })
         flash[:error] = "You are not a member of this project"
         redirect_to projects_path, notice: 'You are not a member of this project' # halts request cycle
       end

@@ -8,8 +8,11 @@
             <div class="col-md-3 col-sm-6">
                 <%= link_to project do %>
                     <div class="panel panel-info">
-                        <div class="panel-heading" style="height: 80px">
-                          <td><%= project.name %></td><br>
+                        <div class="panel-heading projects-index-box">
+                            <span><%= project.name %> hasfsafs hgfhasgf hsgfhasg hgfashfg ahgsfhsafg hgfas</span>
+                        </div>
+                        <div class="panel-heading projects-index-box">
+                            <span class="glyphicon glyphicon-user"> <%= project.created_by.name %></span>
                         </div>
                     </div>
                 <% end %>
@@ -20,7 +23,7 @@
         <%= link_to new_project_path do %>
           <div class="panel panel-default">
               <div class="panel-body" style="height: 80px">
-                  <td>Create a new project..</td>
+                  <span>Create a new project..</span>
               </div>
           </div>
         <% end %>
@@ -29,7 +32,16 @@
 
 <br>
 
+
 <h3>Past Projects</h3>
+
+<% if (@projects.select { |p| p[:active] == false }).empty? %>
+    <div class="container">
+        <div class="col-md-3 col-sm-6 text-center">
+            <p>No past projects yet</p>
+        </div>
+    </div>
+<% end %>
 
 <div class="container block">
     <% @projects.each do |project| %>
@@ -37,8 +49,11 @@
             <div class="col-md-3 col-sm-6">
                 <%= link_to project do %>
                     <div class="panel panel-default">
-                        <div class="panel-heading" style="height: 80px">
-                            <td><%= project.name %></td><br>
+                        <div class="panel-heading projects-index-box">
+                            <span><%= project.name %> hasfsafs hgfhasgf hsgfhasg hgfashfg ahgsfhsafg hgfas</span>
+                        </div>
+                        <div class="panel-heading projects-index-box">
+                            <span class="glyphicon glyphicon-user"> <%= project.created_by.name %></span>
                         </div>
                     </div>
                 <% end %>
