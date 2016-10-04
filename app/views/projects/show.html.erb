@@ -106,7 +106,7 @@
           <!-- <%= link_to 'New hypothesis', new_project_hypothesis_path(@project.id), :class => 'btn btn-success' %> -->
           <%= link_to 'New hypothesis', new_project_hypothesis_path(@project.id),
             { remote: true, 'data-toggle': "modal", 'data-target': '#show-hypothesis',
-              id: "hypothesis-link-new", class: "btn btn-primary"} %>
+              id: "hypothesis-link-new", class: "btn btn-success"} %>
         </div>
       </div>
       <hr>
@@ -151,7 +151,7 @@
           <%= bootstrap_form_tag url: "/projects/#{@project.id}/add_user", layout: :inline do |f| %>
             <%= f.hidden_field :id, value: @project.id %>
             <%= f.select(:user_id, options_for_select(User.all.map { |h| [h.name, h.id] }), hide_label: true) %>
-            <%= f.submit 'Add user', class:'btn btn-default' %>
+            <%= f.submit 'Add user', class:'btn btn-success' %>
           <% end %>
         </div>
       </div>

@@ -1,21 +1,24 @@
 <p id="notice"><%= notice %></p>
 
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <h6 class="panel-title text-center">
-      <%= "Experiment: #{@experiment.name}" %>
-      <%= link_to 'Edit', edit_project_phase_experiment_path(@project.id, @phase.id, @experiment), class:'btn btn-success btn-xs pull-right' %>
-    </h6>
-  </div>
-  <div class="panel-body">
-    <div id="accordion">
-      <h3>Description</h3>
+<div id="tabs" data-selected-tab="<%= params[:selected_tab] || 0 %>" style="border: 0">
+  <ul>
+    <li><a href="#tabs-0">Header</a></li>
+    <li><a href="#tabs-1">Hypotheses</a></li>
+    <li><a href="#tabs-2">Project members</a></li>
+  </ul>
+  <div class="panel panel-default panel-body">
+    <!-- Header -->
+    <div id="tabs-0">
       <div class="panel panel-default panel-heading">
         <div class="form-group">
+          <label class="small">Name</label>
+          <input class="form-control" value="<%= @experiment.name %>" disabled>
+        </div>
+        <div class="form-group">
+          <label class="small">Description</label>
           <textarea class="form-control" title="description" placeholder=" -- " disabled><%= @experiment.description %></textarea>
         </div>
       </div>
-      <h3>Results</h3>
       <div class="panel panel-default panel-heading">
         <div class="row">
           <div class="form">
@@ -59,41 +62,60 @@
             </div>
           </div>
         </div>
+        <br>
       </div>
+      <%= link_to 'Edit', edit_project_phase_experiment_path(@project.id, @phase.id, @experiment), class:'btn btn-success pull-right' %>
     </div>
-  </div>
-</div>
-
-<div id="tabs" data-selected-tab="<%= params[:selected_tab] || 0 %>" style="border: 0">
-  <ul>
-    <li><a href="#tabs-0">Hypotheses</a></li>
-    <li><a href="#tabs-1">Project members</a></li>
-  </ul>
-  <div class="panel panel-default panel-body">
     <!-- Hypotheses -->
-    <div id="tabs-0">
+    <div id="tabs-1">
       <%= bootstrap_form_tag url: "/projects/#{@project.id}/phases/#{@phase.id}/experiments/#{@experiment.id}/add_hypothesis", layout: :inline do |f|%>
         <%= f.hidden_field :id, value: @experiment.id %>
         <%= f.select(:hypothesis_id, grouped_options_for_select(@experiment.hypothesis_for_grouped_select), hide_label: true) %>
         <%= f.submit("Add hypothesis") %>
       <% end %>
       <hr>
-      <% @experiment.results.each do |result| %>
-        <div class="col-sm-3">
-          <div class="panel panel-default panel-heading">
-            <p><%= link_to result.hypothesis.name, project_hypothesis_path(@project.id, result.hypothesis) %></p>
-            <p><%= Result::LEVELS[result.level] if result.level.present? %></p>
-            <%= button_to("Remove", "/projects/#{@project.id}/phases/#{@phase.id}/experiments/#{@experiment.id}/remove_hypothesis" , html_options = {method: "post", params:{project_id: @project.id, phase_id: @phase_id, id: @experiment.id, result_id: result.id}, class: 'btn btn-danger btn-xs' }) %>
+      <!-- Modal -->
+      <div id="show-hypothesis" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
+      <div class="row" id="areas-row">
+        <% (@experiment.results.group_by { |r| r.hypothesis.area_identifier }).each do |k, v| %>
+          <div class="col-xs-12" id="area-col-<%= k.gsub(' ', '-') %>">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h6 class="panel-title"><%= k.capitalize %></h6>
+              </div>
+              <div class="panel-body">
+                <% v.each do |result| %>
+                  <div class="col-sm-4" id="result-col-<%= result.id %>">
+                    <div class="panel panel-default">
+                      <div class="panel-heading" style="height: 40px; overflow-y: auto; white-space: nowrap;">
+                        <!-- <p>
+                          <%= link_to result.hypothesis.name, project_hypothesis_path(@project.id, result.hypothesis),
+                            { remote: true, 'data-toggle': "modal", 'data-target': '#show-result',
+                              id: "result-link-#{result.hypothesis.id}"} %>
+                        </p> -->
+                        <p><%= link_to result.hypothesis.name, project_hypothesis_path(@project.id, result.hypothesis) %></p>
+                      </div>
+                      <div class="panel-heading" style="height: 40px">
+                        <input value="<%= result.level.present? ? Result::LEVELS[result.level] : 'No validation level' %>">
+                      </div>
+                      <div class="panel-heading" style="height: 40px">
+                        <%= button_to("Remove", "/projects/#{@project.id}/phases/#{@phase.id}/experiments/#{@experiment.id}/remove_hypothesis" , html_options = {form: {style: 'display:inline-block;'}, method: "post", params:{project_id: @project.id, phase_id: @phase_id, id: @experiment.id, result_id: result.id}, class: 'btn btn-danger btn-xs pull-right' }) %>
+                      </div>
+                    </div>
+                  </div>
+                <% end %>
+              </div>
+            </div>
           </div>
-        </div>
-      <% end %>
+        <% end %>
+      </div>
     </div>
     <!-- Project members -->
-    <div id="tabs-1">
+    <div id="tabs-2">
       <%= bootstrap_form_tag url: "/projects/#{@project.id}/phases/#{@phase.id}/experiments/#{@experiment.id}/add_user", layout: :inline do |f| %>
       <%= f.hidden_field :id, value: @experiment.id %>
       <%= f.select(:user_id, @experiment.phase.project.users.collect {|u| [ u.name, u.id ] }, hide_label: true) %>
-      <%= f.submit("Add user") %>
+      <%= f.submit "Add user", class: 'btn btn-success' %>
       <% end %>
       <hr>
       <% @experiment.users.each do |user| %>
@@ -112,7 +134,6 @@
 
 <script>
   $( function() {
-    $( "#accordion" ).accordion({collapsible: true, active: false});
     var selectedTab = $("#tabs").data("selected-tab")
     $( "#tabs" ).tabs({ active: selectedTab });
   });
