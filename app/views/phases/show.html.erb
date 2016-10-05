@@ -111,7 +111,7 @@
             <select class="form-control" id="select-experiment-type">
               <option value="">--select an experiment type</option>
               <% Experiment.experiment_types.each do |type| %>
-                <option value="<%= type %>"><%= (type.underscore).split('_')[0].capitalize %></option>
+                <option value="<%= type.underscore.pluralize %>"><%= (type.underscore).split('_')[0].capitalize %></option>
               <% end %>
             </select>
           </div>
@@ -119,6 +119,7 @@
           <hr>
           <div class="table-responsive">
             <table class="table table-bordered table-hover table-condensed">
+              <caption>Problem experiments</caption>
               <thead>
                 <tr>
                   <th>Completed</th>
@@ -129,7 +130,7 @@
                 </tr>
               </thead>
               <tbody>
-                <% @phase.experiments.each do |experiment| %>
+                <% @phase.problem_experiments.each do |experiment| %>
                   <tr>
                     <td>
                       <% if experiment.completed %>
@@ -162,7 +163,32 @@
 
 <script>
   $( function() {
+
     var selectedTab = $("#tabs").data("selected-tab")
     $( "#tabs" ).tabs({ active: selectedTab });
+
+    var project_id= '<%=@project.id%>';
+    var phase_id= '<%=@phase.id%>';
+
+    var $selectExperimentType = $("select#select-experiment-type");
+    var $buttonCreateNewExperiment = $("button#create-new-experiment");
+
+    $buttonCreateNewExperiment.attr("disabled", !$selectExperimentType.val() ? true : false);
+
+    function disableButton(event){
+      event.preventDefault();
+      $buttonCreateNewExperiment.attr("disabled", !event.target.value ? true : false);
+    }
+
+    function createNewExperiment(event){
+      event.preventDefault();
+      var selectedExperimentType = $selectExperimentType.val();
+      window.location.href = "/projects/"+ project_id +"/phases/"+ phase_id +"/"+ selectedExperimentType +"/new"
+    }
+
+    $selectExperimentType.bind("change", disableButton);
+    $buttonCreateNewExperiment.bind("click", createNewExperiment);
+
+
   });
 </script>
