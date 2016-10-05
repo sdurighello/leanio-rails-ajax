@@ -22,9 +22,13 @@
       <div class="panel panel-default panel-heading">
         <div class="row">
           <div class="form">
-            <div class="form-group col-sm-6 col-xs-6" style="margin: 1px">
+            <div class="form-group col-sm-5 col-xs-5" style="margin: 1px">
               <label class="small">Completion</label>
               <input type="text" class="form-control" id="" value="<%= @experiment.completed ? 'Experiment is completed' : 'Experiment is not completed' %>" disabled>
+            </div>
+            <div class="form-group col-sm-5 col-xs-5" style="margin: 1px">
+              <label class="small">Experiment type</label>
+              <input type="text" class="form-control" id="" value="<%= @experiment.type %>" disabled>
             </div>
           </div>
         </div>
@@ -64,7 +68,7 @@
         </div>
         <br>
       </div>
-      <%= link_to 'Edit', edit_project_phase_experiment_path(@project.id, @phase.id, @experiment), class:'btn btn-success pull-right' %>
+      <%= link_to 'Edit', sti_experiment_path(@project.id, @phase.id, @experiment.type, @experiment, 'edit'), class:'btn btn-success pull-right' %>
     </div>
     <!-- Hypotheses -->
     <div id="tabs-1">

@@ -5,6 +5,7 @@ class ExperimentsController < ApplicationController
   before_action :set_phase
   before_action :set_experiment, except: [:index, :new, :create]
   before_action :project_is_active, except: [:index, :show]
+  before_action :set_experiment_type
 
   add_breadcrumb "Projects", :projects_path
 
@@ -45,7 +46,7 @@ class ExperimentsController < ApplicationController
   # GET /experiments
   # GET /experiments.json
   def index
-    @experiments =  Experiment.where(phase_id: params[:phase_id])
+    @experiments =  experiment_type_class.where(phase_id: params[:phase_id])
   end
 
   # GET /experiments/1
@@ -60,8 +61,8 @@ class ExperimentsController < ApplicationController
   def new
     add_breadcrumb "Project: #{@project.name}", project_path(@project)
     add_breadcrumb "Phase #{@phase.sequence + 1}: #{@phase.name}", project_phase_path(@project, @phase)
-    add_breadcrumb "New Experiment"
-    @experiment = Experiment.new
+    add_breadcrumb "New #{@experiment_type.underscore.split('_').join(' ')}"
+    @experiment = experiment_type_class.new
   end
 
   # GET /experiments/1/edit
@@ -140,17 +141,33 @@ class ExperimentsController < ApplicationController
       @phase = Phase.find(params[:phase_id])
     end
     def set_experiment
-      @experiment = Experiment.find(params[:id])
+      @experiment = experiment_type_class.find(params[:id])
+    end
+
+    def set_experiment_type
+     @experiment_type = experiment_type
+    end
+    def experiment_type
+      Experiment.experiment_types.include?(params[:type]) ? params[:type] : "Experiment"
+    end
+    def experiment_type_class
+      experiment_type.constantize
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def experiment_params
-      params.require(:experiment).permit(
+      params.require(experiment_type.underscore.to_sym).permit(
       :project_id,
       :phase_id,
       {hypothesis_ids: []},
-      :name, :description, :completed, :interviews_planned,
-      :interviews_done, :early_adopters_planned, :early_adopters_converted,
+      :type,
+      :name, :description, :completed, :status,
+      :interviews_planned, :interviews_done, :early_adopters_planned, :early_adopters_converted,
+      :today_solution,
+      :price_proposed,
+      :price_acceptance,
+      :price_revised,
+      :sean_ellis_test,
       results_attributes: [:id, :level, :comment])
     end
 end

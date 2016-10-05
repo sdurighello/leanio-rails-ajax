@@ -1,0 +1,3 @@
+class CustomerExperiment < Experiment
+  
+end

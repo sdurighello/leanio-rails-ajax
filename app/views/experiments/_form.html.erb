@@ -18,6 +18,12 @@
 
       <%= f.text_field :name, wrapper: {class: 'col-md-4 col-xs-8'} %>
 
+      <div class="col-md-4 col-xs-8">
+        <%= f.select :type, Experiment.experiment_types.map {|r| [(r.underscore).split('_')[0].capitalize, r]}, {}, disabled: @experiment_type != "Experiment" %>
+      </div>
+
+      <!-- <%= f.select :type, Experiment.experiment_types, wrapper: {class: 'col-md-4 col-xs-8'} %> -->
+
       <%= f.text_area :description, wrapper: {class: 'col-xs-12'} %>
 
     <div class="col-xs-3">

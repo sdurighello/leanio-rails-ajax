@@ -84,6 +84,7 @@ module ExampleData extend ActiveSupport::Concern
       4.times do |i|
         Experiment.create(
           phase: p,
+          type: (Experiment.experiment_types).sample,
           name: "experiment title #{i + 1}",
           description: 'Migas fingerstache pbr&b tofu. Polaroid distillery ' +
             'typewriter echo tofu actually. Slow-carb fanny pack pickled direct ' +

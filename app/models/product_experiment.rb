@@ -1,0 +1,3 @@
+class ProductExperiment < Experiment
+
+end

@@ -48,14 +48,22 @@ ActiveRecord::Schema.define(version: 20160926125302) do
   end
 
   create_table "experiments", force: :cascade do |t|
+    t.string   "type"
     t.string   "name"
     t.text     "description"
     t.boolean  "completed"
-    t.string   "experiment_type"
+    t.string   "status"
+    t.date     "start_date"
+    t.date     "end_date"
     t.integer  "interviews_planned"
     t.integer  "interviews_done"
     t.integer  "early_adopters_planned"
     t.integer  "early_adopters_converted"
+    t.text     "today_solution"
+    t.decimal  "price_proposed"
+    t.integer  "price_acceptance"
+    t.decimal  "price_revised"
+    t.integer  "sean_ellis_test"
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.integer  "phase_id"

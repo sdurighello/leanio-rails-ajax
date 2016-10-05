@@ -1,0 +1,3 @@
+class SolutionExperiment < Experiment
+
+end

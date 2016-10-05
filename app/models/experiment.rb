@@ -7,6 +7,10 @@ class Experiment < ApplicationRecord
 
   accepts_nested_attributes_for :results
 
+  def self.experiment_types
+    %w(ProblemExperiment SolutionExperiment ProductExperiment CustomerExperiment)
+  end
+
   def add_hypothesis(hypothesis_id)
     if Result.find_by(experiment_id:self.id, hypothesis_id: hypothesis_id).present?
       self.errors.add :base, 'This hypothesis has already been added'
@@ -99,7 +103,5 @@ class Experiment < ApplicationRecord
     end
     select_hash
   end
-
-
 
 end

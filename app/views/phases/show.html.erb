@@ -106,7 +106,16 @@
         </div>
         <!-- Experiments -->
         <div id="tabs-1">
-          <%= link_to('Add new experiment', new_project_phase_experiment_path(@project.id, @phase.id), :class => 'btn btn-success')  %>
+          <!-- <%= link_to('Add new experiment', new_project_phase_experiment_path(@project.id, @phase.id), :class => 'btn btn-success')  %> -->
+          <div class="col-sm-4" style="display: inline">
+            <select class="form-control" id="select-experiment-type">
+              <option value="">--select an experiment type</option>
+              <% Experiment.experiment_types.each do |type| %>
+                <option value="<%= type %>"><%= (type.underscore).split('_')[0].capitalize %></option>
+              <% end %>
+            </select>
+          </div>
+          <button class="btn btn-success" id="create-new-experiment">New experiment</button>
           <hr>
           <div class="table-responsive">
             <table class="table table-bordered table-hover table-condensed">
@@ -114,6 +123,7 @@
                 <tr>
                   <th>Completed</th>
                   <th>Name</th>
+                  <th>Type</th>
                   <th>Interviews</th>
                   <th>Early adopters</th>
                 </tr>
@@ -130,6 +140,9 @@
                     </td>
                     <td>
                       <%= link_to experiment.name, project_phase_experiment_path(@project.id, @phase.id, experiment) %>
+                    </td>
+                    <td>
+                      <%= experiment.type %>
                     </td>
                     <td><%= experiment.interviews_completion[:number] %>
                       (<%= number_to_percentage(experiment.interviews_completion[:ratio] * 100, options = {precision: 2}) %>)

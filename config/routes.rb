@@ -24,6 +24,10 @@ Rails.application.routes.draw do
         post 'add_user' => 'experiments#add_user'
         post 'remove_user' => 'experiments#remove_user'
       end
+      resources :problem_experiments, controller: 'experiments', type: 'ProblemExperiment'
+      resources :solution_experiments, controller: 'experiments', type: 'SolutionExperiment'
+      resources :product_experiments, controller: 'experiments', type: 'ProductExperiment'
+      resources :customer_experiments, controller: 'experiments', type: 'CustomerExperiment'
 
       resources :sprints
       post 'update_experiment_assignment' => 'sprints#update_experiment_assignment'
