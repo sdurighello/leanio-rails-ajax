@@ -2,7 +2,7 @@ class Result < ApplicationRecord
   belongs_to :experiment
   belongs_to :hypothesis
 
-  LEVELS = ['Very low', 'Low', 'Medium', 'High', 'Very high']
+  LEVELS = ['Very low validation', 'Low validation', 'Medium validation', 'High validation', 'Very high validation']
 
   def self.get_list_of_levels
     list_of_levels = []

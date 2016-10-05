@@ -49,14 +49,14 @@
                 <th>Feasibility</th>
                 <th>Riskiness</th>
               </thead>
-              <tbody>
+              <tbody class="small">
                 <% @project.canvases.each do |canvas| %>
                   <tr>
                     <td><%= link_to canvas.name, project_canvas_path(@project.id, canvas) %></td>
-                    <td><%= canvas.market_size %></td>
-                    <td><%= canvas.customers_to_break_even %></td>
-                    <td><%= canvas.payback_period %></td>
-                    <td><%= canvas.gross_margin %></td>
+                    <td><%= number_with_precision(canvas.market_size, precision: 0, delimiter: ',') %></td>
+                    <td><%= number_with_delimiter(canvas.customers_to_break_even) %></td>
+                    <td><%= number_with_precision(canvas.payback_period, precision: 0, delimiter: ',') %></td>
+                    <td><%= number_with_precision(canvas.gross_margin, precision: 0, delimiter: ',') %></td>
                     <td><%= canvas.customer_pain_level_string %></td>
                     <td><%= canvas.market_ease_of_reach_string %></td>
                     <td><%= canvas.feasibility_string %></td>

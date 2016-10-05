@@ -9,6 +9,10 @@ class Phase < ApplicationRecord
     Project::PHASES[self.sequence]
   end
 
+  def assigned_experiments
+    Experiment.includes(:sprints).where(sprints: {phase_id: self.id})
+  end
+
   protected
 
   def set_sprints
