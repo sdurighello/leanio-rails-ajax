@@ -119,7 +119,6 @@
           <hr>
           <div class="table-responsive">
             <table class="table table-bordered table-hover table-condensed">
-              <caption>Problem experiments</caption>
               <thead>
                 <tr>
                   <th>Completed</th>
@@ -130,7 +129,7 @@
                 </tr>
               </thead>
               <tbody>
-                <% @phase.problem_experiments.each do |experiment| %>
+                <% @phase.experiments.each do |experiment| %>
                   <tr>
                     <td>
                       <% if experiment.completed %>
@@ -140,7 +139,7 @@
                       <% end %>
                     </td>
                     <td>
-                      <%= link_to experiment.name, project_phase_experiment_path(@project.id, @phase.id, experiment) %>
+                      <%= link_to experiment.name, sti_experiment_path(@project.id, @phase.id, experiment.type, experiment) %>
                     </td>
                     <td>
                       <%= experiment.type %>

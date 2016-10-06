@@ -1,4 +1,5 @@
 class ExperimentsController < ApplicationController
+  include StiExperimentPath
   before_action :authenticate_user!
   before_action :user_is_member
   before_action :set_project
@@ -12,34 +13,34 @@ class ExperimentsController < ApplicationController
   # Adding / Removing HYPOTHESES to/from experiments
   def add_hypothesis
     if @experiment.add_hypothesis(params[:hypothesis_id].to_i)
-      redirect_to project_phase_experiment_path(@project.id, @phase.id, @experiment), notice: 'Hypothesis was successfully added'
+      redirect_to sti_experiment_path(@project.id, @phase.id, @experiment.type, @experiment), notice: 'Hypothesis was successfully added'
     else
-      redirect_to project_phase_experiment_path(@project.id, @phase.id, @experiment), notice: 'Hypothesis cannot be added'
+      redirect_to sti_experiment_path(@project.id, @phase.id, @experiment.type, @experiment), notice: 'Hypothesis cannot be added'
     end
   end
 
   def remove_hypothesis
     if @experiment.remove_hypothesis(params[:result_id].to_i)
-      redirect_to project_phase_experiment_path(@project.id, @phase.id, @experiment), notice: 'Hypothesis was successfully removed'
+      redirect_to sti_experiment_path(@project.id, @phase.id, @experiment.type, @experiment), notice: 'Hypothesis was successfully removed'
     else
-      redirect_to project_phase_experiment_path(@project.id, @phase.id, @experiment), notice: 'Hypothesis cannot be removed'
+      redirect_to sti_experiment_path(@project.id, @phase.id, @experiment.type, @experiment), notice: 'Hypothesis cannot be removed'
     end
   end
 
   # Adding / Removing USERS to/from experiments
   def add_user
     if @experiment.add_user(params[:user_id].to_i)
-      redirect_to project_phase_experiment_path(@project.id, @phase.id, @experiment), notice: 'User was successfully added'
+      redirect_to sti_experiment_path(@project.id, @phase.id, @experiment.type, @experiment), notice: 'User was successfully added'
     else
-      redirect_to project_phase_experiment_path(@project.id, @phase.id, @experiment), notice: 'User cannot be added'
+      redirect_to sti_experiment_path(@project.id, @phase.id, @experiment.type, @experiment), notice: 'User cannot be added'
     end
   end
 
   def remove_user
     if @experiment.remove_user(params[:user_id].to_i)
-      redirect_to project_phase_experiment_path(@project.id, @phase.id, @experiment), notice: 'User was successfully removed'
+      redirect_to sti_experiment_path(@project.id, @phase.id, @experiment.type, @experiment), notice: 'User was successfully removed'
     else
-      redirect_to project_phase_experiment_path(@project.id, @phase.id, @experiment), notice: 'User cannot be removed'
+      redirect_to sti_experiment_path(@project.id, @phase.id, @experiment.type, @experiment), notice: 'User cannot be removed'
     end
   end
 
@@ -75,11 +76,11 @@ class ExperimentsController < ApplicationController
   # POST /experiments
   # POST /experiments.json
   def create
-    @experiment = Experiment.new(experiment_params)
+    @experiment = experiment_type_class.new(experiment_params)
 
     respond_to do |format|
       if @experiment.save
-        format.html { redirect_to project_phase_experiment_path(@project.id, @phase.id, @experiment), notice: 'Experiment was successfully created.' }
+        format.html { redirect_to sti_experiment_path(@project.id, @phase.id, @experiment.type, @experiment), notice: 'Experiment was successfully created.' }
         format.json { render :show, status: :created, location: @experiment }
       else
         format.html { render :new }
@@ -93,7 +94,7 @@ class ExperimentsController < ApplicationController
   def update
     respond_to do |format|
       if @experiment.update(experiment_params)
-        format.html { redirect_to project_phase_experiment_path(@project.id, @phase.id, @experiment), notice: 'Experiment was successfully updated.' }
+        format.html { redirect_to sti_experiment_path(@project.id, @phase.id, @experiment.type, @experiment), notice: 'Experiment was successfully updated.' }
         format.json { render :show, status: :ok, location: @experiment }
       else
         format.html { render :edit }
@@ -128,7 +129,7 @@ class ExperimentsController < ApplicationController
       unless project.active
         flash[:error] = "This project is not active"
         if params[:id].present?
-          redirect_to project_phase_experiment_path(project.id, phase.id, experiment), notice: 'This project is not active' # halts request cycle
+          redirect_to sti_experiment_path(project.id, phase.id, experiment.type, experiment), notice: 'This project is not active' # halts request cycle
         else
           redirect_to project_phase_path(project.id, phase), notice: 'This project is not active'
         end

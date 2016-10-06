@@ -18,7 +18,7 @@ class PhasesController < ApplicationController
   def show
     add_breadcrumb "Project: #{@project.name}", project_path(@project)
     add_breadcrumb "Phase #{@phase.sequence + 1}: #{@phase.name}", project_phase_path(@project, @phase)
-  
+
   end
 
   # GET /phases/new
