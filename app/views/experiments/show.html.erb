@@ -91,18 +91,21 @@
                 <% v.each do |result| %>
                   <div class="col-sm-4" id="result-col-<%= result.id %>">
                     <div class="panel panel-default">
-                      <div class="panel-heading" style="height: 40px; overflow-y: auto; white-space: nowrap;">
-                        <!-- <p>
+                      <div class="panel-heading" style="height: 50px; overflow-y: auto; white-space: nowrap;">
+                        <p>
                           <%= link_to result.hypothesis.name, project_hypothesis_path(@project.id, result.hypothesis),
-                            { remote: true, 'data-toggle': "modal", 'data-target': '#show-result',
-                              id: "result-link-#{result.hypothesis.id}"} %>
-                        </p> -->
-                        <p><%= link_to result.hypothesis.name, project_hypothesis_path(@project.id, result.hypothesis) %></p>
+                            { remote: true, 'data-toggle': "modal", 'data-target': '#show-hypothesis',
+                              id: "hypothesis-link-#{result.hypothesis.id}"} %>
+                        </p>
+                        <!-- <p><%= link_to result.hypothesis.name, project_hypothesis_path(@project.id, result.hypothesis) %></p> -->
                       </div>
-                      <div class="panel-heading" style="height: 40px">
-                        <input value="<%= result.level.present? ? Result::LEVELS[result.level] : 'No validation level' %>">
+                      <div class="panel-heading" style="height: 50px">
+                        <span>
+                          <%= link_to result.level.present? ? Result::LEVELS[result.level] : 'No validation level', project_result_path(@project.id, result) %>
+                        </span>
+                        <!-- <input value="<%= result.level.present? ? Result::LEVELS[result.level] : 'No validation level' %>" disabled> -->
                       </div>
-                      <div class="panel-heading" style="height: 40px">
+                      <div class="panel-heading" style="height: 50px">
                         <%= button_to("Remove", "/projects/#{@project.id}/phases/#{@phase.id}/experiments/#{@experiment.id}/remove_hypothesis" , html_options = {form: {style: 'display:inline-block;'}, method: "post", params:{project_id: @project.id, phase_id: @phase_id, id: @experiment.id, result_id: result.id}, class: 'btn btn-danger btn-xs pull-right' }) %>
                       </div>
                     </div>

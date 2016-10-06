@@ -1,27 +1,44 @@
 class ResultsController < ApplicationController
   before_action :authenticate_user!
   before_action :user_is_member
-  before_action :set_result, only: [:show, :edit, :update, :destroy]
+  before_action :set_project
+  before_action :set_result, except: [:index, :new, :create]
   before_action :project_is_active, except: [:index, :show]
+
+  add_breadcrumb "Projects", :projects_path
 
   # GET /results
   # GET /results.json
   def index
-    @results = Result.all
+    @results = Result.where(project_id: params[:project_id])
   end
 
   # GET /results/1
   # GET /results/1.json
   def show
+    add_breadcrumb "Project: #{@project.name}", project_path(@project)
+    add_breadcrumb "Result: #{@result.name}", project_result_path(@project, @result)
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # GET /results/new
   def new
+    add_breadcrumb "Project: #{@project.name}", project_path(@project)
+    add_breadcrumb "New Result"
     @result = Result.new
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # GET /results/1/edit
   def edit
+    add_breadcrumb "Project: #{@project.name}", project_path(@project)
+    add_breadcrumb "Result: #{@result.name}", project_result_path(@project, @result)
   end
 
   # POST /results
@@ -31,8 +48,8 @@ class ResultsController < ApplicationController
 
     respond_to do |format|
       if @result.save
-        format.html { redirect_to @result, notice: 'Result was successfully created.' }
-        format.json { render :show, status: :created, location: @result }
+        format.html { redirect_to project_result_path(@project.id, @result), notice: 'Result was successfully created.' }
+        format.json { render json: @result, status: :ok }
       else
         format.html { render :new }
         format.json { render json: @result.errors, status: :unprocessable_entity }

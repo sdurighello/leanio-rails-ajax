@@ -16,9 +16,9 @@ Rails.application.routes.draw do
 
     post 'set_current_phase' => 'projects#set_current_phase'
 
-    resources :phases do
+    resources :phases, except: [:index] do
 
-      resources :experiments do
+      resources :experiments, except: [:index, :new, :create, :edit, :update, :destroy, :show] do
         post 'add_hypothesis' => 'experiments#add_hypothesis'
         post 'remove_hypothesis' => 'experiments#remove_hypothesis'
         post 'add_user' => 'experiments#add_user'
@@ -29,20 +29,20 @@ Rails.application.routes.draw do
       resources :product_experiments, controller: 'experiments', type: 'ProductExperiment'
       resources :customer_experiments, controller: 'experiments', type: 'CustomerExperiment'
 
-      resources :sprints
+      resources :sprints, except: [:index]
       post 'update_experiment_assignment' => 'sprints#update_experiment_assignment'
 
     end
 
-    resources :canvases do
-      resources :areas do
+    resources :canvases, except: [:index] do
+      resources :areas, except: [:index] do
         post 'add_hypothesis' => 'areas#add_hypothesis'
         post 'remove_hypothesis' => 'areas#remove_hypothesis'
       end
     end
 
-    resources :hypotheses
-    resources :results
+    resources :hypotheses, except: [:index]
+    resources :results, except: [:index]
 
   end
 

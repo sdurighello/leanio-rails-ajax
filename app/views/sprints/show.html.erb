@@ -143,7 +143,7 @@
               [ ]
             <% end %>
             </td>
-            <td><%= link_to experiment.name, project_phase_experiment_path(@project.id, @phase.id, experiment) %></td>
+            <td><%= link_to experiment.name, sti_experiment_path(@project.id, @phase.id, experiment.type, experiment) %></td>
             <td><%= experiment.interviews_completion[:number] %>
               (<%= number_to_percentage(experiment.interviews_completion[:ratio] * 100, options = {precision: 2}) %>)
             </td>
