@@ -119,12 +119,14 @@ ActiveRecord::Schema.define(version: 20160926125302) do
   end
 
   create_table "results", force: :cascade do |t|
-    t.integer  "level"
+    t.integer  "validation_level"
+    t.integer  "priority"
+    t.integer  "pain_level"
     t.text     "comment"
     t.integer  "experiment_id"
     t.integer  "hypothesis_id"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",       null: false
+    t.datetime "updated_at",       null: false
     t.index ["experiment_id"], name: "index_results_on_experiment_id", using: :btree
     t.index ["hypothesis_id"], name: "index_results_on_hypothesis_id", using: :btree
   end
