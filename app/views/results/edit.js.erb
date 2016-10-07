@@ -1,0 +1,61 @@
+// Dislay the modal content
+$("#show").html("<%= escape_javascript(render 'results/modal_edit') %>");
+
+// Get IDs
+var modalDialog = $(".modal-dialog");
+var projectId = modalDialog.data('project-id');
+var resultId = modalDialog.data('result-id');
+var hypothesisId = modalDialog.data('hypothesis-id');
+var experimentId = modalDialog.data('experiment-id');
+
+// Show error message
+function showError(message) {
+  $(".modal-dialog").addClass("error");
+  var errorElement = $("<small></small>")
+    .attr('id', 'error_message')
+    .addClass('error')
+    .html(message);
+  $(errorElement).appendTo('form .field');
+}
+
+// EDIT hypothesis
+function editResult(event){
+  event.preventDefault();
+
+  // get edited object
+  var editedResult = {
+    id: resultId,
+    experiment_id: experimentId,
+    hypothesis_id: hypothesisId,
+    level: $("#result_level").val(),
+    comment: $("#result_comment").val()
+  };
+
+  $.ajax({
+    type: "PUT",
+    url: "/projects/"+projectId+"/results/"+resultId+".json",
+    data: JSON.stringify({
+        result: editedResult
+    }),
+    contentType: "application/json",
+    dataType: "json"})
+
+    .done(function(data) {
+      // Update link name on project show view
+      $("#result-link-"+resultId).html(data.level);
+      // Close modal
+      $("button#close-modal").click();
+    })
+
+    .fail(function(error) {
+      console.log(error);
+      error_message = error.responseJSON.title[0];
+      showError(error_message);
+    }
+  );
+}
+
+// After loading: bind submit event
+$(document).ready(function() {
+  // $("#submit-edit").bind('click', editResult);
+});

@@ -1,5 +1,5 @@
 // Dislay the modal content
-$("#show-hypothesis").html("<%= escape_javascript(render 'hypotheses/modal_edit') %>");
+$("#show").html("<%= escape_javascript(render 'hypotheses/modal_edit') %>");
 
 // Get IDs
 var modalDialog = $(".modal-dialog");
@@ -52,7 +52,7 @@ function createNewLinkPanel(data, areaCol){
 
   var newLink = $("<a></a>")
   newLink.attr('data-toggle', "modal");
-  newLink.attr('data-target', "#show-hypothesis");
+  newLink.attr('data-target', "#show");
   newLink.attr('id', "hypothesis-link-" + data.id);
   newLink.attr('data-remote', "true");
   newLink.attr('href', "/projects/"+data.project_id+"/hypotheses/"+data.id);

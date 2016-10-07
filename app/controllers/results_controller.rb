@@ -17,7 +17,7 @@ class ResultsController < ApplicationController
   # GET /results/1.json
   def show
     add_breadcrumb "Project: #{@project.name}", project_path(@project)
-    add_breadcrumb "Result: #{@result.name}", project_result_path(@project, @result)
+    add_breadcrumb "Result -> [#{@result.hypothesis.name}] / [#{@result.experiment.name}]", project_result_path(@project, @result)
     respond_to do |format|
       format.html
       format.js
@@ -38,7 +38,11 @@ class ResultsController < ApplicationController
   # GET /results/1/edit
   def edit
     add_breadcrumb "Project: #{@project.name}", project_path(@project)
-    add_breadcrumb "Result: #{@result.name}", project_result_path(@project, @result)
+    add_breadcrumb "Result -> [#{@result.hypothesis.name}] / [#{@result.experiment.name}]", project_result_path(@project, @result)
+    respond_to do |format|
+      format.html
+      format.js
+    end
   end
 
   # POST /results
@@ -62,8 +66,8 @@ class ResultsController < ApplicationController
   def update
     respond_to do |format|
       if @result.update(result_params)
-        format.html { redirect_to @result, notice: 'Result was successfully updated.' }
-        format.json { render :show, status: :ok, location: @result }
+        format.html { redirect_to project_result_path(@project.id, @result), notice: 'Result was successfully updated.' }
+        format.json { render json: @result, status: :ok }
       else
         format.html { render :edit }
         format.json { render json: @result.errors, status: :unprocessable_entity }
@@ -76,7 +80,7 @@ class ResultsController < ApplicationController
   def destroy
     @result.destroy
     respond_to do |format|
-      format.html { redirect_to results_url, notice: 'Result was successfully destroyed.' }
+      format.html { redirect_to project_path(@project.id), notice: 'Result was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
@@ -101,6 +105,9 @@ class ResultsController < ApplicationController
           redirect_to project_path(project), notice: 'This project is not active'
         end
       end
+    end
+    def set_project
+      @project = Project.find(params[:project_id])
     end
     def set_result
       @result = Result.find(params[:id])

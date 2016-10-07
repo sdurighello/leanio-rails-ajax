@@ -1,0 +1,33 @@
+<div class="modal-dialog" role="document"
+      data-result-id="<%= @result.id %>"
+      data-project-id="<%= @project.id %>"
+      data-experiment-id"<%= @result.experiment.id %>"
+      data-hypothesis-id"<%= @result.hypothesis.id %>" >
+   <div class="modal-content">
+      <div class="modal-header">
+         <h4 class="modal-title text-center">Experiment result</h4>
+      </div>
+      <div class="modal-body">
+         <%= bootstrap_form_for([@project, @result], remote: true) do |f| %>
+          <% if @result.errors.any? %>
+            <div id="error_explanation">
+              <h2><%= pluralize(@result.errors.count, "error") %> prohibited this result from being saved:</h2>
+              <ul>
+              <% @result.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+              <% end %>
+              </ul>
+            </div>
+          <% end %>
+          <%= f.hidden_field :hypothesis_id, value: @result.hypothesis.id %>
+          <%= f.hidden_field :experiment_id, value: @result.experiment.id %>
+          <%= f.select :level, Result.get_list_of_levels, label: 'Validation level' %>
+          <%= f.text_area :comment %>
+      </div>
+      <div class="modal-footer">
+         <%= f.submit "Save", remote: true, class:"btn btn-success", id:'submit-edit' %>
+         <button id="close-modal" type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+      </div>
+        <% end %>
+   </div>
+</div>

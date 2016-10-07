@@ -1,0 +1,43 @@
+<div class="modal-dialog" role="document">
+   <div class="modal-content">
+      <div class="modal-header">
+         <h4 class="modal-title text-center">Experiment Result</h4>
+      </div>
+      <div class="modal-body">
+         <div class="row">
+            <div class="form">
+               <div class="form-group col-sm-6 col-xs-6">
+                 <label class="small">Hypothesis</label>
+                 <input type="text" class="form-control" id="" value="<%= @result.hypothesis.name %>" disabled>
+               </div>
+               <div class="form-group col-sm-6 col-xs-6">
+                 <label class="small">Experiment</label>
+                 <input type="text" class="form-control" id="" value="<%= @result.experiment.name %>" disabled>
+               </div>
+            </div>
+         </div>
+         <br>
+         <div class="row">
+            <div class="form">
+               <div class="form-group col-sm-6 col-xs-6" style="margin: 1px">
+                 <label class="small">Validation level</label>
+                 <input type="text" class="form-control" id="" value="<%= @result.level %>" disabled>
+               </div>
+            </div>
+         </div>
+         <br>
+         <div class="row">
+            <div class="form">
+               <div class="form-group col-xs-12" style="margin: 1px">
+                  <label class="small">Comment</label>
+                  <textarea class="form-control" title="description" disabled><%= @result.comment %></textarea>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="modal-footer">
+         <%= link_to 'Edit', edit_project_result_path(@project.id, @result), remote: true, class: 'btn btn-success' %>
+         <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
+      </div>
+   </div>
+</div>

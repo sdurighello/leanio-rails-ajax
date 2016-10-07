@@ -1,14 +1,32 @@
-<%= simple_form_for(@result) do |f| %>
-  <%= f.error_notification %>
 
-  <div class="form-inputs">
-    <%= f.input :level %>
-    <%= f.input :comment %>
-    <%= f.association :experiment %>
-    <%= f.association :hypothesis %>
+<%= bootstrap_form_for([@project, @result]) do |f| %>
+  <% if @result.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@result.errors.count, "error") %> prohibited this result from being saved:</h2>
+      <ul>
+      <% @result.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="row">
+      <!-- this hidden fields won't work for new/create but we should not be using those actions -->
+      <%= f.hidden_field :hypothesis_id, value: @result.hypothesis.id %>
+      <%= f.hidden_field :experiment_id, value: @result.experiment.id %>
+      <div class="col-md-4 col-xs-8">
+        <%= f.select :level, Result.get_list_of_levels %>
+      </div>
+      <%= f.text_area :comment, wrapper: {class: 'col-xs-12'} %>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit %>
+  <hr>
+  <div class="row">
+    <div class="col-xs-12">
+      <%= f.submit "Save", class:"btn btn-success" %>
+      <% if !@result.new_record? %>
+        <%= link_to 'Delete', project_result_path(@project.id, @result), method: :delete, data: { confirm: 'Are you sure?' }, class: 'btn btn-danger' %>
+      <% end %>
+      <%= link_to 'Cancel', @result.new_record? ? project_path(@project, selected_tab: 3) : project_result_path(@project.id, @result), class:"btn btn-info" %>
+    </div>
   </div>
 <% end %>

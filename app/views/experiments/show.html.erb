@@ -75,11 +75,11 @@
       <%= bootstrap_form_tag url: "/projects/#{@project.id}/phases/#{@phase.id}/experiments/#{@experiment.id}/add_hypothesis", layout: :inline do |f|%>
         <%= f.hidden_field :id, value: @experiment.id %>
         <%= f.select(:hypothesis_id, grouped_options_for_select(@experiment.hypothesis_for_grouped_select), hide_label: true) %>
-        <%= f.submit("Add hypothesis") %>
+        <%= f.submit("Add hypothesis", class: 'btn btn-success') %>
       <% end %>
       <hr>
       <!-- Modal -->
-      <div id="show-hypothesis" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
+      <div id="show" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
       <div class="row" id="areas-row">
         <% (@experiment.results.group_by { |r| r.hypothesis.area_identifier }).each do |k, v| %>
           <div class="col-xs-12" id="area-col-<%= k.gsub(' ', '-') %>">
@@ -92,18 +92,20 @@
                   <div class="col-sm-4" id="result-col-<%= result.id %>">
                     <div class="panel panel-default">
                       <div class="panel-heading" style="height: 50px; overflow-y: auto; white-space: nowrap;">
-                        <p>
+                        <span>
                           <%= link_to result.hypothesis.name, project_hypothesis_path(@project.id, result.hypothesis),
-                            { remote: true, 'data-toggle': "modal", 'data-target': '#show-hypothesis',
+                            { remote: true, 'data-toggle': "modal", 'data-target': '#show',
                               id: "hypothesis-link-#{result.hypothesis.id}"} %>
-                        </p>
-                        <!-- <p><%= link_to result.hypothesis.name, project_hypothesis_path(@project.id, result.hypothesis) %></p> -->
+                        </span>
+                        <!-- <span><%= link_to result.hypothesis.name, project_hypothesis_path(@project.id, result.hypothesis) %></span> -->
                       </div>
                       <div class="panel-heading" style="height: 50px">
                         <span>
-                          <%= link_to result.level.present? ? Result::LEVELS[result.level] : 'No validation level', project_result_path(@project.id, result) %>
+                          <%= link_to result.level.present? ? Result::LEVELS[result.level] : 'No validation level', project_result_path(@project.id, result),
+                            { remote: true, 'data-toggle': "modal", 'data-target': '#show',
+                              id: "result-link-#{result.id}"} %>
                         </span>
-                        <!-- <input value="<%= result.level.present? ? Result::LEVELS[result.level] : 'No validation level' %>" disabled> -->
+                        <!-- <span><%= link_to result.level.present? ? Result::LEVELS[result.level] : 'No validation level', project_result_path(@project.id, result) %></span> -->
                       </div>
                       <div class="panel-heading" style="height: 50px">
                         <%= button_to("Remove", "/projects/#{@project.id}/phases/#{@phase.id}/experiments/#{@experiment.id}/remove_hypothesis" , html_options = {form: {style: 'display:inline-block;'}, method: "post", params:{project_id: @project.id, phase_id: @phase_id, id: @experiment.id, result_id: result.id}, class: 'btn btn-danger btn-xs pull-right' }) %>
