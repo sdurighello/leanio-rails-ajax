@@ -7,7 +7,7 @@ class Project < ApplicationRecord
 
   accepts_nested_attributes_for :phases, allow_destroy: true, reject_if: :all_blank
 
-  # --- Constants
+  # --- Phases
 
   PHASES = ['Problem/Solution Fit', 'Product/Market Fit', 'Scale']
 
@@ -17,6 +17,12 @@ class Project < ApplicationRecord
       list_of_phases << [phase, index]
     end
     list_of_phases
+  end
+
+  # --- Status
+
+  def self.status
+    %w(Red Amber Green)
   end
 
   # --- Instance methdos
