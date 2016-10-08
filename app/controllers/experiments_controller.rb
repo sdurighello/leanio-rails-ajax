@@ -157,18 +157,63 @@ class ExperimentsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def experiment_params
-      params.require(experiment_type.underscore.to_sym).permit(
-      :project_id,
-      :phase_id,
-      {hypothesis_ids: []},
-      :type,
-      :name, :description, :completed, :status,
-      :interviews_planned, :interviews_done, :early_adopters_planned, :early_adopters_converted,
-      :today_solution,
-      :price_proposed,
-      :price_acceptance,
-      :price_revised,
-      :sean_ellis_test,
-      results_attributes: [:id, :level, :comment])
+      case experiment_type
+      when 'ProblemExperiment'
+        params.require(experiment_type.underscore.to_sym).permit(
+        :project_id,
+        :phase_id,
+        :type,
+        :name, :description, :completed, :status,
+        {hypothesis_ids: []},
+        {results_attributes: [:id, :validation_level, :pain_level, :priority, :comment]},
+        :interviews_planned,
+        :interviews_done,
+        
+        :today_solution
+        )
+      when 'SolutionExperiment'
+        params.require(experiment_type.underscore.to_sym).permit(
+        :project_id,
+        :phase_id,
+        :type,
+        :name, :description, :completed, :status,
+        {hypothesis_ids: []},
+        {results_attributes: [:id, :validation_level, :pain_level, :priority, :comment]},
+        :interviews_planned,
+        :interviews_done,
+
+        :price_proposed,
+        :price_acceptance,
+        :price_revised
+        )
+      when 'ProductExperiment'
+        params.require(experiment_type.underscore.to_sym).permit(
+        :project_id,
+        :phase_id,
+        :type,
+        :name, :description, :completed, :status,
+        {hypothesis_ids: []},
+        {results_attributes: [:id, :validation_level, :pain_level, :priority, :comment]},
+        :interviews_planned,
+        :interviews_done,
+
+        :sean_ellis_test
+        )
+      when 'CustomerExperiment'
+        params.require(experiment_type.underscore.to_sym).permit(
+        :project_id,
+        :phase_id,
+        :type,
+        :name, :description, :completed, :status,
+        {hypothesis_ids: []},
+        {results_attributes: [:id, :validation_level, :pain_level, :priority, :comment]},
+        :interviews_planned,
+        :interviews_done,
+
+        :early_adopters_planned,
+        :early_adopters_converted
+        )
+      end
+
     end
 end

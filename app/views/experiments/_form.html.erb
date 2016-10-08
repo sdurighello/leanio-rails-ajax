@@ -3,7 +3,6 @@
   <% if @experiment.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@experiment.errors.count, "error") %> prohibited this experiment from being saved:</h2>
-
       <ul>
       <% @experiment.errors.full_messages.each do |message| %>
         <li><%= message %></li>
@@ -19,6 +18,9 @@
       <%= f.select :type, Experiment.experiment_types.map {|r| [(r.underscore).split('_')[0].capitalize, r]}, {}, disabled: @experiment_type != "Experiment" %>
     </div>
     <%= f.text_area :description, wrapper: {class: 'col-xs-12'} %>
+    <div class="col-md-4 col-xs-8">
+      <%= f.select :status, Experiment.status, include_blank: true  %>
+    </div>
     <div class="col-xs-3">
       <%= f.check_box :completed %>
     </div>
@@ -26,8 +28,25 @@
   <div class="row">
     <%= f.number_field :interviews_planned, wrapper: {class: 'col-md-3 col-xs-6'} %>
     <%= f.number_field :interviews_done, wrapper: {class: 'col-md-3 col-xs-6'} %>
-    <%= f.number_field :early_adopters_planned, wrapper: {class: 'col-md-3 col-xs-6'} %>
-    <%= f.number_field :early_adopters_converted, wrapper: {class: 'col-md-3 col-xs-6'} %>
+    <% if @experiment_type == 'ProblemExperiment' %>
+      <%= f.text_area :today_solution, wrapper: {class: 'col-xs-12'} %>
+    <% end %>
+    <% if @experiment_type == 'SolutionExperiment' %>
+      <%= f.number_field :price_proposed, wrapper: {class: 'col-md-3 col-xs-6'} %>
+      <%= f.number_field :price_revised, wrapper: {class: 'col-md-3 col-xs-6'} %>
+      <div class="col-md-3 col-xs-6">
+        <%= f.select :price_acceptance, Experiment.list_of_price_acceptance, include_blank: true  %>
+      </div>
+    <% end %>
+    <% if @experiment_type == 'ProductExperiment' %>
+      <div class="col-md-3 col-xs-6">
+        <%= f.select :sean_ellis_test, Experiment.list_of_sean_ellis_test, include_blank: true  %>
+      </div>
+    <% end %>
+    <% if @experiment_type == 'CustomerExperiment' %>
+      <%= f.number_field :early_adopters_planned, wrapper: {class: 'col-md-3 col-xs-6'} %>
+      <%= f.number_field :early_adopters_converted, wrapper: {class: 'col-md-3 col-xs-6'} %>
+    <% end %>
   </div>
 
   <!-- <hr>
@@ -40,7 +59,7 @@
             <h6 class="panel-title"><%= results_form.object.hypothesis.name %></h6>
           </div>
           <div class="panel-body">
-            <%= results_form.number_field :level %>
+            <%= results_form.number_field :validation_level %>
             <%= results_form.text_area :comment %>
           </div>
         </div>

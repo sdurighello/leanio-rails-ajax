@@ -11,6 +11,48 @@ class Experiment < ApplicationRecord
     %w(ProblemExperiment SolutionExperiment ProductExperiment CustomerExperiment)
   end
 
+  def self.status
+    %w(Red Amber Green)
+  end
+
+  # Price acceptance
+
+  PRICE_ACCEPTANCE = ['1 - Very low', '2 - Low', '3 - Medium', '4 - High', '5 - Very high']
+
+  def self.list_of_price_acceptance
+    list_of_values = []
+    PRICE_ACCEPTANCE.each_with_index do |v, i|
+      list_of_values << [v, i]
+    end
+    list_of_values
+  end
+
+  def price_acceptance_string
+    if self.price_acceptance.present?
+      PRICE_ACCEPTANCE[self.price_acceptance]
+    end
+  end
+
+  # Sean Ellis Test
+
+  SEAN_ELLIS_TEST = ['1 - Very disappointed', '2 - Somewhat disappointed', '3 - Not disappointed', '4 - N/A']
+
+  def self.list_of_sean_ellis_test
+    list_of_values = []
+    SEAN_ELLIS_TEST.each_with_index do |v, i|
+      list_of_values << [v, i]
+    end
+    list_of_values
+  end
+
+  def sean_ellis_test_string
+    if self.sean_ellis_test.present?
+      SEAN_ELLIS_TEST[self.sean_ellis_test]
+    end
+  end
+
+  # Hypotheses add/remove
+
   def add_hypothesis(hypothesis_id)
     if Result.find_by(experiment_id:self.id, hypothesis_id: hypothesis_id).present?
       self.errors.add :base, 'This hypothesis has already been added'

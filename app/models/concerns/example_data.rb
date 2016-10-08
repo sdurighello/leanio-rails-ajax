@@ -90,11 +90,7 @@ module ExampleData extend ActiveSupport::Concern
             'typewriter echo tofu actually. Slow-carb fanny pack pickled direct ' +
             'trade scenester mlkshk plaid. Banjo venmo chambray cold-pressed ' +
             'typewriter. Fap skateboard intelligentsia.',
-          completed: p.sequence == 0,
-          interviews_planned: i * 3,
-          interviews_done: p.sequence == 1 ? (i * 2) : 0,
-          early_adopters_planned: i * 10,
-          early_adopters_converted: p.sequence == 1 ? (i * 9) : 0
+          completed: p.sequence == 0
         )
       end
     end
@@ -188,7 +184,9 @@ module ExampleData extend ActiveSupport::Concern
                   'typewriter echo tofu actually. Slow-carb fanny pack pickled direct ' +
                   'trade scenester mlkshk plaid. Banjo venmo chambray cold-pressed ' +
                   'typewriter. Fap skateboard intelligentsia.',
-                level: rand(0..4)
+                validation_level: rand(0..4),
+                pain_level: rand(0..4),
+                priority: rand(0..4)
               )
             end
           end
@@ -206,7 +204,9 @@ module ExampleData extend ActiveSupport::Concern
                     'typewriter echo tofu actually. Slow-carb fanny pack pickled direct ' +
                     'trade scenester mlkshk plaid. Banjo venmo chambray cold-pressed ' +
                     'typewriter. Fap skateboard intelligentsia.',
-                  level: rand(0..4)
+                  validation_level: rand(0..4),
+                  pain_level: rand(0..4),
+                  priority: rand(0..4)
                 )
               end
             end

@@ -115,6 +115,6 @@ class ResultsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def result_params
-      params.require(:result).permit(:level, :comment, :experiment_id, :hypothesis_id)
+      params.require(:result).permit(:validation_level, :pain_level, :priority, :comment, :experiment_id, :hypothesis_id)
     end
 end

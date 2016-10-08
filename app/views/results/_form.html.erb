@@ -14,8 +14,14 @@
       <!-- this hidden fields won't work for new/create but we should not be using those actions -->
       <%= f.hidden_field :hypothesis_id, value: @result.hypothesis.id %>
       <%= f.hidden_field :experiment_id, value: @result.experiment.id %>
-      <div class="col-md-4 col-xs-8">
-        <%= f.select :level, Result.get_list_of_levels %>
+      <div class="col-md-4">
+        <%= f.select :validation_level, Result.list_of_validation_levels %>
+      </div>
+      <div class="col-md-4">
+        <%= f.select :pain_level, Result.list_of_pain_levels %>
+      </div>
+      <div class="col-md-4">
+        <%= f.select :priority, Result.list_of_priorities %>
       </div>
       <%= f.text_area :comment, wrapper: {class: 'col-xs-12'} %>
   </div>

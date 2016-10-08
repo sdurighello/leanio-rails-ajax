@@ -10,61 +10,89 @@
     <!-- Header -->
     <div id="tabs-0">
       <div class="panel panel-default panel-heading">
-        <div class="form-group">
-          <label class="small">Name</label>
-          <input class="form-control" value="<%= @experiment.name %>" disabled>
-        </div>
-        <div class="form-group">
-          <label class="small">Description</label>
-          <textarea class="form-control" title="description" placeholder=" -- " disabled><%= @experiment.description %></textarea>
+        <div class="row">
+          <div class="form-group col-sm-6">
+            <label class="small">Name</label>
+            <input class="form-control" value="<%= @experiment.name %>" disabled>
+          </div>
+          <div class="form-group col-sm-6">
+            <label class="small">Experiment type</label>
+            <input type="text" class="form-control" id="" value="<%= @experiment.type %>" disabled>
+          </div>
+          <div class="form-group col-xs-12">
+            <label class="small">Description</label>
+            <textarea class="form-control" title="description" placeholder=" -- " disabled><%= @experiment.description %></textarea>
+          </div>
         </div>
       </div>
       <div class="panel panel-default panel-heading">
         <div class="row">
-          <div class="form">
-            <div class="form-group col-sm-5 col-xs-5" style="margin: 1px">
-              <label class="small">Completion</label>
-              <input type="text" class="form-control" id="" value="<%= @experiment.completed ? 'Experiment is completed' : 'Experiment is not completed' %>" disabled>
-            </div>
-            <div class="form-group col-sm-5 col-xs-5" style="margin: 1px">
-              <label class="small">Experiment type</label>
-              <input type="text" class="form-control" id="" value="<%= @experiment.type %>" disabled>
-            </div>
+          <div class="form-group col-sm-4">
+            <label class="small">Completion</label>
+            <input type="text" class="form-control" id="" value="<%= @experiment.completed ? 'Experiment is completed' : 'Experiment is not completed' %>" disabled>
+          </div>
+          <div class="form-group col-sm-4">
+            <label class="small">Status</label>
+            <input type="text" class="form-control" id="" value="<%= @experiment.status %>" disabled>
           </div>
         </div>
         <br>
         <div class="row">
-          <div class="form form-horizontal">
-            <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
-              <label class="small">Interviews planned</label>
-              <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @experiment.interviews_planned %>" disabled>
-            </div>
-            <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
-              <label class="small">Interviews done</label>
-              <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @experiment.interviews_done %>" disabled>
-            </div>
-            <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
-              <label class="small">Iterviews completion</label>
-              <input type="text" class="form-control" id="" value="<%= @experiment.interviews_completion[:number] %> (<%= number_to_percentage(@experiment.interviews_completion[:ratio] * 100, options = {precision: 2}) %>) " disabled>
-            </div>
+          <div class="form-group col-sm-4">
+            <label class="small">Interviews planned</label>
+            <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @experiment.interviews_planned %>" disabled>
+          </div>
+          <div class="form-group col-sm-4">
+            <label class="small">Interviews done</label>
+            <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @experiment.interviews_done %>" disabled>
+          </div>
+          <div class="form-group col-sm-4">
+            <label class="small">Iterviews completion</label>
+            <input type="text" class="form-control" id="" value="<%= @experiment.interviews_completion[:number] %> (<%= number_to_percentage(@experiment.interviews_completion[:ratio] * 100, options = {precision: 2}) %>) " disabled>
           </div>
         </div>
         <br>
         <div class="row">
-          <div class="form form-horizontal">
-            <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
+          <% if @experiment_type == "ProblemExperiment" %>
+            <div class="form-group">
+              <label class="small">Today's solution</label>
+              <textarea class="form-control" title="today_solution" placeholder=" -- " disabled><%= @experiment.today_solution %></textarea>
+            </div>
+          <% end %>
+          <% if @experiment_type == "SolutionExperiment" %>
+            <div class="form-group col-sm-4">
+              <label class="small">Price proposed</label>
+              <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @experiment.price_proposed %>" disabled>
+            </div>
+            <div class="form-group col-sm-4">
+              <label class="small">Price revised</label>
+              <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @experiment.price_revised %>" disabled>
+            </div>
+            <div class="form-group col-sm-4">
+              <label class="small">Price acceptance</label>
+              <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @experiment.price_acceptance_string %>" disabled>
+            </div>
+          <% end %>
+          <% if @experiment_type == "ProductExperiment" %>
+            <div class="form-group col-sm-4">
+              <label class="small">Sean Ellis Test</label>
+              <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @experiment.sean_ellis_test_string %>" disabled>
+            </div>
+          <% end %>
+          <% if @experiment_type == "CustomerExperiment" %>
+            <div class="form-group col-sm-4">
               <label class="small">Early adopters planned</label>
               <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @experiment.early_adopters_planned %>" disabled>
             </div>
-            <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
+            <div class="form-group col-sm-4">
               <label class="small">Early adopters converted</label>
               <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @experiment.early_adopters_converted %>" disabled>
             </div>
-            <div class="form-group col-sm-3 col-xs-6" style="margin: 1px">
+            <div class="form-group col-sm-4">
               <label class="small">Early adopters conversion</label>
               <input type="text" class="form-control" id="" value="<%= @experiment.early_adopters_conversion[:number] %> (<%= number_to_percentage(@experiment.early_adopters_conversion[:ratio] * 100, options = {precision: 2}) %>) " disabled>
             </div>
-          </div>
+          <% end %>
         </div>
         <br>
       </div>
@@ -101,11 +129,11 @@
                       </div>
                       <div class="panel-heading" style="height: 50px">
                         <span>
-                          <%= link_to result.level.present? ? Result::LEVELS[result.level] : 'No validation level', project_result_path(@project.id, result),
+                          <%= link_to result.validation_level.present? ? "#{result.validation_level_string} validation" : 'No validation level', project_result_path(@project.id, result),
                             { remote: true, 'data-toggle': "modal", 'data-target': '#show',
                               id: "result-link-#{result.id}"} %>
                         </span>
-                        <!-- <span><%= link_to result.level.present? ? Result::LEVELS[result.level] : 'No validation level', project_result_path(@project.id, result) %></span> -->
+                        <!-- <span><%= link_to result.validation_level.present? ? result.validation_level_string : 'No validation level', project_result_path(@project.id, result) %></span> -->
                       </div>
                       <div class="panel-heading" style="height: 50px">
                         <%= button_to("Remove", "/projects/#{@project.id}/phases/#{@phase.id}/experiments/#{@experiment.id}/remove_hypothesis" , html_options = {form: {style: 'display:inline-block;'}, method: "post", params:{project_id: @project.id, phase_id: @phase_id, id: @experiment.id, result_id: result.id}, class: 'btn btn-danger btn-xs pull-right' }) %>
