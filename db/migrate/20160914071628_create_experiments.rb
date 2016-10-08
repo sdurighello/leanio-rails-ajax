@@ -8,9 +8,6 @@ class CreateExperiments < ActiveRecord::Migration[5.0]
       t.boolean :completed
       t.string :status
 
-      t.date :start_date
-      t.date :end_date
-
       t.integer :interviews_planned
       t.integer :interviews_done
       t.integer :early_adopters_planned
