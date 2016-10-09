@@ -122,7 +122,7 @@ function deleteHypothesis(event){
 
     .done(function(data) {
       // Remove hypothesis
-      $("#hypothesis-col-"+data.id).remove();
+      $("#hypothesis-col-"+hypothesisId).remove();
       // Close modal
       $("button#close-modal").click();
     })

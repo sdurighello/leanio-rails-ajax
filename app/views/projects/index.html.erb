@@ -11,6 +11,20 @@
                         <div class="panel-heading projects-index-box">
                             <span><%= project.name %></span>
                         </div>
+                        <div class="panel-heading projects-index-box" style="padding-left: 1px; padding-right: 1px;">
+                            <div style="display: inline">
+                                <div style="border-radius: 50%; margin: 1px 1px 1px 3px; border: 1px solid grey; width: 15px; height: 15px; display: inline-block; background-color: <%= 'green' if project.status == 'Green' %>"></div>
+                                <div style="border-radius: 50%; margin: 1px; border: 1px solid grey; width: 15px; height: 15px; display: inline-block; background-color: <%= 'yellow' if project.status == 'Amber' %>"></div>
+                                <div style="border-radius: 50%; margin: 1px; border: 1px solid grey; width: 15px; height: 15px; display: inline-block; background-color: <%= 'red' if project.status == 'Red' %>"></div>
+                            </div>
+                            <div style="display: inline">
+                                <div style="background-color: white; display: inline-block; min-width: 60%;">
+                                    <div style="min-width: 2em; width: 0%; background-color: #428bca; color: white;">
+                                        5%
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <div class="panel-heading projects-index-box">
                             <span class="glyphicon glyphicon-user"> <%= project.created_by.name %></span>
                         </div>

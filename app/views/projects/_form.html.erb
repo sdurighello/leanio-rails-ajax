@@ -11,16 +11,18 @@
     </div>
   <% end %>
 
-  <%= f.text_field :name %>
-
-  <%= f.text_area :description %>
+  <%= f.text_field :name, wrapper: {class: 'col-sm-6'} %>
+  <div class="col-sm-6">
+    <%= f.select :status, Project.status, include_blank: true %>
+  </div>
+  <%= f.text_area :description, wrapper: {class: 'col-sm-12'} %>
 
   <% if project.new_record? %>
     <%= f.hidden_field :created_by_id, value: current_user.id %>
     <%= f.hidden_field :active, value: true %>
 
     <%= f.fields_for :phases do |m| %>
-       <%= m.select :sequence, Project.get_list_of_phases, label: "Starting phase" %>
+       <%= m.select :sequence, Project.get_list_of_phases, label: "Starting phase", wrapper: {class: 'col-sm-6'} %>
     <% end %>
   <% end %>
 

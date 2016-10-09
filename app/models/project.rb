@@ -25,6 +25,10 @@ class Project < ApplicationRecord
     %w(Red Amber Green)
   end
 
+  def status_css
+    self.status.downcase if self.status
+  end
+
   # --- Current phase
 
   def set_current_phase(phase_id)
