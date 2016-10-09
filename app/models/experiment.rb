@@ -146,4 +146,34 @@ class Experiment < ApplicationRecord
     select_hash
   end
 
+  # Start date - End date - Duration (in days)
+
+  def start_date
+    earliest_date_sprint = (self.sprints).min_by { |s| s.start_date} if !self.sprints.empty?
+    if earliest_date_sprint.present?
+      earliest_date_sprint.start_date
+    else
+      nil
+    end
+  end
+
+  def end_date
+    latest_date_sprint = (self.sprints).max_by { |s| s.end_date} if !self.sprints.empty?
+    if latest_date_sprint.present?
+      latest_date_sprint.end_date
+    else
+      nil
+    end
+  end
+
+  def duration
+    (self.end_date - self.start_date).to_i if (self.start_date.present? && self.end_date.present?)
+  end
+
+  # -------- Private --------
+
+  private
+
+
+
 end

@@ -25,7 +25,7 @@ class Project < ApplicationRecord
     %w(Red Amber Green)
   end
 
-  # --- Instance methdos
+  # --- Current phase
 
   def set_current_phase(phase_id)
     current_phase = Phase.find_by(id: phase_id)
@@ -45,6 +45,8 @@ class Project < ApplicationRecord
       return false
     end
   end
+
+  # Project members and creator
 
   def is_member?(user)
     return true if user.id == self.created_by.id
@@ -76,11 +78,37 @@ class Project < ApplicationRecord
     end
   end
 
+  # Active/Inactive project
+
   def update_active_status(current_user_id)
     if self.created_by.id == current_user_id
       self.active ? self.active = false : self.active = true
       self.save!
     end
+  end
+
+  # Start date - End date - Duration (in days)
+
+  def start_date
+    earliest_date_phase = (self.phases).min_by { |s| s.start_date} if !self.phases.empty?
+    if earliest_date_phase.present?
+      earliest_date_phase.start_date
+    else
+      nil
+    end
+  end
+
+  def end_date
+    latest_date_phase = (self.phases).max_by { |s| s.end_date} if !self.phases.empty?
+    if latest_date_phase.present?
+      latest_date_phase.end_date
+    else
+      nil
+    end
+  end
+
+  def duration
+    (self.end_date - self.start_date).to_i if (self.start_date.present? && self.end_date.present?)
   end
 
   # --- Private methods ---

@@ -33,6 +33,20 @@
           <textarea class="form-control" title="description" placeholder=" -- " disabled><%= @project.description %></textarea>
         </div>
       </div>
+      <div class="row">
+        <div class="form-group col-sm-4">
+          <label class="small">Start</label>
+          <input class="form-control" value="<%=  @project.start_date.strftime('%d %b %Y') if @project.start_date.present? %>" disabled>
+        </div>
+        <div class="form-group col-sm-4">
+          <label class="small">End</label>
+          <input type="text" class="form-control" id="" value="<%= @project.end_date.strftime('%d %b %Y') if @project.end_date.present? %>" disabled>
+        </div>
+        <div class="form-group col-sm-4">
+          <label class="small">Duration</label>
+          <input type="text" class="form-control" id="" value="<%= @project.duration %>" disabled>
+        </div>
+      </div>
       <hr>
       <%= link_to 'Edit', edit_project_path(@project), class:'btn btn-success' %>
     </div>

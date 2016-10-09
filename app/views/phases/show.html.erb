@@ -8,36 +8,32 @@
       </div>
       <div class="panel-body">
         <div class="row">
-          <div class="col-xs-12">
-            <div class="form form-horizontal">
-              <div class="form-group col-lg-2 col-md-3 col-sm-4 col-xs-6" style="margin: 1px">
-                <label for="">Start date</label>
-                <input type="text" class="form-control" id="" placeholder="no date yet" value="<%= @phase.start_date.strftime("%d %B %Y") %>" disabled>
-              </div>
-              <div class="form-group col-lg-2 col-md-3 col-sm-4 col-xs-6" style="margin: 1px">
-                <label for="">End date</label>
-                <input type="text" class="form-control" id="" placeholder="no date yet" value="<%= @phase.end_date.strftime("%d %B %Y") %>" disabled>
-              </div>
-              <div class="form-group col-lg-3 col-md-4 col-sm-6 col-xs-6" style="margin: 1px">
-                <label for="">Completion</label>
-                <input type="text" class="form-control" id="" value="<%= @phase.completed ? 'Phase is completed' : 'Phase is not completed' %>" disabled>
-              </div>
-            </div>
+          <div class="form-group col-sm-4">
+            <label for="">Start date</label>
+            <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @phase.start_date.strftime("%d %b %Y") if @phase.start_date.present? %>" disabled>
+          </div>
+          <div class="form-group col-sm-4">
+            <label for="">End date</label>
+            <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @phase.end_date.strftime("%d %b %Y") if @phase.end_date.present? %>" disabled>
+          </div>
+          <div class="form-group col-sm-4">
+            <label for="">Duration</label>
+            <input type="text" class="form-control" id="" placeholder=" -- " value="<%= @phase.duration %>" disabled>
           </div>
         </div>
         <br>
         <div class="row">
-          <div class="col-xs-12">
-            <div class="form form-horizontal">
-              <div class="form-group col-lg-2 col-md-3 col-sm-4 col-xs-6" style="margin: 1px">
-                <label for="">N. of sprints</label>
-                <input type="text" class="form-control" id="" placeholder="no date yet" value="<%= @phase.number_of_sprints %>" disabled>
-              </div>
-              <div class="form-group col-lg-2 col-md-3 col-sm-4 col-xs-6" style="margin: 1px">
-                <label for="">Sprints length</label>
-                <input type="text" class="form-control" id="" placeholder="no length yet" value="<%= @phase.sprint_length %>" disabled>
-              </div>
-            </div>
+          <div class="form-group col-sm-4">
+            <label for="">N. of sprints</label>
+            <input type="text" class="form-control" id="" placeholder="no date yet" value="<%= @phase.number_of_sprints %>" disabled>
+          </div>
+          <div class="form-group col-sm-4">
+            <label for="">Sprints length</label>
+            <input type="text" class="form-control" id="" placeholder="no length yet" value="<%= @phase.sprint_length %>" disabled>
+          </div>
+          <div class="form-group col-sm-4">
+            <label for="">Completion</label>
+            <input type="text" class="form-control" id="" value="<%= @phase.completed ? 'Completed' : 'Not completed' %>" disabled>
           </div>
         </div>
         <hr>
@@ -84,10 +80,10 @@
                       <%= link_to "Sprint #{@phase.sprints.find_index(sprint) + 1}", project_phase_sprint_path(@project.id, @phase.id, sprint) %>
                     </td>
                     <td>
-                      <%= sprint.start_date.present? ? sprint.start_date.strftime("%d %B %Y") : '-' %>
+                      <%= sprint.start_date.present? ? sprint.start_date.strftime("%d %b %Y") : '-' %>
                     </td>
                     <td>
-                      <%= sprint.end_date.present? ? sprint.end_date.strftime("%d %B %Y") : '-' %>
+                      <%= sprint.end_date.present? ? sprint.end_date.strftime("%d %b %Y") : '-' %>
                     </td>
                     <td><%= sprint.stories_completion[:number] %>
                       (<%= number_to_percentage(sprint.stories_completion[:ratio] * 100, options = {precision: 2}) %>)
@@ -123,8 +119,10 @@
                   <th>Completed</th>
                   <th>Name</th>
                   <th>Type</th>
+                  <th>Start</th>
+                  <th>End</th>
+                  <th>Duration</th>
                   <th>Interviews</th>
-                  <th>Early adopters</th>
                 </tr>
               </thead>
               <tbody>
@@ -143,11 +141,17 @@
                     <td>
                       <%= experiment.type %>
                     </td>
+                    <td>
+                      <%= experiment.start_date.strftime("%d %b %Y") if experiment.start_date.present? %>
+                    </td>
+                    <td>
+                      <%= experiment.end_date.strftime("%d %b %Y") if experiment.end_date.present? %>
+                    </td>
+                    <td>
+                      <%= experiment.duration %>
+                    </td>
                     <td><%= experiment.interviews_completion[:number] %>
                       (<%= number_to_percentage(experiment.interviews_completion[:ratio] * 100, options = {precision: 2}) %>)
-                    </td>
-                    <td><%= experiment.early_adopters_conversion[:number] %>
-                      (<%= number_to_percentage(experiment.early_adopters_conversion[:ratio] * 100, options = {precision: 2}) %>)
                     </td>
                   </tr>
                 <% end %>

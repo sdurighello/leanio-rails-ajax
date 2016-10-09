@@ -13,6 +13,12 @@ class Phase < ApplicationRecord
     Experiment.includes(:sprints).where(sprints: {phase_id: self.id})
   end
 
+  def duration
+    (self.end_date - self.start_date).to_i if (self.start_date.present? && self.end_date.present?)
+  end
+
+  # --- Private methods ---
+
   protected
 
   def set_sprints
