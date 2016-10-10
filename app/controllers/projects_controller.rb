@@ -7,6 +7,13 @@ class ProjectsController < ApplicationController
   add_breadcrumb "Projects", :projects_path
 
   # Manage user members
+  def show_users
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+  
   def add_user
     if @project.add_user(params[:user_id].to_i, current_user.id)
       redirect_to project_path(id: @project.id, selected_tab: 4), notice: 'User was successfully added'

@@ -25,10 +25,6 @@ class Project < ApplicationRecord
     %w(Red Amber Green)
   end
 
-  def status_css
-    self.status.downcase if self.status
-  end
-
   # --- Current phase
 
   def set_current_phase(phase_id)
@@ -113,6 +109,25 @@ class Project < ApplicationRecord
 
   def duration
     (self.end_date - self.start_date).to_i if (self.start_date.present? && self.end_date.present?)
+  end
+
+  # Experiment completion
+
+  def experiment_completion
+    # Ratio of experiments completed across all phases
+    if !self.phases.empty?
+      number_of_experiments = 0
+      experiments_completed = 0
+      self.phases.each do |phase|
+        if !phase.experiments.empty?
+          number_of_experiments += phase.experiments.length
+          experiments_completed += phase.experiments.count { |e| e.completed}
+        end
+      end
+      number_of_experiments == 0 ? 0 : experiments_completed / number_of_experiments
+    else
+      0
+    end
   end
 
   # --- Private methods ---

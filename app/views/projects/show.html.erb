@@ -166,10 +166,12 @@
     <div id="tabs-4">
       <div class="row">
         <div class="col-xs-12">
-          <p>Project created by: <%= @project.creator.name %> - <%= @project.creator.email %></p>
+          <p>Project created by: <em><%= @project.creator.name %></em></p>
         </div>
       </div>
       <hr>
+      <!-- <%= button_to 'Add user', project_show_users_path(project_id: @project.id, id: @project.id),
+        { remote: true, 'data-toggle': "modal", 'data-target': '#show', class: 'btn btn-success'} %> -->
       <div class="row">
         <div class="col-xs-12">
           <%= bootstrap_form_tag url: "/projects/#{@project.id}/add_user", layout: :inline do |f| %>
