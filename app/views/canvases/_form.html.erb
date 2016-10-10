@@ -31,21 +31,21 @@
   <div class="row">
     <!-- integer from select -->
     <div class="col-sm-4">
-      <%= f.select :customer_pain_level, Canvas.list_of_customer_pain_levels %>
+      <%= f.select :customer_pain_level, Canvas.list_of_customer_pain_levels, include_blank: true %>
     </div>
     <div class="col-sm-4">
-      <%= f.select :market_ease_of_reach, Canvas.list_of_market_ease_of_reach %>
+      <%= f.select :market_ease_of_reach, Canvas.list_of_market_ease_of_reach, include_blank: true %>
     </div>
     <div class="col-sm-4">
-      <%= f.select :feasibility, Canvas.list_of_feasibility %>
+      <%= f.select :feasibility, Canvas.list_of_feasibility, include_blank: true %>
     </div>
     <div class="col-sm-4">
-      <%= f.select :riskiness, Canvas.list_of_riskiness %>
+      <%= f.select :riskiness, Canvas.list_of_riskiness, include_blank: true %>
     </div>
   </div>
 
   <hr>
-  
+
   <div class="row">
     <div class="col-xs-12">
       <%= f.submit "Save", class:"btn btn-success" %>
