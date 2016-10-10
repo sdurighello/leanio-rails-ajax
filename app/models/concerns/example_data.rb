@@ -35,6 +35,7 @@ module ExampleData extend ActiveSupport::Concern
         'trade scenester mlkshk plaid. Banjo venmo chambray cold-pressed ' +
         'typewriter. Fap skateboard intelligentsia.',
       active: true,
+      status: 'Green',
       created_by: user
     )
   end

@@ -83,7 +83,7 @@
             <%= bootstrap_form_tag url: "/projects/#{@project.id}/canvases/#{@canvas.id}/areas/#{area.id}/add_hypothesis", layout: :inline do |f|%>
               <%= f.hidden_field :id, value: area.id %>
               <%= f.select(:hypothesis_id, options_for_select(area.options_for_select_hypotheses), {hide_label: true}) %>
-              <%= f.submit "Add hypothesis" %>
+              <%= f.submit "Add hypothesis", class: 'btn btn-success' %>
             <% end %>
           </div>
           <hr>
