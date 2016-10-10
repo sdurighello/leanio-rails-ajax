@@ -2,7 +2,7 @@
 
 ![alt text](./app/assets/images/landing_page.png "Leanio homepage")
 
-App demo is live on Heroku at [Leanio.co](http://leanio.herokuapp.com)
+App demo is live on Heroku at [Leanio.co](http://www.leanio.co)
 
 #### Technical Platform
 * Built with **Ruby on Rails**, **postgreSQL** and some **AJAX** (with **JQuery**).
