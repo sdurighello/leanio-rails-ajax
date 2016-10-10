@@ -21,9 +21,9 @@
           <% end %>
           <%= f.hidden_field :hypothesis_id, value: @result.hypothesis.id %>
           <%= f.hidden_field :experiment_id, value: @result.experiment.id %>
-          <%= f.select :validation_level, Result.list_of_validation_levels %>
-          <%= f.select :pain_level, Result.list_of_pain_levels %>
-          <%= f.select :priority, Result.list_of_priorities %>
+          <%= f.select :validation_level, Result.list_of_validation_levels, include_blank: true %>
+          <%= f.select :pain_level, Result.list_of_pain_levels, include_blank: true %>
+          <%= f.select :priority, Result.list_of_priorities, include_blank: true %>
           <%= f.text_area :comment %>
       </div>
       <div class="modal-footer">
