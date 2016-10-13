@@ -60,11 +60,11 @@ class Project < ApplicationRecord
   def search_users(search_string)
     # Search string must not be empty
     # Users must neither be already members of the project nor the creator.
-    # Return only users with name/email matches of the search_string
+    # Return only users with name/email matches of the search_string ("email ~* ? OR name ~* ?", "/#{search_string}/g", "/#{search_string}/g")
     if search_string.present?
       User.where.not(id: self.created_by.id)
         .where.not(id: self.users.map { |u| u.id  })
-        .where("email ~* ? OR name ~* ?", "/#{search_string}/g", "/#{search_string}/g")
+        .where("email like ? OR name like ?", "%#{search_string}%", "%#{search_string}%")
     else
       self.errors.add :base, 'Search string cannot be empty'
       return false
