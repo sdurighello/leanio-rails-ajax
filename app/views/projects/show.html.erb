@@ -170,12 +170,14 @@
         </div>
       </div>
       <hr>
+      <!-- Modal -->
+      <div id="show-users" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"></div>
       <!-- <%= button_to 'Add user', project_show_users_path(project_id: @project.id, id: @project.id),
         { remote: true, 'data-toggle': "modal", 'data-target': '#show', class: 'btn btn-success'} %> -->
         <%= link_to 'Add users', project_show_users_path(@project, id: @project),
-          { remote: true, 'data-toggle': "modal", 'data-target': '#show',
+          { remote: true, 'data-toggle': "modal", 'data-target': '#show-users',
             id: "#{@project.id}", class: "btn btn-success"} %>
-      <div class="row">
+      <!-- <div class="row">
         <div class="col-xs-12">
           <%= bootstrap_form_tag url: "/projects/#{@project.id}/add_user", layout: :inline do |f| %>
             <%= f.hidden_field :id, value: @project.id %>
@@ -183,7 +185,7 @@
             <%= f.submit 'Add user', class:'btn btn-success' %>
           <% end %>
         </div>
-      </div>
+      </div> -->
       <br>
       <div class="row">
         <% @project.users.each do |user| %>

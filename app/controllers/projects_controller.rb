@@ -14,6 +14,14 @@ class ProjectsController < ApplicationController
     end
   end
 
+  def search_users
+    @found_users = @project.search_users(params[:search])
+    respond_to do |format|
+      format.html
+      format.js
+    end
+  end
+
   def add_user
     if @project.add_user(params[:user_id].to_i, current_user.id)
       redirect_to project_path(id: @project.id, selected_tab: 4), notice: 'User was successfully added'

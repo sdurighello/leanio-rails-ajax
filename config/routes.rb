@@ -12,6 +12,7 @@ Rails.application.routes.draw do
     post 'update_active_status' => 'projects#update_active_status'
 
     get 'show_users' => 'projects#show_users'
+    post 'search_users' => 'projects#search_users'
     post 'add_user' => 'projects#add_user'
     post 'remove_user' => 'projects#remove_user'
 

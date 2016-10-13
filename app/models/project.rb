@@ -57,6 +57,14 @@ class Project < ApplicationRecord
     self.created_by
   end
 
+  def search_users(search_string)
+    # Users must neither be already members of the project nor the creator.
+    # Return only users with name/email matches of the search_string
+    User.where.not(id: self.created_by.id)
+      .where.not(id: self.users.map { |u| u.id  })
+      .where("email REGEXP ?", '.*@gmail.com')
+  end
+
   def add_user(user_id, current_user_id)
     if (current_user_id == self.created_by.id) && (!self.users.any? { |u| u.id == user_id  })
       user = User.find_by(id: user_id)
