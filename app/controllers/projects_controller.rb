@@ -15,9 +15,8 @@ class ProjectsController < ApplicationController
   end
 
   def search_users
-    @found_users = @project.search_users(params[:search])
+    @found_users = @project.search_users(params[:search]) || []
     respond_to do |format|
-      format.html
       format.js
     end
   end

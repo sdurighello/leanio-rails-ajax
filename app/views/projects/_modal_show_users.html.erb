@@ -6,29 +6,43 @@
       <div class="modal-body">
          <div class="row">
             <div class="col-md-6">
-               <%= bootstrap_form_tag  url: "/projects/#{@project.id}/search_users" do |f| %>
+               <%= bootstrap_form_tag  url: "/projects/#{@project.id}/search_users", remote: true do |f| %>
                   <%= f.hidden_field :id, value: @project.id %>
                   <%= f.text_field :search, append: f.submit('Search'), input_group_class: 'input-group-sm' %>
                <% end %>
             </div>
          </div>
          <hr>
-         <div class="row">
-            <div class="col-xs-12 table-responsive">
-               <table class="table">
-                  <thead>
-                     <tr>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th> </th>
-                     </tr>
-                  </thead>
-                  <tbody>
-
-                  </tbody>
-               </table>
+         <% if @found_users.present? %>
+            <div class="row">
+               <div class="col-xs-12 table-responsive">
+                  <table class="table">
+                     <thead>
+                        <tr>
+                           <th>Name</th>
+                           <th>Email</th>
+                           <th> </th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <% if @found_users.empty? %>
+                           <p>No users found</p>
+                        <% else %>
+                           <% @found_users.each do |user| %>
+                              <tr>
+                                 <td><%= user.name %></td>
+                                 <td><%= user.email %></td>
+                                 <td>
+                                    <%= button_to(name = "Add", "/projects/#{@project.id}/add_user" , html_options = {method: "post", params:{id: @project.id, user_id: user.id}, class: 'btn btn-success btn-xs'}) %>
+                                 </td>
+                              </tr>
+                           <% end %>
+                        <% end %>
+                     </tbody>
+                  </table>
+               </div>
             </div>
-         </div>
+         <% end %>
       </div>
       <div class="modal-footer">
          <button type="button" class="btn btn-info" data-dismiss="modal">Close</button>
