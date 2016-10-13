@@ -4,6 +4,6 @@ FactoryGirl.define do
      description { Faker::Lorem.paragraph }
      active true
      current_phase_id { rand(1..10) }
-     created_by { rand(1..10) }
+     association :created_by, factory: :user
    end
 end

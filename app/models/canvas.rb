@@ -85,12 +85,12 @@ class Canvas < ApplicationRecord
   RISKINESS = ['Very low', 'Low', 'Medium', 'High', 'Very high']
 
   def self.list_of_riskiness
-    # create_select_list(Canvas::RISKINESS)
-    array_of_arrays = []
-    RISKINESS.each_with_index do |word, index|
-      array_of_arrays << [word, index]
-    end
-    array_of_arrays
+    create_select_list(Canvas::RISKINESS)
+    # array_of_arrays = []
+    # RISKINESS.each_with_index do |word, index|
+    #   array_of_arrays << [word, index]
+    # end
+    # array_of_arrays
   end
 
   def riskiness_string
@@ -111,7 +111,7 @@ class Canvas < ApplicationRecord
     end
   end
 
-  def create_select_list(array_of_words)
+  def self.create_select_list(array_of_words)
     array_of_arrays = []
     array_of_words.each_with_index do |word, index|
       array_of_arrays << [word, index]

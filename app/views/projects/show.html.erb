@@ -172,6 +172,9 @@
       <hr>
       <!-- <%= button_to 'Add user', project_show_users_path(project_id: @project.id, id: @project.id),
         { remote: true, 'data-toggle': "modal", 'data-target': '#show', class: 'btn btn-success'} %> -->
+        <%= link_to 'Add users', project_show_users_path(@project, id: @project),
+          { remote: true, 'data-toggle': "modal", 'data-target': '#show',
+            id: "#{@project.id}", class: "btn btn-success"} %>
       <div class="row">
         <div class="col-xs-12">
           <%= bootstrap_form_tag url: "/projects/#{@project.id}/add_user", layout: :inline do |f| %>
