@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>RunningLeanRails</title>
+    <title>Leanio</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
-    
+
+    <meta property="og:title" content="Leanio"/>
+    <meta property="og:description" content="Web application that helps innovators and entrepreneurs manage their ideas using the Lean Startup and Running Lean methodologies."/>
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="http://www.leanio.co"/>
+    <meta property="og:site_name" content="Leanio"/>
+    <meta property="og:image" content="<%=image_tag("logo_leanio.png", style: 'width: 200px; height: auto;')%>"/>
+
   </head>
 
   <body>
